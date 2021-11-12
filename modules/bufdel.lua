@@ -1,0 +1,4 @@
+-- require('bufdel').setup({
+--   next = 'alternate',  --  cycle, alternate
+--   quit = true,
+-- })
