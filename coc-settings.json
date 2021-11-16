@@ -86,6 +86,7 @@
     "~/Site/api.master/lib/sanic-validator/src",
     "~/Site/api.master/lib/tecq-base/src",
     "~/Site/api.master/lib/tecq-client/src",
+    "~/Site/api.master/misc/pdf-template-toolkit/src",
     /* API */
     "~/Site/api.master/app/contact-center-api/src",
     "~/Site/api.master/app/contract-administration-api/src",
