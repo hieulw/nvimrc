@@ -49,7 +49,7 @@ nnoremap <leader>gdl :diffget //3<CR>
 nnoremap <leader>e :FloatermNew vifm<cr>
 nnoremap <leader>gb :Git blame<CR>
 nnoremap <leader>d :DBUIToggle<CR>
-nnoremap <leader>n :NvimTreeFindFile<CR>
+nnoremap <leader>n :NvimTreeFindFileToggle<CR>
 
 " Debug Adapter Protocol
 nnoremap <silent> gsc :lua require'dap'.continue()<CR>

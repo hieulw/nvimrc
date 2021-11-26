@@ -80,7 +80,7 @@
     "~/Site/api.master/lib/sanic-oauth",
     "~/Site/api.master/lib/fii-pdfgen/src",
     "~/Site/api.master/lib/sanic-query/src",
-    "~/Site/api.master/lib/sanic-session/src",
+    "~/Site/api.master/lib/sanic-session",
     "~/Site/api.master/lib/sanic-swagger/src",
     "~/Site/api.master/lib/sanic-toolbox/src",
     "~/Site/api.master/lib/sanic-validator/src",
