@@ -26,6 +26,8 @@ set relativenumber                        " Relative line numbers
 set cursorline                            " Enable highlighting of the current line
 set laststatus=2                          " Let lightline handle status line
 set showtabline=1                         " Always show tabs
+set nofixendofline                        " Stop adding end of line character, annoying git diff
+set nofoldenable                          " No folding by default
 set noshowmode                            " We don't need to see things like -- INSERT -- anymore
 set nobackup                              " This is recommended by coc
 set nowritebackup                         " This is recommended by coc

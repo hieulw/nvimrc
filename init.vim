@@ -68,6 +68,7 @@ source $HOME/.config/nvim/modules/coc.vim
 source $HOME/.config/nvim/modules/comment.lua
 source $HOME/.config/nvim/modules/dadbod.vim
 source $HOME/.config/nvim/modules/dap.lua
+source $HOME/.config/nvim/modules/folding.lua
 source $HOME/.config/nvim/modules/git.lua
 source $HOME/.config/nvim/modules/mapping.vim
 source $HOME/.config/nvim/modules/neoscroll.lua

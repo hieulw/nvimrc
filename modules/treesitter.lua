@@ -13,5 +13,5 @@ require('nvim-treesitter.configs').setup({
     },
     context_commentstring = {enable = true, enable_autocmd = false},
     indent = {enable = false}, -- experimental feature, not reliable
-    autopairs = {enable = true}
+    autopairs = {enable = false}
 })
