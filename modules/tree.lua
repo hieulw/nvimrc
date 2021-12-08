@@ -41,7 +41,8 @@ require'nvim-tree'.setup {
         -- the command arguments as a list
         args = {}
     },
-
+    filters = {dotfiles = false, custom = {'.pyc$', '__pycache__', '~$'}},
+    git = {enable = true, ignore = true, timeout = 500},
     view = {
         -- width of the window, can be either a number (columns) or a string in `%`
         width = 30,
@@ -98,6 +99,4 @@ vim.g.nvim_tree_show_icons = {
     folder_arrows = 0
 }
 
--- vim.g.nvim_tree_ignore = {'.pyc$', '__pycache__', '~$'}
-vim.g.nvim_tree_gitignore = 1
 vim.g.nvim_tree_quit_on_open = 1
