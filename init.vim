@@ -2,7 +2,7 @@ let g:mapleader=' '
 let plugin_dir=stdpath('data') . '/plugged'
 let config_dir=stdpath('config') . '/modules'
 let g:python3_host_prog='~/.pyenv/versions/py3nvim/bin/python'
-let g:polyglot_disabled=['autoindent', 'ftdetect'] " Increase Performance
+" let g:polyglot_disabled=['autoindent', 'ftdetect', 'sensible'] " Increase Performance
 
 " Plugins
 call plug#begin(plugin_dir)
@@ -26,7 +26,7 @@ call plug#begin(plugin_dir)
 Plug 'sainnhe/gruvbox-material'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
-Plug 'tpope/vim-sleuth'
+" Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -53,6 +53,7 @@ Plug 'fannheyward/telescope-coc.nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'mfussenegger/nvim-dap-python'
+Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 
