@@ -40,7 +40,7 @@ require('lualine').setup {
                 'diagnostics',
                 -- table of diagnostic sources, available sources:
                 -- nvim_lsp, coc, ale, vim_lsp
-                sources = {'nvim_lsp', 'coc'},
+                sources = {'nvim_diagnostic', 'coc'},
                 -- displays diagnostics from defined severity
                 sections = {'error', 'warn', 'info', 'hint'},
                 -- all colors are in format #rrggbb

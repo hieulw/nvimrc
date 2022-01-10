@@ -23,6 +23,7 @@ call plug#begin(plugin_dir)
 " Plug 'nvim-lua/lsp-status.nvim' " LSP progress in statusline
 " Plug 'simrat39/symbols-outline.nvim'
 
+Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'sainnhe/gruvbox-material'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
@@ -40,7 +41,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'voldikss/vim-floaterm'
 Plug 'akinsho/toggleterm.nvim'
 Plug 'karb94/neoscroll.nvim'
-Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
 Plug 'qpkorr/vim-bufkill'
 Plug 'ahmedkhalf/project.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
@@ -75,7 +75,6 @@ source $HOME/.config/nvim/modules/mapping.vim
 source $HOME/.config/nvim/modules/neoscroll.lua
 source $HOME/.config/nvim/modules/neovide.vim
 source $HOME/.config/nvim/modules/project.lua
-source $HOME/.config/nvim/modules/sniprun.lua
 source $HOME/.config/nvim/modules/telescope.lua
 source $HOME/.config/nvim/modules/terminal.lua
 source $HOME/.config/nvim/modules/theme.vim
