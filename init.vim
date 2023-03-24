@@ -43,7 +43,7 @@ Plug 'akinsho/toggleterm.nvim'
 Plug 'karb94/neoscroll.nvim'
 Plug 'qpkorr/vim-bufkill'
 Plug 'ahmedkhalf/project.nvim'
-Plug 'kyazdani42/nvim-tree.lua'
+Plug 'nvim-tree/nvim-tree.lua'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
