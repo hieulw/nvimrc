@@ -106,6 +106,8 @@ vnoremap <silent> <expr> p <sid>Repl()
 nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap J mzJ`z
+nnoremap <C-i> <C-i>zzzv
+nnoremap <C-o> <C-o>zzzv
 
 " Visual text process
 vnoremap gs :sort<cr>
