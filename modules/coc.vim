@@ -4,7 +4,6 @@ let g:coc_global_extensions = [
     \   'coc-json',
     \   'coc-java',
     \   'coc-pyright',
-    \   'coc-sumneko-lua',
     \   'coc-sqlfluff',
     \   'coc-diagnostic',
     \   'coc-tsserver',
