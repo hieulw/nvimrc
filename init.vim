@@ -23,18 +23,17 @@ call plug#begin(plugin_dir)
 " Plug 'nvim-lua/lsp-status.nvim' " LSP progress in statusline
 " Plug 'simrat39/symbols-outline.nvim'
 
-Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'sainnhe/gruvbox-material'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
-" Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
-Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+Plug 'JoosepAlviste/nvim-ts-context-commentstring' " Respect different languages comment syntax
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'junegunn/vim-easy-align'
@@ -43,7 +42,7 @@ Plug 'akinsho/toggleterm.nvim'
 Plug 'karb94/neoscroll.nvim'
 Plug 'qpkorr/vim-bufkill'
 Plug 'ahmedkhalf/project.nvim'
-Plug 'nvim-tree/nvim-tree.lua'
+" Plug 'nvim-tree/nvim-tree.lua'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
@@ -58,13 +57,13 @@ Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 " Utilities
-source $HOME/.config/nvim/modules/basic.vim
+source $HOME/.config/nvim/modules/basic.lua
 source $HOME/.config/nvim/modules/autocommand.vim
 
 " Plugins Configuration
 " source $HOME/.config/nvim/modules/lsp.lua
 source $HOME/.config/nvim/modules/autopairs.lua
-source $HOME/.config/nvim/modules/bufdel.lua
+" source $HOME/.config/nvim/modules/bufdel.lua
 source $HOME/.config/nvim/modules/coc.vim
 source $HOME/.config/nvim/modules/comment.lua
 source $HOME/.config/nvim/modules/dadbod.vim
@@ -78,6 +77,6 @@ source $HOME/.config/nvim/modules/project.lua
 source $HOME/.config/nvim/modules/telescope.lua
 source $HOME/.config/nvim/modules/terminal.lua
 source $HOME/.config/nvim/modules/theme.vim
-source $HOME/.config/nvim/modules/tree.lua
+" source $HOME/.config/nvim/modules/tree.lua
 source $HOME/.config/nvim/modules/treesitter.lua
 source $HOME/.config/nvim/modules/statusline.lua
