@@ -10,6 +10,7 @@ local servers = {
             diagnostics = { globals = { "vim" } },
         },
     },
+  jsonls = {}
 }
 
 local on_attach = function(_, bufnr)
@@ -79,6 +80,7 @@ return {
             -- Useful status updates for LSP
             { "j-hui/fidget.nvim", opts = {} },
             -- Additional lua configuration, makes nvim stuff amazing!
+            "folke/neoconf.nvim",
             "folke/neodev.nvim",
         },
         config = function()
@@ -88,7 +90,9 @@ return {
                 capabilities = cmp_lsp.default_capabilities(capabilities)
             end
 
+            require("neoconf").setup()
             require("neodev").setup()
+
             require("mason").setup({
                 ui = { border = "rounded", width = 0.6, height = 0.7 },
             })

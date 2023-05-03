@@ -12,7 +12,7 @@ return {
       pcall(require('nvim-treesitter.install').update({ with_sync = true }))
     end,
     opts = {
-      ensure_installed = { 'go', 'lua', 'python', 'rust', 'vimdoc', 'vim' },
+      ensure_installed = { 'go', 'lua', 'python', 'rust', 'vimdoc', 'vim', 'jsonc' },
       yati = {
         enable = true,
         default_lazy = true,
