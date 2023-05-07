@@ -40,10 +40,10 @@ return {
     config = function()
       require('sibling-swap').setup({
         keymaps = {
-          ['g.'] = 'swap_with_right',
-          ['g,'] = 'swap_with_left',
-          ['g>'] = 'swap_with_right_with_opp',
-          ['g<'] = 'swap_with_left_with_opp',
+          ['<leader>sn'] = 'swap_with_right',
+          ['<leader>sp'] = 'swap_with_left',
+          ['<leader>son'] = 'swap_with_right_with_opp',
+          ['<leader>sop'] = 'swap_with_left_with_opp',
         }
       })
     end,

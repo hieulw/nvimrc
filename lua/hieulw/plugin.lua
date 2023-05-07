@@ -10,24 +10,30 @@ if not vim.loop.fs_stat(lazypath) then
 end
 
 require("lazy").setup('plugins', {
-    install = { colorscheme = { "gruvbox" } },
-    ui = {
-        -- a number <1 is a percentage., >1 is a fixed size
-        size = { width = 0.6, height = 0.7 },
-        -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
-        border = "rounded",
-    },
-    change_detection = {
-        enabled = true,
-        notify = false -- get a notification when changes are found
-    },
-    performance = {
-        rtp = {
-            disabled_plugins = {
-                "gzip", -- "matchit", -- "matchparen",
-                "man",             -- "netrwPlugin",
-                "tarPlugin", "tohtml", "tutor", "zipPlugin"
-            }
-        }
+  install = { colorscheme = { "gruvbox" } },
+  ui = {
+    -- a number <1 is a percentage., >1 is a fixed size
+    size = { width = 0.6, height = 0.7 },
+    -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
+    border = "rounded",
+  },
+  change_detection = {
+    enabled = true,
+    notify = false -- get a notification when changes are found
+  },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        -- "matchit",
+        -- "matchparen",
+        --"man",
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin"
+      }
     }
+  }
 })

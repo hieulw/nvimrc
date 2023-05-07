@@ -58,10 +58,6 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev,
                {desc = "Go to previous diagnostic message"})
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next,
                {desc = "Go to next diagnostic message"})
--- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float,
---                {desc = "Open floating diagnostic message"})
--- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist,
---                {desc = "Open diagnostics list"})
 
 -- Easy Align
 vim.keymap.set('x', 'ga', "<Plug>(EasyAlign)")
@@ -88,6 +84,18 @@ vim.keymap.set('v', 'p', function()
     vim.schedule(function() vim.fn.setreg(register, restore_register) end)
     return 'p'
 end, {silent = true, expr = true})
+
+--- Open a URL under the cursor with the current operating system (without netrw)
+vim.keymap.set('n', 'gx', function(path)
+  local cmd
+  if vim.fn.has "unix" == 1 and vim.fn.executable "xdg-open" == 1 then
+    cmd = { "xdg-open" }
+  elseif (vim.fn.has "mac" == 1 or vim.fn.has "unix" == 1) and vim.fn.executable "open" == 1 then
+    cmd = { "open" }
+  end
+  if not cmd then vim.notify("Available system opening tool not found!", vim.log.levels.ERROR) end
+  vim.fn.jobstart(vim.fn.extend(cmd, { path or vim.fn.expand "<cfile>" }), { detach = true })
+end)
 
 -- Keep cursor center
 vim.keymap.set('n', 'n', "nzzzv")

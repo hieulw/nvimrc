@@ -6,6 +6,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*'
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  desc = "Unlist quickfist buffers",
+  group = vim.api.nvim_create_augroup("Unlist Quickfist", { clear = true }),
+  pattern = "qf",
+  callback = function() vim.opt_local.buflisted = false end,
+})
+
 -- Open terminal in vim feel like home
 -- start insert right away
 vim.api.nvim_create_autocmd('TermOpen', {
