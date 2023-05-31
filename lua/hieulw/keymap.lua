@@ -7,12 +7,6 @@ vim.keymap.set({'n', 'v'}, vim.g.mapleader, '<Nop>', {silent = true})
 vim.keymap.set('n', '<C-q>', ':q<cr>', {silent = true})
 vim.keymap.set('n', '<C-s>', ':w<cr>', {silent = true})
 
--- Better tabbing
-vim.keymap.set('v', 'L', ">gv")
-vim.keymap.set('v', 'H', "<gv")
-vim.keymap.set('v', 'J', ":m '>+1<cr>gv=gv")
-vim.keymap.set('v', 'K', ":m '<-2<cr>gv=gv")
-
 -- Switch between vertical and horizontal
 vim.keymap.set('n', '<leader>sh', "<C-w>t<C-w>K")
 vim.keymap.set('n', '<leader>sv', "<C-w>t<C-w>H")
@@ -28,12 +22,6 @@ vim.keymap.set('n', '<leader><bs>', ":nohlsearch<cr>")
 vim.keymap.set('n', '<leader>gd', ":Gvdiff!<CR>")
 vim.keymap.set('n', '<leader>gdh', ":diffget //2<CR>")
 vim.keymap.set('n', '<leader>gdl', ":diffget //3<CR>")
-
--- Diagnostic
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev,
-               {desc = "Go to previous diagnostic message"})
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next,
-               {desc = "Go to next diagnostic message"})
 
 -- Apply @record to multiple lines
 -- https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db
@@ -70,11 +58,10 @@ vim.keymap.set('n', 'gx', function(path)
 end)
 
 -- Keep cursor center
--- vim.keymap.set('n', 'n', "nzzzv")
--- vim.keymap.set('n', 'N', "Nzzzv")
--- vim.keymap.set('n', 'J', "mzJ`z")
--- vim.keymap.set('n', '<C-i>', "<C-i>zzzv")
--- vim.keymap.set('n', '<C-o>', "<C-o>zzzv")
+vim.keymap.set('n', 'n', "nzzzv")
+vim.keymap.set('n', 'N', "Nzzzv")
+vim.keymap.set('n', '<C-i>', "<C-i>zzzv")
+vim.keymap.set('n', '<C-o>', "<C-o>zzzv")
 
 -- Undo breakpoint
 vim.keymap.set('i', ',', ",<c-g>u")
