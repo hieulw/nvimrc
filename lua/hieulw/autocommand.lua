@@ -1,48 +1,59 @@
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+local utils = require("hieulw.helper")
+
 -- Highlight on yank
 -- https://stackoverflow.com/questions/26069278/hightlight-copied-area-on-vim
-vim.api.nvim_create_autocmd('TextYankPost', {
+autocmd('TextYankPost', {
   callback = function() vim.highlight.on_yank() end,
-  group = vim.api.nvim_create_augroup('YankHighlight', { clear = true }),
+  group = augroup('YankHighlight', { clear = true }),
   pattern = '*'
 })
 
-vim.api.nvim_create_autocmd("FileType", {
+autocmd("FileType", {
   desc = "Unlist quickfist buffers",
-  group = vim.api.nvim_create_augroup("Unlist Quickfist", { clear = true }),
-  pattern = "qf",
+  group = augroup("Unlist Quickfist", { clear = true }),
+  pattern = { "qf", "dap-repl" },
   callback = function() vim.opt_local.buflisted = false end,
+})
+
+autocmd("FileType", {
+  group = augroup("Better Goto File in Lua", { clear = true }),
+  pattern = { "lua" },
+  desc = "fix gf functionality inside .lua files",
+  callback = function()
+    ---@diagnostic disable: assign-type-mismatch
+    -- credit: https://github.com/sam4llis/nvim-lua-gf
+    vim.opt_local.include = [[\v<((do|load)file|require|reload)[^''"]*[''"]\zs[^''"]+]]
+    vim.opt_local.includeexpr = "substitute(v:fname,'\\.','/','g')"
+    vim.opt_local.suffixesadd:prepend ".lua"
+    vim.opt_local.suffixesadd:prepend "init.lua"
+    for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+      vim.opt_local.path:append(path .. "/lua")
+    end
+  end,
 })
 
 -- Open terminal in vim feel like home
 -- start insert right away
-vim.api.nvim_create_autocmd('TermOpen', {
+autocmd('TermOpen', {
   callback = function()
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false
     vim.opt_local.filetype = 'terminal'
     vim.cmd('startinsert')
   end,
-  group = vim.api.nvim_create_augroup('OpenTerminal', { clear = true }),
+  group = augroup('OpenTerminal', { clear = true }),
   pattern = 'term://*'
 })
 
--- TreeSitter Powered Folding
-local ok, parsers = pcall(require, 'nvim-treesitter.parsers')
-if ok then
-  local configs = parsers.get_parser_configs()
-  _FOLDING = require 'hieulw.folding'
+autocmd({ "BufReadPost", "BufNewFile" }, {
+  group = augroup("File User Events", { clear = true }),
+  callback = function(args)
+    if not (vim.fn.expand "%" == "" or vim.api.nvim_get_option_value("buftype", { buf = args.buf }) == "nofile") then
+      utils.event "File"
+      if utils.cmd('git -C "' .. vim.fn.expand "%:p:h" .. '" rev-parse', false) then utils.event "GitFile" end
+    end
+  end,
+})
 
-  local filetypes = table.concat(vim.tbl_map(function(ft)
-    return configs[ft].filetype or ft
-  end, parsers.available_parsers()), ',')
-
-  vim.api.nvim_create_autocmd('Filetype', {
-    callback = function()
-      vim.opt_local.foldmethod = 'expr'
-      vim.opt_local.foldexpr = 'nvim_treesitter#foldexpr()'
-    end,
-    group = vim.api.nvim_create_augroup('FoldText', { clear = true }),
-    pattern = filetypes
-  })
-  vim.wo.foldtext = "v:lua._FOLDING.foldtext()"
-end
