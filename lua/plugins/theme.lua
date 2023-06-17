@@ -1,5 +1,11 @@
 return {
   {
+    "NvChad/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup({})
+    end,
+  },
+  {
     "ellisonleao/gruvbox.nvim",
     lazy = false,
     priority = 1000,
@@ -45,6 +51,10 @@ return {
       local custom_gruvbox = require("lualine.themes.gruvbox")
       custom_gruvbox.normal.c.bg = "#282828"
       custom_gruvbox.insert.c.bg = "#282828"
+      custom_gruvbox.visual.c.bg = "#282828"
+      custom_gruvbox.replace.c.bg = "#282828"
+      custom_gruvbox.command.c.bg = "#282828"
+      custom_gruvbox.inactive.c.bg = "#282828"
 
       local mode = {
         "mode",

@@ -35,6 +35,19 @@ return {
     end,
   },
   {
+    "abecodes/tabout.nvim",
+    enabled = false,
+    event = "InsertEnter",
+    config = function()
+      require("tabout").setup({
+        -- tabkey = "<C-j>",
+        -- backwards_tabkey = "<C-k>",
+        act_as_tab = false,
+        act_as_shift_tab = false,
+      })
+    end,
+  },
+  {
     "kylechui/nvim-surround",
     event = "VeryLazy",
     opts = {},
@@ -42,7 +55,10 @@ return {
   {
     "Wansmer/treesj",
     keys = function()
-      local treejs = require("treesj")
+      local ok, treejs = pcall(require, "treesj")
+      if not ok then
+        return {}
+      end
       return {
         { "<leader>tj", treejs.join, mode = "n", desc = "Join node" },
         { "<leader>ts", treejs.split, mode = "n", desc = "Split node" },
@@ -54,7 +70,10 @@ return {
   {
     "drybalka/tree-climber.nvim",
     keys = function()
-      local treecl = require("tree-climber")
+      local ok, treecl = pcall(require, "tree-climber")
+      if not ok then
+        return {}
+      end
       return {
         { "<M-n>", treecl.goto_next, mode = { "n", "v", "o" }, desc = "Go to next node" },
         { "<M-p>", treecl.goto_prev, mode = { "n", "v", "o" }, desc = "Go to previous node" },
@@ -83,9 +102,9 @@ return {
     opts = {
       timeout = tonumber(vim.opt.timeoutlen),
       mapping = { "kj" },
-      keys = function()
-        return vim.api.nvim_win_get_cursor(0)[2] > 1 and "<esc>l" or "<esc>"
-      end,
+      -- keys = function()
+      --   return vim.api.nvim_win_get_cursor(0)[2] > 1 and "<esc>l" or "<esc>"
+      -- end,
     },
   },
   { "NMAC427/guess-indent.nvim", event = "User File", opts = {} },
@@ -93,7 +112,10 @@ return {
     "mrjones2014/smart-splits.nvim",
     opts = { ignored_filetypes = { "nofile", "quickfix", "qf", "prompt" }, ignored_buftypes = { "nofile" } },
     keys = function()
-      local split = require("smart-splits")
+      local ok, split = pcall(require, "smart-splits")
+      if not ok then
+        return {}
+      end
       return {
         { "<C-h>", split.move_cursor_left, mode = { "n" }, desc = "Move cursor to left pane" },
         { "<C-j>", split.move_cursor_down, mode = { "n" }, desc = "Move cursor to bottom pane" },
@@ -112,7 +134,10 @@ return {
     event = { "User File", "InsertEnter" },
     dependencies = { "kevinhwang91/promise-async" },
     keys = function()
-      local ufo = require("ufo")
+      local ok, ufo = pcall(require, "ufo")
+      if not ok then
+        return {}
+      end
       return {
         { "zR", ufo.openAllFolds, mode = "n", desc = "Open all folds" },
         { "zM", ufo.closeAllFolds, mode = "n", desc = "Close all folds" },

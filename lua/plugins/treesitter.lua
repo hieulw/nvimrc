@@ -1,17 +1,17 @@
 return {
   {
     -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
+    "nvim-treesitter/nvim-treesitter",
     dependencies = {
-      'JoosepAlviste/nvim-ts-context-commentstring',
+      "JoosepAlviste/nvim-ts-context-commentstring",
     },
-    main = 'nvim-treesitter.configs',
+    main = "nvim-treesitter.configs",
     build = function()
-      pcall(require('nvim-treesitter.install').update({ with_sync = true }))
+      pcall(require("nvim-treesitter.install").update({ with_sync = true }))
     end,
     event = "User File",
     opts = {
-      ensure_installed = { 'lua' },
+      ensure_installed = { "lua" },
       indent = { enable = false },
       highlight = {
         enable = true,
@@ -21,6 +21,6 @@ return {
         enable = true,
         enable_autocmd = false,
       },
-    }
-  }
+    },
+  },
 }
