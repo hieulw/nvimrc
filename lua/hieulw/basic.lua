@@ -43,7 +43,7 @@ vim.opt.startofline = false       -- Move  more freedom
 vim.opt.breakindent = true        -- Indent wrapped lines to match line start
 vim.opt.wrap = false              -- Display long lines as just one line
 vim.opt.winblend = 0              -- Make floating windows slightly transparent
-vim.opt.pumblend = 10             -- Make builtin completion menus slightly transparent
+vim.opt.pumblend = 0              -- Make builtin completion menus slightly transparent
 vim.opt.pumheight = 10            -- Makes popup menu smaller
 vim.opt.updatetime = 250          -- Faster completion
 vim.opt.timeoutlen = 300          -- By default timeoutlen is 1000 ms
@@ -77,11 +77,12 @@ vim.opt.completeopt = { "menu", "menuone", "noinsert", "noselect" } -- no autofi
 -- set suffixesadd={'.py','.lua','.vim'}
 vim.opt.path = vim.fn.getcwd() .. "/**"
 vim.opt.list = true
---[[ vim.opt.guicursor =
-'i-ci-ve:Cursor,r-cr-o:DiffDelete,i-ci-ve:blinkwait700-blinkoff400-blinkon250,a:block' ]]
+vim.opt.guicursor = "i-ci-ve:Cursor,r-cr-o:DiffDelete,i-ci-ve:blinkwait700-blinkoff400-blinkon250,a:block"
 vim.opt.guifont = "CaskaydiaCove Nerd Font Mono:h15"
 vim.opt.colorcolumn = "100"
 vim.opt.shell = "/bin/zsh" -- https://github.com/kyazdani42/nvim-tree.lua/issues/518
 
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
+
+vim.opt.more = true

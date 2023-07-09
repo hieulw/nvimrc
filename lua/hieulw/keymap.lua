@@ -71,7 +71,9 @@ vim.keymap.set("i", ",", ",<c-g>u")
 vim.keymap.set("i", ".", ".<c-g>u")
 
 -- Jumplist mutations
-vim.keymap.set('n', 'k', [[ (v:count > 5 ? "m'" . v:count : "") . 'gk']],
-               {expr = true, silent = true})
-vim.keymap.set('n', 'j', [[ (v:count > 5 ? "m'" . v:count : "") . 'gj']],
-               {expr = true, silent = true})
+vim.keymap.set("n", "<M-k>", [[ (v:count > 5 ? "m'" . v:count : "") . 'gk']], { expr = true, silent = true })
+vim.keymap.set("n", "<M-j>", [[ (v:count > 5 ? "m'" . v:count : "") . 'gj']], { expr = true, silent = true })
+vim.keymap.set("i", "<M-h>", "<Left>")
+vim.keymap.set("i", "<M-j>", "<Down>")
+vim.keymap.set("i", "<M-k>", "<Up>")
+vim.keymap.set("i", "<M-l>", "<Right>")
