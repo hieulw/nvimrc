@@ -34,6 +34,9 @@ return {
           TelescopeResultsDiffChange = { link = "GitSignsChange" },
           TelescopeResultsDiffAdd = { link = "GitSignsAdd" },
           TelescopeResultsDiffDelete = { link = "GitSignsDelete" },
+          CmpItemAbbrMatchFuzzy = { link = "CmpIntemAbbrMatch" },
+          CmpItemAbbrDeprecated = { link = "DiagnosticDeprecated" },
+          PmenuSel = { link = "TabLineSel" },
         },
         dim_inactive = false,
         transparent_mode = true,
@@ -49,12 +52,15 @@ return {
     opts = function()
       local icon = require("hieulw.helper").icon
       local custom_gruvbox = require("lualine.themes.gruvbox")
-      custom_gruvbox.normal.c.bg = "#282828"
-      custom_gruvbox.insert.c.bg = "#282828"
-      custom_gruvbox.visual.c.bg = "#282828"
-      custom_gruvbox.replace.c.bg = "#282828"
-      custom_gruvbox.command.c.bg = "#282828"
-      custom_gruvbox.inactive.c.bg = "#282828"
+      local background, foreground = "#282828", "#ebdbb2"
+      custom_gruvbox.normal.c.bg = background
+      custom_gruvbox.insert.c.bg = background
+      custom_gruvbox.visual.c.bg = background
+      custom_gruvbox.visual.c.fg = foreground
+      custom_gruvbox.replace.c.bg = background
+      custom_gruvbox.command.c.bg = background
+      custom_gruvbox.command.c.fg = foreground
+      custom_gruvbox.inactive.c.bg = background
 
       local mode = {
         "mode",
