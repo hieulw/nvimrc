@@ -17,18 +17,18 @@ return {
     config = function()
       local cmp_autopairs = require("nvim-autopairs.completion.cmp")
       local cmp = require("cmp")
-      require("nvim-autopairs").setup()
+      require("nvim-autopairs").setup({ fast_wrap = {} })
       cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
     end,
   },
   {
     "abecodes/tabout.nvim",
-    enabled = false,
+    -- enabled = false,
     event = "InsertEnter",
     config = function()
       require("tabout").setup({
-        -- tabkey = "<C-j>",
-        -- backwards_tabkey = "<C-k>",
+        tabkey = "<C-j>",
+        backwards_tabkey = "<C-k>",
         act_as_tab = false,
         act_as_shift_tab = false,
       })
@@ -167,6 +167,12 @@ return {
   },
   -- https://github.com/arnamak/stay-centered.nvim/issues/1
   -- { "arnamak/stay-centered.nvim", opts = {} },
+  {
+    "hieulw/im-select.nvim",
+    config = function()
+      require("im_select").setup()
+    end,
+  },
   {
     "echasnovski/mini.nvim",
     config = function()
