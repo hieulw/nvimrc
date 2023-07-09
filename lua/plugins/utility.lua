@@ -1,18 +1,5 @@
 return {
   {
-    "tpope/vim-abolish",
-    keys = {
-      { "crs", mode = "n", desc = "Change to snake_case" },
-      { "crm", mode = "n", desc = "Change to MixedCase" },
-      { "crc", mode = "n", desc = "Change to camelCase" },
-      { "cru", mode = "n", desc = "Change to UPPER_CASE" },
-      { "cr-", mode = "n", desc = "Change to dash-case" },
-      { "cr.", mode = "n", desc = "Change to dot.case" },
-      { "cr<space>", mode = "n", desc = "Change to space case" },
-    },
-    cmd = { "Abolish", "Subvert" },
-  },
-  {
     "numToStr/Comment.nvim",
     keys = {
       { "gcc", mode = "n", desc = "Go line comment" },
