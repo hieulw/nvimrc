@@ -11,6 +11,13 @@ local servers = {
     },
   },
   jsonls = {},
+  gopls = {
+    completeUnimported = true,
+    usePlaceHolders = true,
+    analyses = { unusedparams = true, shadow = true },
+    staticcheck = true,
+    experimentalPostfixCompletions = true,
+  },
 }
 
 local on_attach = function(_, bufnr)
@@ -80,6 +87,7 @@ return {
       if ok then
         capabilities = cmp_lsp.default_capabilities(capabilities)
       end
+      local null_ls = require("null-ls")
 
       require("neoconf").setup()
       require("neodev").setup()
@@ -100,12 +108,11 @@ return {
         end,
       })
       require("mason-null-ls").setup({
-        ensure_installed = { "stylua", "jq" },
+        ensure_installed = { "stylua", "jq", "gofumpt", "goimports" },
         automatic_installation = false,
         handlers = {},
       })
-
-      require("null-ls").setup({
+      null_ls.setup({
         sources = {},
         on_attach = function(client, bufnr)
           if client.supports_method("textDocument/formatting") then
@@ -116,9 +123,6 @@ return {
               callback = function()
                 vim.lsp.buf.format({
                   name = "null-ls",
-                  -- filter = function(_client)
-                  --   return _client.name == "null-ls"
-                  -- end,
                   bufnr = bufnr,
                 })
               end,
