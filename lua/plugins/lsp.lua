@@ -1,26 +1,4 @@
-local servers = {
-  lua_ls = {
-    Lua = {
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false,
-      },
-      telemetry = { enable = false },
-      diagnostics = { globals = { "vim" } },
-    },
-  },
-  jsonls = {},
-  gopls = {
-    completeUnimported = true,
-    usePlaceHolders = true,
-    analyses = { unusedparams = true, shadow = true },
-    staticcheck = true,
-    experimentalPostfixCompletions = true,
-  },
-}
-
-local on_attach = function(_, bufnr)
+local attach = function(client, bufnr)
   local nmap = function(keys, func, desc)
     if desc then
       desc = "LSP: " .. desc
@@ -32,12 +10,15 @@ local on_attach = function(_, bufnr)
       desc = desc,
     })
   end
-  -- nmap("gd", require("definition-or-references").definition_or_references, "Declaration or Usages")
-  nmap("gd", "<cmd>lua vim.lsp.buf.definition()<cr>", "Declaration or Usages")
-  nmap("<leader>lr", vim.lsp.buf.rename, "[R]e[n]ame")
-  nmap("<leader>la", vim.lsp.buf.code_action, "[C]ode [A]ction")
-  nmap("<leader>lds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-  nmap("<leader>lws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+  nmap("gd", vim.lsp.buf.definition, "Go to Definition")
+  nmap("gy", vim.lsp.buf.type_definition, "Go to Type Definition")
+  nmap("gD", vim.lsp.buf.declaration, "Go to Declaration")
+  nmap("gI", vim.lsp.buf.implementation, "Go to Implementation")
+  nmap("gr", vim.lsp.buf.references, "Go to References")
+  nmap("<leader>lr", vim.lsp.buf.rename, "Rename")
+  nmap("<leader>la", vim.lsp.buf.code_action, "Code Action")
+  nmap("<leader>lds", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
+  nmap("<leader>lws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
   -- See `:help K` for why this keymap
   nmap("K", vim.lsp.buf.hover, "Hover Documentation")
 
@@ -56,6 +37,20 @@ local on_attach = function(_, bufnr)
     return orig_util_open_floating_preview(contents, syntax, opts, ...)
   end
 
+  vim.api.nvim_clear_autocmds({ group = "LspFormat", buffer = bufnr })
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    group = "LspFormat",
+    buffer = bufnr,
+    callback = function()
+      if client.name == "typescript-tools" then
+        vim.cmd("silent! TSToolsAddMissingImports")
+      end
+      if client.name == "eslint" then
+        vim.cmd("silent! EslintFixAll")
+      end
+    end,
+  })
+
   vim.diagnostic.config({
     virtual_text = false,
     signs = false,
@@ -72,22 +67,60 @@ return {
       -- Automatically install LSPs to stdpath for neovim
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
+      "nvimtools/none-ls.nvim",
       "jay-babu/mason-null-ls.nvim",
-      -- Useful status updates for LSP
-      { "j-hui/fidget.nvim", opts = {} },
       -- Additional lua configuration, makes nvim stuff amazing!
       "folke/neoconf.nvim",
       "folke/neodev.nvim",
+      "b0o/schemastore.nvim",
+      "antosha417/nvim-lsp-file-operations",
     },
     config = function()
+      local servers = {
+        lua_ls = {
+          Lua = {
+            workspace = {
+              -- Make the server aware of Neovim runtime files
+              -- library = vim.api.nvim_get_runtime_file("", true),
+              -- library = {
+              --   [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+              --   [vim.fn.stdpath("config") .. "/lua"] = true,
+              -- },
+              checkThirdParty = "Disable",
+            },
+            runtime = { version = "LuaJIT" },
+            completion = { callSnippet = "Replace" },
+            telemetry = { enable = false },
+            diagnostics = { globals = { "vim" } },
+            hint = { enable = true },
+          },
+        },
+        gopls = {
+          completeUnimported = true,
+          usePlaceHolders = true,
+          analyses = { unusedparams = true, shadow = true },
+          staticcheck = true,
+          experimentalPostfixCompletions = true,
+        },
+        jsonls = {
+          json = {
+            schemas = require("schemastore").json.schemas(),
+            validate = { enable = true },
+          },
+        },
+        cssls = {},
+        eslint = {},
+      }
+
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       local ok, cmp_lsp = pcall(require, "cmp_nvim_lsp")
-      local augroup = vim.api.nvim_create_augroup("LspFormat", {})
+      local augroup = vim.api.nvim_create_augroup("LspFormat", { clear = true })
       if ok then
         capabilities = cmp_lsp.default_capabilities(capabilities)
       end
       local null_ls = require("null-ls")
+
+      require("lsp-file-operations").setup()
 
       require("neoconf").setup()
       require("neodev").setup()
@@ -100,15 +133,27 @@ return {
       })
       require("mason-lspconfig").setup_handlers({
         function(server_name)
+          if vim.tbl_contains({ "tsserver" }, server_name) then
+            return
+          end
           require("lspconfig")[server_name].setup({
             capabilities = capabilities,
-            on_attach = on_attach,
+            on_attach = attach,
             settings = servers[server_name],
+            handlers = {
+              ["textDocument/definition"] = function(err, result, ...)
+                -- always go to the first definition
+                if vim.tbl_islist(result) or type(result) == "table" then
+                  result = result[1]
+                end
+                vim.lsp.handlers["textDocument/definition"](err, result, ...)
+              end,
+            },
           })
         end,
       })
       require("mason-null-ls").setup({
-        ensure_installed = { "stylua", "jq", "gofumpt", "goimports" },
+        ensure_installed = { "gofumpt", "goimports" },
         automatic_installation = false,
         handlers = {},
       })
@@ -121,10 +166,10 @@ return {
               group = augroup,
               buffer = bufnr,
               callback = function()
-                vim.lsp.buf.format({
-                  name = "null-ls",
-                  bufnr = bufnr,
-                })
+                -- Only format if buffer is unloaded or has been modified
+                if vim.api.nvim_buf_get_option(bufnr, "modified") then
+                  vim.lsp.buf.format({ name = "null-ls", bufnr = bufnr })
+                end
               end,
             })
           end
@@ -133,20 +178,23 @@ return {
     end,
   },
   {
-    "KostkaBrukowa/definition-or-references.nvim",
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     opts = {
-      on_references_result = function(result)
-        require("telescope.pickers")
-          .new({}, {
-            prompt_title = "LSP References",
-            finder = require("telescope.finders").new_table({
-              results = vim.lsp.util.locations_to_items(result, "utf-16"),
-              entry_maker = require("telescope.make_entry").gen_from_quickfix(),
-            }),
-            previewer = require("telescope.config").values.qflist_previewer({}),
-          })
-          :find()
-      end,
+      on_attach = attach,
+      tsserver_file_preferences = {
+        -- Inlay Hints
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+      expose_as_code_action = "all",
+      complete_function_calls = true,
     },
   },
 }

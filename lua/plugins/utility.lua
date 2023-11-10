@@ -1,5 +1,12 @@
 return {
   {
+    "nvim-tree/nvim-tree.lua",
+    keys = {
+      { "<leader>e", "<cmd>NvimTreeFindFileToggle<cr>", mode = "n", desc = "Toggle File Explorer" },
+    },
+    opts = {},
+  },
+  {
     "numToStr/Comment.nvim",
     keys = {
       { "gcc", mode = "n", desc = "Go line comment" },
@@ -21,9 +28,9 @@ return {
       cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
     end,
   },
+  { "windwp/nvim-ts-autotag", opts = {} },
   {
     "abecodes/tabout.nvim",
-    -- enabled = false,
     event = "InsertEnter",
     config = function()
       require("tabout").setup({
@@ -165,8 +172,6 @@ return {
       end,
     },
   },
-  -- https://github.com/arnamak/stay-centered.nvim/issues/1
-  -- { "arnamak/stay-centered.nvim", opts = {} },
   {
     "hieulw/im-select.nvim",
     config = function()

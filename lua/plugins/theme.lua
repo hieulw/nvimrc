@@ -10,7 +10,6 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      local colors = require("gruvbox.palette").get_base_colors(vim.o.background)
       require("gruvbox").setup({
         undercurl = true,
         underline = true,
@@ -30,7 +29,6 @@ return {
         contrast = "", -- can be "hard", "soft" or empty string
         palette_overrides = {},
         overrides = {
-          Normal = { fg = colors.fg1, bg = colors.bg0 },
           TelescopeResultsDiffChange = { link = "GitSignsChange" },
           TelescopeResultsDiffAdd = { link = "GitSignsAdd" },
           TelescopeResultsDiffDelete = { link = "GitSignsDelete" },
@@ -97,7 +95,7 @@ return {
         function()
           local buf_clients = vim.lsp.get_active_clients({ bufnr = 0 })
           if #buf_clients == 0 then
-            return "LSP Inactive"
+            return ""
           end
 
           local buf_ft = vim.bo.filetype
@@ -126,7 +124,7 @@ return {
           -- vim.list_extend(buf_client_names, supported_linters)
 
           local unique_client_names = table.concat(buf_client_names, ", ")
-          local language_servers = string.format("[%s]", unique_client_names)
+          local language_servers = string.format("%s", unique_client_names)
 
           if copilot_active then
             language_servers = language_servers .. "%#SLCopilot#" .. " " .. icon.git.Octoface .. "%*"
@@ -148,7 +146,7 @@ return {
         sections = {
           lualine_a = {},
           lualine_b = {},
-          lualine_c = { mode, "filename", lsp },
+          lualine_c = { mode, "filename", lsp, require("lsp-progress").progress },
           lualine_x = { diff, diagnostics },
           lualine_y = {},
           lualine_z = {},
@@ -157,4 +155,16 @@ return {
     end,
   },
   "nvim-tree/nvim-web-devicons",
+  {
+    "linrongbin16/lsp-progress.nvim",
+    config = function()
+      require("lsp-progress").setup({})
+      vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
+      vim.api.nvim_create_autocmd("User", {
+        group = "lualine_augroup",
+        pattern = "LspProgressStatusUpdated",
+        callback = require("lualine").refresh,
+      })
+    end,
+  },
 }

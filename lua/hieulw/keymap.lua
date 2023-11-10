@@ -46,7 +46,7 @@ vim.keymap.set("v", "p", function()
   return "p"
 end, { silent = true, expr = true })
 
---- Open a URL under the cursor with the current operating system (without netrw)
+-- Open a URL under the cursor with the current operating system (without netrw)
 vim.keymap.set("n", "gx", function(path)
   local cmd
   if vim.fn.has("unix") == 1 and vim.fn.executable("xdg-open") == 1 then
@@ -59,6 +59,15 @@ vim.keymap.set("n", "gx", function(path)
   end
   vim.fn.jobstart(vim.fn.extend(cmd, { path or vim.fn.expand("<cfile>") }), { detach = true })
 end)
+
+-- Auto indent when insert empty line
+vim.keymap.set("n", "i", function()
+  if #vim.fn.getline(".") == 0 then
+    return [["_cc]]
+  else
+    return "i"
+  end
+end, { expr = true, desc = "properly indent on empty line when insert" })
 
 -- Keep cursor center
 vim.keymap.set("n", "n", "nzzzv")
