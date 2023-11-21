@@ -115,11 +115,11 @@ return {
           end, { "i", "s" }),
         }),
         sources = cmp.config.sources({
-          { name = "nvim_lsp", priority = 1000 },
+          { name = "nvim_lsp",               priority = 1000 },
           { name = "nvim_lsp_signature_help" },
-          { name = "vsnip", priority = 750 },
-          { name = "buffer", priority = 500 },
-          { name = "path", priority = 250 },
+          { name = "vsnip",                  priority = 750 },
+          { name = "buffer",                 priority = 500 },
+          { name = "path",                   priority = 250 },
         }),
         sorting = {
           comparators = {
@@ -138,6 +138,7 @@ return {
       cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
+        sorting = { comparators = { cmp.config.compare.recently_used } },
         view = { entries = { name = "wildmenu", separator = " " } },
       })
     end,

@@ -4,7 +4,17 @@ return {
     keys = {
       { "<leader>e", "<cmd>NvimTreeFindFileToggle<cr>", mode = "n", desc = "Toggle File Explorer" },
     },
-    opts = {},
+    opts = {
+      respect_buf_cwd = true,
+      filters = {
+        custom = { ".git" },
+      },
+      sync_root_with_cwd = true,
+      update_focused_file = {
+        enable = true,
+        update_root = true,
+      },
+    },
   },
   {
     "numToStr/Comment.nvim",
@@ -28,7 +38,7 @@ return {
       cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
     end,
   },
-  { "windwp/nvim-ts-autotag", opts = {} },
+  { "windwp/nvim-ts-autotag" },
   {
     "abecodes/tabout.nvim",
     event = "InsertEnter",
