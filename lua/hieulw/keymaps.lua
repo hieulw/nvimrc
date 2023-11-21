@@ -1,6 +1,3 @@
-vim.g.mapleader = " "
-vim.g.localleader = " "
-
 vim.keymap.set({ "n", "v" }, vim.g.mapleader, "<Nop>", { silent = true })
 
 -- nano feel here
@@ -60,17 +57,9 @@ vim.keymap.set("n", "gx", function(path)
   vim.fn.jobstart(vim.fn.extend(cmd, { path or vim.fn.expand("<cfile>") }), { detach = true })
 end)
 
--- Auto indent when insert empty line
-vim.keymap.set("n", "i", function()
-  if #vim.fn.getline(".") == 0 then
-    return [["_cc]]
-  else
-    return "i"
-  end
-end, { expr = true, desc = "properly indent on empty line when insert" })
-
 -- Keep cursor center
 vim.keymap.set("n", "n", "nzzzv")
+
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "<C-i>", "<C-i>zzzv")
 vim.keymap.set("n", "<C-o>", "<C-o>zzzv")

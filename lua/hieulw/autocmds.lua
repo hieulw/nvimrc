@@ -14,15 +14,6 @@ autocmd("TextYankPost", {
   pattern = "*",
 })
 
-autocmd("FileType", {
-  desc = "Unlist quickfist buffers",
-  group = augroup("Unlist Quickfist"),
-  pattern = { "qf", "dap-repl" },
-  callback = function()
-    vim.opt_local.buflisted = false
-  end,
-})
-
 -- Open terminal in vim feel like home
 -- start insert right away
 autocmd("TermOpen", {
@@ -101,7 +92,6 @@ autocmd("FileType", {
   end,
 })
 
-
 -- Check if we need to reload the file when it changed
 autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   group = augroup("checktime"),
@@ -118,8 +108,16 @@ autocmd("FileType", {
   end,
 })
 
+-- avoid auto insert comment on newline
+autocmd({ "BufWinEnter" }, {
+  group = augroup "auto_format_options",
+  callback = function()
+    vim.cmd "set formatoptions-=cro"
+  end,
+})
+
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+autocmd({ "BufWritePre" }, {
   group = augroup("auto_create_dir"),
   callback = function(event)
     if event.match:match("^%w%w+://") then
