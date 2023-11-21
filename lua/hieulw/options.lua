@@ -45,7 +45,7 @@ vim.opt.wrap = false                -- Display long lines as just one line
 vim.opt.winblend = 0                -- Make floating windows slightly transparent
 vim.opt.pumblend = 0                -- Make builtin completion menus slightly transparent
 vim.opt.pumheight = 10              -- Makes popup menu smaller
-vim.opt.updatetime = 250            -- Faster completion
+vim.opt.updatetime = 100            -- Faster completion
 vim.opt.timeoutlen = 300            -- By default timeoutlen is 1000 ms
 vim.opt.shortmess:append("c")       -- Shut off completion messages
 vim.opt.signcolumn = "number"       -- Always show the signcolumn
