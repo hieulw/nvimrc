@@ -2,7 +2,6 @@ local augroup = function(name)
   vim.api.nvim_create_augroup(name, { clear = true })
 end
 local autocmd = vim.api.nvim_create_autocmd
-local utils = require("hieulw.helper")
 
 -- Highlight on yank
 -- https://stackoverflow.com/questions/26069278/hightlight-copied-area-on-vim
@@ -25,18 +24,6 @@ autocmd("TermOpen", {
   end,
   group = augroup("OpenTerminal"),
   pattern = "term://*",
-})
-
-autocmd({ "BufReadPost", "BufNewFile" }, {
-  group = augroup("File User Events"),
-  callback = function(args)
-    if not (vim.fn.expand("%") == "" or vim.api.nvim_get_option_value("buftype", { buf = args.buf }) == "nofile") then
-      utils.event("File")
-      if utils.cmd('git -C "' .. vim.fn.expand("%:p:h") .. '" rev-parse', false) then
-        utils.event("GitFile")
-      end
-    end
-  end,
 })
 
 -- resize splits if window got resized
@@ -71,20 +58,30 @@ autocmd("BufReadPost", {
 autocmd("FileType", {
   group = augroup("close_with_q"),
   pattern = {
+    "OverseerForm",
+    "OverseerList",
     "PlenaryTestPopup",
+    "checkhealth",
+    "floggraph",
+    "fugitive",
+    "git",
     "help",
     "lspinfo",
     "man",
+    "neoai-input",
+    "neoai-output",
+    "neotest-output",
+    "neotest-output-panel",
+    "neotest-summary",
+    "netrw",
     "notify",
     "qf",
     "query",
     "spectre_panel",
     "startuptime",
+    "toggleterm",
     "tsplayground",
-    "neotest-output",
-    "checkhealth",
-    "neotest-summary",
-    "neotest-output-panel",
+    "vim",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
@@ -110,9 +107,9 @@ autocmd("FileType", {
 
 -- avoid auto insert comment on newline
 autocmd({ "BufWinEnter" }, {
-  group = augroup "auto_format_options",
+  group = augroup("auto_format_options"),
   callback = function()
-    vim.cmd "set formatoptions-=cro"
+    vim.cmd("set formatoptions-=cro")
   end,
 })
 
