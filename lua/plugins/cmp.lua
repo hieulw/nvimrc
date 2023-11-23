@@ -1,4 +1,3 @@
----@diagnostic disable: missing-fields
 return {
   {
     "hrsh7th/nvim-cmp",
@@ -13,11 +12,13 @@ return {
       "hrsh7th/cmp-vsnip",
       "hrsh7th/vim-vsnip",
       "rafamadriz/friendly-snippets",
+      "windwp/nvim-autopairs",
     },
     event = { "InsertEnter", "CmdlineEnter" },
     config = function()
       local cmp = require("cmp")
-      local kind_icons = require("hieulw.helper").icon.kind
+      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+      local autopairs = require("nvim-autopairs")
       local kind_icons = require("hieulw.icons").kind
       local feedkey = require("hieulw.helper").feedkey
       local border_opts = {
@@ -30,6 +31,9 @@ return {
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
       end
+
+      autopairs.setup({ fast_wrap = {} })
+      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
       cmp.setup({
         enabled = function()
@@ -116,11 +120,11 @@ return {
           end, { "i", "s" }),
         }),
         sources = cmp.config.sources({
-          { name = "nvim_lsp",               priority = 1000 },
+          { name = "nvim_lsp", priority = 1000 },
           { name = "nvim_lsp_signature_help" },
-          { name = "vsnip",                  priority = 750 },
-          { name = "buffer",                 priority = 500 },
-          { name = "path",                   priority = 250 },
+          { name = "vsnip", priority = 750 },
+          { name = "buffer", priority = 500 },
+          { name = "path", priority = 250 },
         }),
         sorting = {
           comparators = {
