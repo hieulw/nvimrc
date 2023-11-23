@@ -17,31 +17,6 @@ return {
     },
   },
   {
-    "numToStr/Comment.nvim",
-    keys = {
-      { "gcc", mode = "n", desc = "Go line comment" },
-      { "gbc", mode = "n", desc = "Go block comment" },
-      { "gc", mode = { "n", "v", "o" }, desc = "Go comment with motion" },
-      { "gb", mode = { "n", "v", "o" }, desc = "Go comment with motion" },
-    },
-    opts = {
-      pre_hook = function()
-        return vim.bo.commentstring
-      end,
-    },
-  },
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = function()
-      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-      local cmp = require("cmp")
-      require("nvim-autopairs").setup({ fast_wrap = {} })
-      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-    end,
-  },
-  { "windwp/nvim-ts-autotag" },
-  {
     "abecodes/tabout.nvim",
     event = "InsertEnter",
     config = function()
@@ -53,49 +28,14 @@ return {
       })
     end,
   },
-  {
-    "kylechui/nvim-surround",
-    event = "VeryLazy",
-    opts = {},
-  },
-  {
-    "Wansmer/treesj",
-    keys = function()
-      local ok, treejs = pcall(require, "treesj")
-      if not ok then
-        return {}
-      end
-      return {
-        { "<leader>tj", treejs.join, mode = "n", desc = "Join node" },
-        { "<leader>ts", treejs.split, mode = "n", desc = "Split node" },
-        { "<leader>tm", treejs.toggle, mode = "n", desc = "Toggle node" },
-      }
-    end,
-    opts = { use_default_keymaps = false, max_join_length = 1000 },
-  },
-  {
-    "drybalka/tree-climber.nvim",
-    keys = function()
-      local ok, treecl = pcall(require, "tree-climber")
-      if not ok then
-        return {}
-      end
-      return {
-        { "<M-n>", treecl.goto_next, mode = { "n", "v", "o" }, desc = "Go to next node" },
-        { "<M-p>", treecl.goto_prev, mode = { "n", "v", "o" }, desc = "Go to previous node" },
-        { "<M-i>", treecl.goto_child, mode = { "n", "v", "o" }, desc = "Go to child node" },
-        { "<M-o>", treecl.goto_parent, mode = { "n", "v", "o" }, desc = "Go to parent node" },
-        { "in", treecl.select_node, mode = { "v", "o" }, desc = "Select inside node" },
-        { "<leader>tn", treecl.swap_next, mode = { "n" }, desc = "Swap next node" },
-        { "<leader>tp", treecl.swap_prev, mode = { "n" }, desc = "Swap previous node" },
-      }
-    end,
-  },
+  { "kylechui/nvim-surround", opts = {} },
   {
     "famiu/bufdelete.nvim",
+    enable = false,
     cmd = { "Bdelete", "Bwipeout" },
     keys = {
       { "<leader>bd", "<cmd>Bdelete<cr>", mode = "n", desc = "Buffer delete" },
+      { "<leader>bw", "<cmd>Bwipeout<cr>", mode = "n", desc = "Buffer wipeout" },
     },
   },
   {
@@ -113,7 +53,6 @@ return {
       -- end,
     },
   },
-  { "NMAC427/guess-indent.nvim", event = "User File", opts = {} },
   {
     "mrjones2014/smart-splits.nvim",
     opts = { ignored_filetypes = { "nofile", "quickfix", "qf", "prompt" }, ignored_buftypes = { "nofile" } },
@@ -137,13 +76,10 @@ return {
   },
   {
     "kevinhwang91/nvim-ufo",
-    event = { "User File", "InsertEnter" },
+    event = { "InsertEnter" },
     dependencies = { "kevinhwang91/promise-async" },
     keys = function()
-      local ok, ufo = pcall(require, "ufo")
-      if not ok then
-        return {}
-      end
+      local ufo = require("ufo")
       return {
         { "zR", ufo.openAllFolds, mode = "n", desc = "Open all folds" },
         { "zM", ufo.closeAllFolds, mode = "n", desc = "Close all folds" },
@@ -203,8 +139,13 @@ return {
         },
       })
       require("mini.align").setup()
-      require("mini.bracketed").setup()
-      require("mini.indentscope").setup({ symbol = "▏" })
+      require("mini.comment").setup({
+        options = {
+          custom_commentstring = function()
+            return require("ts_context_commentstring").calculate_commentstring() or vim.bo.commentstring
+          end,
+        },
+      })
       require("mini.jump").setup()
       require("mini.move").setup({
         mappings = {
