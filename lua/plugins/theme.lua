@@ -48,7 +48,7 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     opts = function()
-      local icon = require("hieulw.helper").icon
+      local icon = require("hieulw.icons")
       local custom_gruvbox = require("lualine.themes.gruvbox")
       local background, foreground = "#282828", "#ebdbb2"
       custom_gruvbox.normal.c.bg = background
@@ -69,10 +69,10 @@ return {
         sources = { "nvim_diagnostic" },
         sections = { "error", "warn", "info", "hint" },
         symbols = {
-          error = icon.diagnostics.Error .. " ",
-          hint = icon.diagnostics.Hint .. " ",
-          info = icon.diagnostics.Info .. " ",
-          warn = icon.diagnostics.Warn .. " ",
+          error = icon.diagnostics.BoldError .. " ",
+          hint = icon.diagnostics.BoldHint .. " ",
+          info = icon.diagnostics.BoldInformation .. " ",
+          warn = icon.diagnostics.BoldWarning .. " ",
         },
         colored = true,
         update_in_insert = false,
@@ -82,10 +82,10 @@ return {
       local diff = {
         "diff",
         symbols = {
-          added = icon.git.Added .. " ",
-          untracked = icon.git.Added .. " ",
-          modified = icon.git.Changed .. " ",
-          removed = icon.git.Deleted .. " ",
+          added = icon.git.LineAdded .. " ",
+          untracked = icon.git.FileUntracked .. " ",
+          modified = icon.git.LineModified .. " ",
+          removed = icon.git.LineRemoved .. " ",
         },
         colored = true,
         always_visible = false,

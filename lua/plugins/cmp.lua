@@ -18,6 +18,7 @@ return {
     config = function()
       local cmp = require("cmp")
       local kind_icons = require("hieulw.helper").icon.kind
+      local kind_icons = require("hieulw.icons").kind
       local feedkey = require("hieulw.helper").feedkey
       local border_opts = {
         border = "single",

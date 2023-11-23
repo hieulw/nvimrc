@@ -25,7 +25,7 @@ return {
       local telescope = require("telescope")
       local actions = require("telescope.actions")
       -- local fb_actions = require("telescope").extensions.file_browser.actions
-      local icon = require("hieulw.helper").icon
+      local icon = require("hieulw.icons")
       local theme = "dropdown" -- ivy | dropdown | cursor
       telescope.setup({
         defaults = {

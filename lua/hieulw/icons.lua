@@ -159,4 +159,8 @@ return {
     BreakpointRejected = { " ", "DiagnosticError" },
     LogPoint = ".>",
   },
+  prompt = {
+    Search = "",
+    Selected = "❯",
+  },
 }
