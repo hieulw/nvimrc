@@ -11,7 +11,14 @@ function M.on_attach(client, buffer)
   self:map("gr", vim.lsp.buf.references)
   self:map("K", vim.lsp.buf.hover) -- See `:help K` for why this keymap
   self:map("gK", vim.lsp.buf.signature_help)
+
   self:map("gl", vim.diagnostic.open_float)
+  self:map("]d", M.diagnostic_goto(true), { desc = "Next Diagnostic" })
+  self:map("[d", M.diagnostic_goto(false), { desc = "Prev Diagnostic" })
+  self:map("]e", M.diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
+  self:map("[e", M.diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
+  self:map("]w", M.diagnostic_goto(true, "WARNING"), { desc = "Next Warning" })
+  self:map("[w", M.diagnostic_goto(false, "WARNING"), { desc = "Prev Warning" })
 
   self:map("<leader>la", vim.lsp.buf.code_action)
   self:map("<leader>lf", format, { has = "documentFormatting" })
@@ -45,9 +52,17 @@ end
 
 function M.rename()
   if pcall(require, "inc_rename") then
-    return ":IncRename " .. vim.fn.expand "<cword>"
+    return ":IncRename " .. vim.fn.expand("<cword>")
   else
     vim.lsp.buf.rename()
+  end
+end
+
+function M.diagnostic_goto(next, severity)
+  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
+  severity = severity and vim.diagnostic.severity[severity] or nil
+  return function()
+    go({ severity = severity })
   end
 end
 

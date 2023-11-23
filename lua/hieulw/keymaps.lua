@@ -57,12 +57,9 @@ vim.keymap.set("n", "gx", function(path)
   vim.fn.jobstart(vim.fn.extend(cmd, { path or vim.fn.expand("<cfile>") }), { detach = true })
 end)
 
--- Keep cursor center
-vim.keymap.set("n", "n", "nzzzv")
-
-vim.keymap.set("n", "N", "Nzzzv")
-vim.keymap.set("n", "<C-i>", "<C-i>zzzv")
-vim.keymap.set("n", "<C-o>", "<C-o>zzzv")
+-- quickfix list
+vim.keymap.set("n", "]q", "<cmd>cnext<cr>", { desc = "Next Quickfix" })
+vim.keymap.set("n", "[q", "<cmd>cprevious<cr>", { desc = "Prev Quickfix" })
 
 -- Undo breakpoint
 vim.keymap.set("i", ",", ",<c-g>u")
