@@ -1,5 +1,19 @@
 local M = {}
 
+local handlers = {
+  ["textDocument/definition"] = function(err, result, ...)
+    -- always go to the first definition
+    if vim.tbl_islist(result) or type(result) == "table" then
+      if #result > 1 then
+        result = result[2]
+      else
+        result = result[1]
+      end
+    end
+    vim.lsp.handlers["textDocument/definition"](err, result, ...)
+  end,
+}
+
 function M.setup(_, opts)
   local lsp_utils = require("plugins.lsp.utils")
   lsp_utils.on_attach(function(client, bufnr)
@@ -13,9 +27,10 @@ function M.setup(_, opts)
   local servers = opts.servers
   local capabilities = lsp_utils.capabilities()
 
-  local function setup(server)
+  local function _setup(server)
     local server_opts = vim.tbl_deep_extend("force", {
       capabilities = capabilities,
+      handlers = handlers,
     }, servers[server] or {})
 
     if opts.setup[server] then
@@ -43,7 +58,7 @@ function M.setup(_, opts)
       server_opts = server_opts == true and {} or server_opts
       -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
       if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
-        setup(server)
+        _setup(server)
       else
         ensure_installed[#ensure_installed + 1] = server
       end
@@ -55,7 +70,7 @@ function M.setup(_, opts)
   end
 
   mlsp.setup({ ensure_installed = ensure_installed })
-  mlsp.setup_handlers({ setup })
+  mlsp.setup_handlers({ _setup })
 end
 
 return M
