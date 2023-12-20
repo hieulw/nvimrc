@@ -8,7 +8,6 @@ return {
       "nvimtools/none-ls.nvim",
       -- "jay-babu/mason-null-ls.nvim",
       -- Additional lua configuration, makes nvim stuff amazing!
-      "folke/neoconf.nvim",
       "antosha417/nvim-lsp-file-operations",
     },
     opts = {},
@@ -16,7 +15,10 @@ return {
   },
   {
     "williamboman/mason.nvim",
-    opts = { ensure_installed = {} },
+    opts = {
+      ensure_installed = {},
+      ui = { border = "rounded", width = 0.6, height = 0.7 },
+    },
     config = function(_, opts)
       require("mason").setup(opts)
       local mr = require("mason-registry")
@@ -34,5 +36,9 @@ return {
         ensure_installed()
       end
     end,
+  },
+  {
+    "nvimtools/none-ls.nvim",
+    opts = { sources = {} },
   },
 }

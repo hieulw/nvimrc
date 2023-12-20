@@ -23,7 +23,7 @@ function M.on_attach(client, buffer)
   self:map("<leader>la", vim.lsp.buf.code_action)
   self:map("<leader>lf", format, { has = "documentFormatting" })
   self:map("<leader>lf", format, { mode = "v", has = "documentRangeFormatting" })
-  self:map("<leader>lr", M.rename, { expr = true, has = "rename" })
+  self:map("<leader>lr", M.rename, { has = "rename" })
   self:map("<leader>ls", require("telescope.builtin").lsp_document_symbols)
   self:map("<leader>lS", require("telescope.builtin").lsp_dynamic_workspace_symbols)
 end
