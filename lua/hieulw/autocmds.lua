@@ -3,9 +3,8 @@ local augroup = function(name)
 end
 local autocmd = vim.api.nvim_create_autocmd
 
--- Highlight on yank
--- https://stackoverflow.com/questions/26069278/hightlight-copied-area-on-vim
 autocmd("TextYankPost", {
+  desc = "highlight on yank",
   callback = function()
     vim.highlight.on_yank()
   end,
@@ -13,9 +12,8 @@ autocmd("TextYankPost", {
   pattern = "*",
 })
 
--- Open terminal in vim feel like home
--- start insert right away
 autocmd("TermOpen", {
+  desc = "open terminal in vim start insert right away",
   callback = function()
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false
@@ -26,8 +24,8 @@ autocmd("TermOpen", {
   pattern = "term://*",
 })
 
--- resize splits if window got resized
-autocmd({ "VimResized" }, {
+autocmd("VimResized", {
+  desc = "resize splits if window got resized",
   group = augroup("resize_splits"),
   callback = function()
     local current_tab = vim.fn.tabpagenr()
@@ -36,26 +34,8 @@ autocmd({ "VimResized" }, {
   end,
 })
 
--- go to last loc when opening a buffer
-autocmd("BufReadPost", {
-  group = augroup("last_loc"),
-  callback = function(event)
-    local exclude = { "gitcommit" }
-    local buf = event.buf
-    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
-      return
-    end
-    vim.b[buf].lazyvim_last_loc = true
-    local mark = vim.api.nvim_buf_get_mark(buf, '"')
-    local lcount = vim.api.nvim_buf_line_count(buf)
-    if mark[1] > 0 and mark[1] <= lcount then
-      pcall(vim.api.nvim_win_set_cursor, 0, mark)
-    end
-  end,
-})
-
--- close some filetypes with <q>
 autocmd("FileType", {
+  desc = "close some filetypes with <q>",
   group = augroup("close_with_q"),
   pattern = {
     "OverseerForm",
@@ -89,14 +69,14 @@ autocmd("FileType", {
   end,
 })
 
--- Check if we need to reload the file when it changed
 autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+  desc = "Check if we need to reload the file when it changed",
   group = augroup("checktime"),
   command = "checktime",
 })
 
--- wrap and check for spell in text filetypes
 autocmd("FileType", {
+  desc = "wrap and check for spell in text filetypes",
   group = augroup("wrap_spell"),
   pattern = { "gitcommit", "markdown" },
   callback = function()
@@ -105,16 +85,16 @@ autocmd("FileType", {
   end,
 })
 
--- avoid auto insert comment on newline
-autocmd({ "BufWinEnter" }, {
+autocmd("BufWinEnter", {
+  desc = "avoid auto insert comment on newline",
   group = augroup("auto_format_options"),
   callback = function()
     vim.cmd("set formatoptions-=cro")
   end,
 })
 
--- Auto create dir when saving a file, in case some intermediate directory does not exist
-autocmd({ "BufWritePre" }, {
+autocmd("BufWritePre", {
+  desc = "auto create dir when saving a file, in case some intermediate directory does not exist",
   group = augroup("auto_create_dir"),
   callback = function(event)
     if event.match:match("^%w%w+://") then
@@ -124,3 +104,37 @@ autocmd({ "BufWritePre" }, {
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
 })
+
+autocmd("BufWinLeave", {
+  desc = "remember cursor position, folds of current buffer",
+  pattern = "?*",
+  group = augroup("remember_folds"),
+  callback = function()
+    vim.cmd("silent! mkview 1")
+  end,
+})
+autocmd("BufWinEnter", {
+  desc = "load cursor position, folds of current buffer",
+  pattern = "?*",
+  group = augroup("remember_folds"),
+  callback = function()
+    vim.cmd("silent! loadview 1")
+  end,
+})
+-- autocmd("BufReadPost", {
+--   desc = "go to last loc when opening a buffer",
+--   group = augroup("last_loc"),
+--   callback = function(event)
+--     local exclude = { "gitcommit" }
+--     local buf = event.buf
+--     if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
+--       return
+--     end
+--     vim.b[buf].lazyvim_last_loc = true
+--     local mark = vim.api.nvim_buf_get_mark(buf, '"')
+--     local lcount = vim.api.nvim_buf_line_count(buf)
+--     if mark[1] > 0 and mark[1] <= lcount then
+--       pcall(vim.api.nvim_win_set_cursor, 0, mark)
+--     end
+--   end,
+-- })
