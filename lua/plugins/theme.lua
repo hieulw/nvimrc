@@ -104,8 +104,17 @@ return {
 
           -- add client
           for _, client in pairs(buf_clients) do
-            if client.name ~= "null-ls" and client.name ~= "copilot" then
+            if not vim.list_contains({ "null-ls", "copilot", "yamlls" }, client.name) then
               table.insert(buf_client_names, client.name)
+            end
+
+            if client.name == "yamlls" then
+              local schema = require("yaml-companion").get_buf_schema(0)
+              if schema.result[1].name == "none" then
+                table.insert(buf_client_names, client.name)
+              else
+                table.insert(buf_client_names, string.format("%s(%s)", client.name, schema.result[1].name))
+              end
             end
 
             if client.name == "copilot" then
