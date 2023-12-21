@@ -62,8 +62,8 @@ function M.notify(formatters)
   vim.notify(table.concat(lines, "\n"), vim.log.levels.INFO, {
     title = "Formatting",
     on_open = function(win)
-      vim.api.nvim_win_set_option(win, "conceallevel", 3)
-      vim.api.nvim_win_set_option(win, "spell", false)
+      vim.api.nvim_set_option_value("conceallevel", 3, { win = win })
+      vim.api.nvim_set_option_value("spell", false, { win = win })
       local buf = vim.api.nvim_win_get_buf(win)
       vim.treesitter.start(buf, "markdown")
     end,
@@ -92,7 +92,7 @@ function M.get_formatters(bufnr)
     null_ls = null_ls,
   }
 
-  local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
   for _, client in ipairs(clients) do
     if M.supports_format(client) then
       if (#null_ls > 0 and client.name == "null-ls") or #null_ls == 0 then

@@ -73,6 +73,7 @@ vim.opt.fillchars:append({
 })
 vim.opt.listchars = { tab = "→ ", trail = "·", nbsp = "·" }
 vim.opt.completeopt = { "menu", "menuone", "noinsert", "noselect" } -- no autofilling and no auto select first item in autocompletion menu
+vim.opt.viewoptions = { "cursor", "folds", "options" }
 
 vim.opt.path = vim.fn.getcwd() .. "/**"
 vim.opt.list = true

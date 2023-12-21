@@ -14,6 +14,13 @@ return {
         enable = true,
         update_root = true,
       },
+      actions = {
+        open_file = {
+          quit_on_open = true,
+        },
+      },
+    },
+  },
     },
   },
   {
@@ -40,7 +47,7 @@ return {
   },
   {
     "axkirillov/hbac.nvim",
-    opts = { threshold = 7 },
+    opts = { threshold = 10 },
   },
   {
     "max397574/better-escape.nvim",

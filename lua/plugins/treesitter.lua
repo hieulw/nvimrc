@@ -47,11 +47,11 @@ return {
       pcall(require("nvim-treesitter.install").update({ with_sync = true }))
     end,
     opts = {
+      ensure_installed = "all",
       autotag = {
         enable = true,
         enable_close_on_slash = false,
       },
-      ensure_installed = "all",
       indent = { enable = false },
       highlight = {
         enable = true,
