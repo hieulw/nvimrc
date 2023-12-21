@@ -12,13 +12,10 @@ return {
       "hrsh7th/cmp-vsnip",
       "hrsh7th/vim-vsnip",
       "rafamadriz/friendly-snippets",
-      "windwp/nvim-autopairs",
     },
     event = { "InsertEnter", "CmdlineEnter" },
     config = function()
       local cmp = require("cmp")
-      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-      local autopairs = require("nvim-autopairs")
       local kind_icons = require("hieulw.icons").kind
       local feedkey = require("hieulw.helper").feedkey
       local border_opts = {
@@ -32,8 +29,6 @@ return {
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
       end
 
-      autopairs.setup({ fast_wrap = {} })
-      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
       cmp.setup({
         enabled = function()
