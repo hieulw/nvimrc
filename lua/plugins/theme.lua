@@ -2,7 +2,30 @@ return {
   {
     "NvChad/nvim-colorizer.lua",
     config = function()
-      require("colorizer").setup({})
+      require("colorizer").setup({
+        user_default_options = {
+          RGB = true, -- #RGB hex codes
+          RRGGBB = true, -- #RRGGBB hex codes
+          names = false, -- "Name" codes like Blue or blue
+          RRGGBBAA = true, -- #RRGGBBAA hex codes
+          AARRGGBB = true, -- 0xAARRGGBB hex codes
+          rgb_fn = true, -- CSS rgb() and rgba() functions
+          hsl_fn = true, -- CSS hsl() and hsla() functions
+          css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+          css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+          -- Available modes for `mode`: foreground, background,  virtualtext
+          mode = "virtualtext", -- Set the display mode.
+          -- Available methods are false / true / "normal" / "lsp" / "both"
+          -- True is same as normal
+          tailwind = "lsp", -- Enable tailwind colors
+          -- parsers can contain values used in |user_default_options|
+          sass = { enable = false, parsers = { "css" } }, -- Enable sass colors
+          -- virtualtext = require("hieulw.icons").ui.Circle,
+          -- update color values even if buffer is not focused
+          -- example use: cmp_menu, cmp_docs
+          always_update = false,
+        },
+      })
     end,
   },
   {
@@ -122,16 +145,6 @@ return {
             end
           end
 
-          -- -- add formatter
-          -- local formatters = require("lvim.lsp.null-ls.formatters")
-          -- local supported_formatters = formatters.list_registered(buf_ft)
-          -- vim.list_extend(buf_client_names, supported_formatters)
-          --
-          -- -- add linter
-          -- local linters = require("lvim.lsp.null-ls.linters")
-          -- local supported_linters = linters.list_registered(buf_ft)
-          -- vim.list_extend(buf_client_names, supported_linters)
-
           local unique_client_names = table.concat(buf_client_names, ", ")
           local language_servers = string.format("%s", unique_client_names)
 
@@ -146,7 +159,7 @@ return {
 
       return {
         options = {
-          theme = custom_gruvbox,
+          theme = vim.g.colors_name == "gruvbox" and custom_gruvbox or "auto",
           globalstatus = true,
           section_separators = "",
           component_separators = "",
