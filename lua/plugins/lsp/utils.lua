@@ -64,12 +64,21 @@ function M.capabilities()
   return require("cmp_nvim_lsp").default_capabilities(capabilities)
 end
 
-function M.on_attach(on_attach)
+function M.on_attach(client_name, on_attach)
   vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
       local bufnr = args.buf
       local client = vim.lsp.get_client_by_id(args.data.client_id)
-      on_attach(client, bufnr)
+      if not client then
+        return
+      end
+      if not client_name then
+        on_attach(client, bufnr)
+        return
+      end
+      if client.name == client_name then
+        on_attach(client, bufnr)
+      end
     end,
   })
 end

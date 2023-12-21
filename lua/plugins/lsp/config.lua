@@ -16,7 +16,7 @@ local handlers = {
 
 function M.setup(_, opts)
   local lsp_utils = require("plugins.lsp.utils")
-  lsp_utils.on_attach(function(client, bufnr)
+  lsp_utils.on_attach(nil, function(client, bufnr)
     require("plugins.lsp.format").on_attach(client, bufnr)
     require("plugins.lsp.keymaps").on_attach(client, bufnr)
   end)
