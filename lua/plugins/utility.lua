@@ -21,7 +21,26 @@ return {
       },
     },
   },
+  {
+    "rrethy/vim-illuminate",
+    opts = {
+      delay = 200,
+      large_file_cutoff = 2000,
+      large_file_overrides = {
+        providers = { "lsp" },
+      },
     },
+    config = function(_, opts)
+      local illuminate = require("illuminate")
+      illuminate.configure(opts)
+
+      vim.keymap.set("n", "]r", function()
+        illuminate.goto_next_reference(false)
+      end, { desc = "Go to next reference" })
+      vim.keymap.set("n", "[r", function()
+        illuminate.goto_prev_reference(false)
+      end, { desc = "Go to previous reference" })
+    end,
   },
   {
     "abecodes/tabout.nvim",

@@ -4,6 +4,13 @@ return {
     dependencies = {
       "joosepalviste/nvim-ts-context-commentstring",
       "windwp/nvim-ts-autotag",
+      {
+        "andymass/vim-matchup",
+        config = function()
+          vim.g.matchup_matchparen_hi_surround_always = 1
+          vim.g.matchup_matchparen_offscreen = { method = "popup" }
+        end,
+      },
       { "nmac427/guess-indent.nvim", opts = {} },
       {
         "wansmer/treesj",
@@ -51,6 +58,9 @@ return {
       autotag = {
         enable = true,
         enable_close_on_slash = false,
+      },
+      matchup = {
+        enable = true,
       },
       indent = { enable = false },
       highlight = {
