@@ -1,9 +1,5 @@
 vim.keymap.set({ "n", "v" }, vim.g.mapleader, "<Nop>", { silent = true })
 
--- nano feel here
-vim.keymap.set("n", "<C-q>", ":q<cr>", { silent = true })
-vim.keymap.set("n", "<C-s>", ":w<cr>", { silent = true })
-
 -- Switch between vertical and horizontal
 vim.keymap.set("n", "<leader>sh", "<C-w>t<C-w>K")
 vim.keymap.set("n", "<leader>sv", "<C-w>t<C-w>H")
@@ -13,7 +9,7 @@ vim.keymap.set("n", "<C-y>", "5<C-y>")
 vim.keymap.set("n", "<C-e>", "5<C-e>")
 
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
-vim.keymap.set("n", "<leader><bs>", ":nohlsearch<cr>")
+vim.keymap.set("n", "<leader><bs>", "<cmd>nohlsearch<cr>")
 
 -- Fugitive Conflict Resolution
 vim.keymap.set("n", "<leader>gd", ":Gvdiff!<CR>")
@@ -32,16 +28,8 @@ end, { silent = true, expr = true }) -- expr = true will execute return value of
 -- https://stackoverflow.com/questions/290465/how-to-paste-over-without-overwriting-register
 -- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
 -- xnoremap <silent> p p:let @+=@0<CR>:let @"=@0<CR>
+-- use P instead of p because it doesn't override register
 vim.keymap.set("n", "Y", "y$")
-vim.keymap.set("v", "p", function()
-  local restore_register, register
-  register = vim.api.nvim_get_option("clipboard") == "unnamedplus" and "+" or '"'
-  restore_register = vim.fn.getreginfo(register)
-  vim.schedule(function()
-    vim.fn.setreg(register, restore_register)
-  end)
-  return "p"
-end, { silent = true, expr = true })
 
 -- Open a URL under the cursor with the current operating system (without netrw)
 vim.keymap.set("n", "gx", function(path)
@@ -60,6 +48,9 @@ end)
 -- quickfix list
 vim.keymap.set("n", "]q", "<cmd>cnext<cr>", { desc = "Next Quickfix" })
 vim.keymap.set("n", "[q", "<cmd>cprevious<cr>", { desc = "Prev Quickfix" })
+-- buffer list
+vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 
 -- Undo breakpoint
 vim.keymap.set("i", ",", ",<c-g>u")
