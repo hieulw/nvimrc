@@ -22,27 +22,6 @@ return {
     },
   },
   {
-    "rrethy/vim-illuminate",
-    opts = {
-      delay = 200,
-      large_file_cutoff = 2000,
-      large_file_overrides = {
-        providers = { "lsp" },
-      },
-    },
-    config = function(_, opts)
-      local illuminate = require("illuminate")
-      illuminate.configure(opts)
-
-      vim.keymap.set("n", "]r", function()
-        illuminate.goto_next_reference(false)
-      end, { desc = "Go to next reference" })
-      vim.keymap.set("n", "[r", function()
-        illuminate.goto_prev_reference(false)
-      end, { desc = "Go to previous reference" })
-    end,
-  },
-  {
     "abecodes/tabout.nvim",
     event = "InsertEnter",
     config = function()
@@ -57,7 +36,6 @@ return {
   { "kylechui/nvim-surround", opts = {} },
   {
     "famiu/bufdelete.nvim",
-    enable = false,
     cmd = { "Bdelete", "Bwipeout" },
     keys = {
       { "<leader>bd", "<cmd>Bdelete<cr>", mode = "n", desc = "Buffer delete" },
@@ -74,9 +52,6 @@ return {
     opts = {
       timeout = tonumber(vim.opt.timeoutlen),
       mapping = { "kj" },
-      -- keys = function()
-      --   return vim.api.nvim_win_get_cursor(0)[2] > 1 and "<esc>l" or "<esc>"
-      -- end,
     },
   },
   {
@@ -138,12 +113,28 @@ return {
     "echasnovski/mini.nvim",
     config = function()
       require("mini.ai").setup({
+        custom_textobjects = {
+          f = require("mini.ai").gen_spec.treesitter({
+            a = "@function.outer",
+            i = "@function.inner",
+          }),
+          c = require("mini.ai").gen_spec.treesitter({
+            a = "@class.outer",
+            i = "@class.inner",
+          }),
+          C = require("mini.ai").gen_spec.treesitter({
+            a = "@comment.outer",
+            i = "@comment.inner",
+          }),
+        },
         search_method = "cover_or_next",
         mappings = {
           around_next = "",
           inside_next = "",
           around_last = "",
           inside_last = "",
+          goto_left = "[o",
+          goto_right = "]o",
         },
       })
       require("mini.align").setup()
