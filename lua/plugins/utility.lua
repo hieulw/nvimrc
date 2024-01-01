@@ -5,19 +5,27 @@ return {
       { "<leader>e", "<cmd>NvimTreeFindFileToggle<cr>", mode = "n", desc = "Toggle File Explorer" },
     },
     opts = {
-      respect_buf_cwd = true,
       filters = {
         custom = { ".git" },
+        dotfiles = false,
       },
       sync_root_with_cwd = true,
       update_focused_file = {
         enable = true,
-        update_root = true,
+        update_root = false,
+      },
+      git = {
+        enable = false,
+        ignore = true,
       },
       actions = {
         open_file = {
           quit_on_open = true,
         },
+      },
+      renderer = {
+        root_folder_label = false,
+        highlight_git = false,
       },
     },
   },

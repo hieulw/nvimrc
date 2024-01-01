@@ -4,7 +4,7 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
       "joosepalviste/nvim-ts-context-commentstring",
-      "windwp/nvim-ts-autotag",
+      { "windwp/nvim-ts-autotag", event = "VeryLazy" },
     },
     init = function(plugin)
       -- REF: https://github.com/LazyVim/LazyVim/commit/1e1b68d633d4bd4faa912ba5f49ab6b8601dc0c9
@@ -74,6 +74,23 @@ return {
       large_file_cutoff = 2000,
       large_file_overrides = {
         providers = { "lsp" },
+      },
+      filetypes_denylist = {
+        "NvimTree",
+        "OverseerForm",
+        "OverseerList",
+        "checkhealth",
+        "fugitive",
+        "git",
+        "help",
+        "lazy",
+        "lspinfo",
+        "mason",
+        "neotest-output",
+        "neotest-output-panel",
+        "neotest-summary",
+        "null-ls-info",
+        "toggleterm",
       },
     },
     config = function(_, opts)
