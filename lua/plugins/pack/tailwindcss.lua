@@ -1,3 +1,5 @@
+local util = require("lspconfig.util")
+
 return {
   {
     "williamboman/mason.nvim",
@@ -19,6 +21,12 @@ return {
         tailwindcss = {
           filetypes_exclude = { "markdown" },
           filetypes_include = {},
+          root_dir = util.root_pattern(
+            "tailwind.config.js",
+            "tailwind.config.cjs",
+            "tailwind.config.mjs",
+            "tailwind.config.ts"
+          ),
         },
       },
       setup = {
