@@ -72,16 +72,8 @@ return {
     event = "VeryLazy",
     opts = function()
       local icon = require("hieulw.icons")
-      local custom_gruvbox = require("lualine.themes.gruvbox")
-      local background, foreground = "#282828", "#ebdbb2"
-      custom_gruvbox.normal.c.bg = background
-      custom_gruvbox.insert.c.bg = background
-      custom_gruvbox.visual.c.bg = background
-      custom_gruvbox.visual.c.fg = foreground
-      custom_gruvbox.replace.c.bg = background
-      custom_gruvbox.command.c.bg = background
-      custom_gruvbox.command.c.fg = foreground
-      custom_gruvbox.inactive.c.bg = background
+      local custom_gruvbox = require("hieulw.colors").lualine
+      local lsp_progress = require("lsp-progress").progress
 
       local mode = {
         "mode",
@@ -106,7 +98,6 @@ return {
         "diff",
         symbols = {
           added = icon.git.LineAdded .. " ",
-          untracked = icon.git.FileUntracked .. " ",
           modified = icon.git.LineModified .. " ",
           removed = icon.git.LineRemoved .. " ",
         },
@@ -116,7 +107,7 @@ return {
 
       local lsp = {
         function()
-          local buf_clients = vim.lsp.get_active_clients({ bufnr = 0 })
+          local buf_clients = vim.lsp.get_clients({ bufnr = 0 })
           if #buf_clients == 0 then
             return ""
           end
@@ -128,7 +119,7 @@ return {
           -- add client
           for _, client in pairs(buf_clients) do
             if not vim.list_contains({ "null-ls", "copilot", "yamlls" }, client.name) then
-              table.insert(buf_client_names, client.name)
+              table.insert(buf_client_names, icon.lsp[client.name])
             end
 
             if client.name == "yamlls" then
@@ -136,7 +127,7 @@ return {
               if schema.result[1].name == "none" then
                 table.insert(buf_client_names, client.name)
               else
-                table.insert(buf_client_names, string.format("%s(%s)", client.name, schema.result[1].name))
+                table.insert(buf_client_names, string.format("%s", schema.result[1].name))
               end
             end
 
@@ -145,7 +136,7 @@ return {
             end
           end
 
-          local unique_client_names = table.concat(buf_client_names, ", ")
+          local unique_client_names = table.concat(buf_client_names, " ")
           local language_servers = string.format("%s", unique_client_names)
 
           if copilot_active then
@@ -157,6 +148,12 @@ return {
         colored = true,
       }
 
+      local filetype = {
+        "filetype",
+        colored = false,
+        icon_only = true,
+      }
+
       return {
         options = {
           theme = vim.g.colors_name == "gruvbox" and custom_gruvbox or "auto",
@@ -166,12 +163,12 @@ return {
           disabled_filetypes = { statusline = { "dashboard", "lazy", "alpha" } },
         },
         sections = {
-          lualine_a = {},
+          lualine_a = { mode },
           lualine_b = {},
-          lualine_c = { mode, "filename", lsp, require("lsp-progress").progress },
+          lualine_c = { "filename", lsp, lsp_progress },
           lualine_x = { diff, diagnostics },
           lualine_y = {},
-          lualine_z = {},
+          lualine_z = { filetype },
         },
       }
     end,

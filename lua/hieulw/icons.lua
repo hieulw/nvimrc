@@ -38,9 +38,9 @@ return {
     Variable = " ",
   },
   git = {
-    LineAdded = "",
-    LineModified = "",
-    LineRemoved = "",
+    LineAdded = "",
+    LineModified = "",
+    LineRemoved = "",
     FileDeleted = "",
     FileIgnored = "◌",
     FileRenamed = "",
@@ -163,5 +163,16 @@ return {
   prompt = {
     Search = "",
     Selected = "❯",
+  },
+  lsp = {
+    lua_ls = "󰢱",
+    pyright = "",
+    tsserver = "󰛦",
+    ["typescript-tools"] = "󰛦",
+    tailwindcss = "󱏿",
+    eslint = "",
+    gopls = "",
+    html = "󰌝",
+    cssls = "",
   },
 }
