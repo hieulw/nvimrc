@@ -14,12 +14,16 @@ autocmd("TextYankPost", {
 
 autocmd("TermOpen", {
   desc = "open terminal in vim start insert right away",
-  callback = function()
+  callback = vim.schedule_wrap(function(e)
+    -- Try to start terminal mode only if target terminal is current
+    if not (vim.api.nvim_get_current_buf() == e.buf and vim.bo.buftype == "terminal") then
+      return
+    end
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false
     vim.opt_local.filetype = "terminal"
     vim.cmd("startinsert")
-  end,
+  end),
   group = augroup("OpenTerminal"),
   pattern = "term://*",
 })
@@ -119,5 +123,31 @@ autocmd("BufWinEnter", {
   group = augroup("remember_folds"),
   callback = function()
     vim.cmd("silent! loadview 1")
+  end,
+})
+
+autocmd("CmdlineEnter", {
+  desc = "enable hlsearch when entering cmdline",
+  pattern = "/,?",
+  group = augroup("auto_hlsearch"),
+  command = "set hlsearch",
+})
+autocmd("CmdlineLeave", {
+  desc = "disable hlsearch when leaving cmdline",
+  pattern = "/,?",
+  group = augroup("auto_hlsearch"),
+  command = "set nohlsearch",
+})
+
+-- https://github.com/nvim-telescope/telescope.nvim/issues/2014
+autocmd("FileType", {
+  desc = "Add telescope result highlight",
+  pattern = { "TelescopeResults" },
+  group = augroup("telescope_parent_highlight"),
+  callback = function(e)
+    vim.api.nvim_buf_call(e.buf, function()
+      vim.fn.matchadd("TelescopeParent", "\t\t.*$")
+      vim.api.nvim_set_hl(0, "TelescopeParent", { link = "GruvBoxBg2" })
+    end)
   end,
 })
