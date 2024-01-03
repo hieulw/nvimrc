@@ -153,7 +153,6 @@ return {
           end,
         },
       })
-      require("mini.pairs").setup()
       require("mini.jump").setup()
       require("mini.move").setup({
         mappings = {
