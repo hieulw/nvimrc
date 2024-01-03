@@ -22,10 +22,20 @@ return {
       local fb_actions = require("telescope").extensions.file_browser.actions
       local icon = require("hieulw.icons")
       local theme = "dropdown" -- ivy | dropdown | cursor
+      local file_name_display = function(_, path)
+        local tail = vim.fs.basename(path)
+        local parent = vim.fs.dirname(path)
+        if parent == "." then
+          return tail
+        end
+        return string.format("%s\t\t%s", tail, parent)
+      end
+
       telescope.setup({
         defaults = {
           prompt_prefix = string.format("%s ", icon.prompt.Search),
           selection_caret = string.format("%s ", icon.prompt.Selected),
+          multi_icon = string.format("%s", icon.ui.Plus),
           path_display = { "truncate" },
           sorting_strategy = "ascending",
           layout_strategy = "flex",
@@ -52,11 +62,13 @@ return {
             ignore_current_buffer = true,
             sort_lastused = true,
             sort_mru = true,
+            path_display = file_name_display,
           },
           find_files = {
             theme = theme,
             follow = true,
             hidden = true,
+            path_display = file_name_display,
           },
           live_grep = {
             theme = theme,
@@ -88,6 +100,7 @@ return {
           },
         },
       })
+
       telescope.load_extension("fzf")
       telescope.load_extension("ui-select")
       telescope.load_extension("file_browser")
