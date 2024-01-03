@@ -12,7 +12,6 @@ return {
       "hrsh7th/cmp-vsnip",
       "hrsh7th/vim-vsnip",
       "rafamadriz/friendly-snippets",
-      "Exafunction/codeium.nvim",
     },
     event = { "InsertEnter", "CmdlineEnter" },
     config = function()
@@ -30,7 +29,6 @@ return {
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
       end
 
-      require("codeium").setup({})
 
       cmp.setup({
         enabled = function()
@@ -117,7 +115,6 @@ return {
           end, { "i", "s" }),
         }),
         sources = cmp.config.sources({
-          { name = "codeium", priority = 800 },
           { name = "nvim_lsp", priority = 1000 },
           { name = "nvim_lsp_signature_help" },
           { name = "vsnip", priority = 750 },
@@ -144,6 +141,29 @@ return {
         sorting = { comparators = { cmp.config.compare.recently_used } },
         view = { entries = { name = "wildmenu", separator = " " } },
       })
+    end,
+  },
+  {
+    "exafunction/codeium.vim",
+    event = "VeryLazy",
+    init = function()
+      vim.g.codeium_disable_bindings = 1
+      vim.g.codeium_manual = true
+      vim.g.codeium_filetypes = {
+        TelescopePrompt = false,
+        ["dap-repl"] = false,
+      }
+    end,
+    config = function()
+      vim.keymap.set("i", "<C-]>", function()
+        return vim.fn["codeium#Accept"]()
+      end, { expr = true, silent = true })
+      vim.keymap.set("i", "<M-]>", function()
+        return vim.fn["codeium#CycleOrComplete"]()
+      end, { expr = true, silent = true })
+      vim.keymap.set("i", "<M-[>", function()
+        return vim.fn["codeium#CycleCompletions"](-1)
+      end, { expr = true, silent = true })
     end,
   },
 }
