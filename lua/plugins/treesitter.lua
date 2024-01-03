@@ -10,7 +10,6 @@ return {
       -- REF: https://github.com/LazyVim/LazyVim/commit/1e1b68d633d4bd4faa912ba5f49ab6b8601dc0c9
       require("lazy.core.loader").add_to_rtp(plugin)
       require("nvim-treesitter.query_predicates")
-      vim.cmd.syntax("off")
     end,
     build = function()
       pcall(require("nvim-treesitter.install").update({ with_sync = true }))
@@ -65,43 +64,6 @@ return {
     config = function()
       vim.g.matchup_matchparen_hi_surround_always = 1
       vim.g.matchup_matchparen_offscreen = { method = "popup" }
-    end,
-  },
-  {
-    "rrethy/vim-illuminate",
-    opts = {
-      delay = 200,
-      large_file_cutoff = 2000,
-      large_file_overrides = {
-        providers = { "lsp" },
-      },
-      filetypes_denylist = {
-        "NvimTree",
-        "OverseerForm",
-        "OverseerList",
-        "checkhealth",
-        "fugitive",
-        "git",
-        "help",
-        "lazy",
-        "lspinfo",
-        "mason",
-        "neotest-output",
-        "neotest-output-panel",
-        "neotest-summary",
-        "null-ls-info",
-        "toggleterm",
-      },
-    },
-    config = function(_, opts)
-      local illuminate = require("illuminate")
-      illuminate.configure(opts)
-      vim.keymap.set("n", "]r", function()
-        illuminate.goto_next_reference(false)
-      end, { desc = "Go to next reference" })
-      vim.keymap.set("n", "[r", function()
-        illuminate.goto_prev_reference(false)
-      end, { desc = "Go to previous reference" })
     end,
   },
   { "nmac427/guess-indent.nvim", opts = {} },

@@ -29,27 +29,7 @@ return {
       },
     },
   },
-  {
-    "abecodes/tabout.nvim",
-    event = "InsertEnter",
-    config = function()
-      require("tabout").setup({
-        tabkey = "<C-j>",
-        backwards_tabkey = "<C-k>",
-        act_as_tab = false,
-        act_as_shift_tab = false,
-      })
-    end,
-  },
   { "kylechui/nvim-surround", opts = {} },
-  {
-    "famiu/bufdelete.nvim",
-    cmd = { "Bdelete", "Bwipeout" },
-    keys = {
-      { "<leader>bd", "<cmd>Bdelete<cr>", mode = "n", desc = "Buffer delete" },
-      { "<leader>bw", "<cmd>Bwipeout<cr>", mode = "n", desc = "Buffer wipeout" },
-    },
-  },
   {
     "axkirillov/hbac.nvim",
     opts = { threshold = 10 },
@@ -122,6 +102,10 @@ return {
     config = function()
       require("mini.ai").setup({
         custom_textobjects = {
+          o = require("mini.ai").gen_spec.treesitter({
+            a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+          }, {}),
           f = require("mini.ai").gen_spec.treesitter({
             a = "@function.outer",
             i = "@function.inner",
@@ -130,10 +114,6 @@ return {
             a = "@class.outer",
             i = "@class.inner",
           }),
-          C = require("mini.ai").gen_spec.treesitter({
-            a = "@comment.outer",
-            i = "@comment.inner",
-          }),
         },
         search_method = "cover_or_next",
         mappings = {
@@ -141,11 +121,12 @@ return {
           inside_next = "",
           around_last = "",
           inside_last = "",
-          goto_left = "[o",
-          goto_right = "]o",
+          goto_left = "",
+          goto_right = "",
         },
       })
       require("mini.align").setup()
+      require("mini.bufremove").setup()
       require("mini.comment").setup({
         options = {
           custom_commentstring = function()
@@ -166,7 +147,6 @@ return {
           line_up = "",
         },
       })
-      require("mini.sessions").setup()
     end,
   },
 }
