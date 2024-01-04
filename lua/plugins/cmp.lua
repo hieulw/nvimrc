@@ -5,7 +5,6 @@ return {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
-      "hrsh7th/cmp-nvim-lua",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lsp-document-symbol",
       "hrsh7th/cmp-nvim-lsp-signature-help",
@@ -14,11 +13,10 @@ return {
       "rafamadriz/friendly-snippets",
       "windwp/nvim-autopairs",
     },
+    version = false,
     event = { "InsertEnter", "CmdlineEnter" },
-    config = function()
+    opts = function()
       local cmp = require("cmp")
-      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-      local autopairs = require("nvim-autopairs")
       local kind_icons = require("hieulw.icons").kind
       local feedkey = require("hieulw.helper").feedkey
       local border_opts = {
@@ -32,10 +30,7 @@ return {
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
       end
 
-      autopairs.setup({ fast_wrap = {} })
-      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-
-      cmp.setup({
+      return {
         enabled = function()
           if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then
             return false
@@ -135,7 +130,17 @@ return {
           },
         },
         view = { entries = { name = "custom", selection_order = "near_cursor" } },
-      })
+      }
+    end,
+    config = function(_, opts)
+      local cmp = require("cmp")
+      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+      local autopairs = require("nvim-autopairs")
+
+      autopairs.setup({ fast_wrap = {} })
+      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+
+      cmp.setup(opts)
       cmp.setup.cmdline({ "/", "?" }, {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({ { name = "nvim_lsp_document_symbol" } }, { { name = "buffer" } }),
@@ -150,7 +155,7 @@ return {
   },
   {
     "exafunction/codeium.vim",
-    event = "VeryLazy",
+    event = "InsertEnter",
     init = function()
       vim.g.codeium_disable_bindings = 1
       vim.g.codeium_manual = true

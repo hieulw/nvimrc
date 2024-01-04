@@ -1,10 +1,11 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
       "joosepalviste/nvim-ts-context-commentstring",
-      { "windwp/nvim-ts-autotag", event = "VeryLazy" },
+      { "windwp/nvim-ts-autotag", event = "InsertEnter" },
     },
     init = function(plugin)
       -- REF: https://github.com/LazyVim/LazyVim/commit/1e1b68d633d4bd4faa912ba5f49ab6b8601dc0c9
@@ -61,14 +62,20 @@ return {
   },
   {
     "andymass/vim-matchup",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     config = function()
       vim.g.matchup_matchparen_hi_surround_always = 1
       vim.g.matchup_matchparen_offscreen = { method = "popup" }
     end,
   },
-  { "nmac427/guess-indent.nvim", opts = {} },
+  {
+    "nmac427/guess-indent.nvim",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    opts = {},
+  },
   {
     "johmsalas/text-case.nvim",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     config = function()
       require("textcase").setup({})
     end,

@@ -20,6 +20,14 @@ return {
   },
   {
     "pmizio/typescript-tools.nvim",
+    ft = {
+      "javascript",
+      "javascriptreact",
+      "javascript.jsx",
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+    },
     opts = {
       tsserver_file_preferences = {
         includeInlayParameterNameHints = "all",

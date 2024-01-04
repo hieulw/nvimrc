@@ -7,12 +7,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      "someone-stole-my-name/yaml-companion.nvim",
-      config = function()
-        require("telescope").load_extension("yaml_schema")
-      end,
-    },
+    dependencies = { "someone-stole-my-name/yaml-companion.nvim" },
     opts = {
       servers = {
         yamlls = {

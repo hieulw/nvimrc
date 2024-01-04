@@ -29,9 +29,14 @@ return {
       },
     },
   },
-  { "kylechui/nvim-surround", opts = {} },
+  {
+    "kylechui/nvim-surround",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    opts = {},
+  },
   {
     "axkirillov/hbac.nvim",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     opts = { threshold = 10 },
   },
   {
@@ -65,7 +70,7 @@ return {
   },
   {
     "kevinhwang91/nvim-ufo",
-    event = { "InsertEnter" },
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     dependencies = { "kevinhwang91/promise-async" },
     keys = function()
       local ufo = require("ufo")
@@ -93,12 +98,14 @@ return {
   },
   {
     "hieulw/im-select.nvim",
+    event = "InsertCharPre",
     config = function()
       require("im_select").setup()
     end,
   },
   {
     "echasnovski/mini.nvim",
+    event = "VeryLazy",
     config = function()
       require("mini.ai").setup({
         custom_textobjects = {
@@ -127,6 +134,8 @@ return {
       })
       require("mini.align").setup()
       require("mini.bufremove").setup()
+      vim.keymap.set("n", "<leader>bd", MiniBufremove.delete, { desc = "Buffer delete" })
+      vim.keymap.set("n", "<leader>bw", MiniBufremove.wipeout, { desc = "Buffer wipeout" })
       require("mini.comment").setup({
         options = {
           custom_commentstring = function()
