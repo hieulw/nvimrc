@@ -1,6 +1,7 @@
 return {
   {
     "neovim/nvim-lspconfig",
+    event = "LazyFile",
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       "williamboman/mason.nvim",
@@ -15,6 +16,7 @@ return {
   },
   {
     "williamboman/mason.nvim",
+    cmd = "Mason",
     opts = {
       ensure_installed = {},
       ui = { border = "rounded", width = 0.6, height = 0.7 },
@@ -39,6 +41,7 @@ return {
   },
   {
     "nvimtools/none-ls.nvim",
+    event = "LazyFile",
     opts = { sources = {} },
   },
 }

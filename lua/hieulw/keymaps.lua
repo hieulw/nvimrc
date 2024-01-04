@@ -6,10 +6,6 @@ map({ "n", "v" }, vim.g.mapleader, "<Nop>", { silent = true })
 map("n", "<leader>sh", "<C-w>t<C-w>K")
 map("n", "<leader>sv", "<C-w>t<C-w>H")
 
--- Buffer remove
-map("n", "<leader>bd", MiniBufremove.delete, { desc = "Buffer delete" })
-map("n", "<leader>bw", MiniBufremove.wipeout, { desc = "Buffer wipeout" })
-
 -- Better scroll
 map("n", "<C-y>", "5<C-y>")
 map("n", "<C-e>", "5<C-e>")
@@ -87,3 +83,7 @@ map("t", "<M-l>", "<Right>", { desc = "Right" })
 
 map("i", "<M-w>", "<S-Right>")
 map("i", "<M-b>", "<S-Left>")
+
+-- Utilities
+map("n", "<leader>pl", "<cmd>Lazy<cr>")
+map("n", "<leader>pm", "<cmd>Mason<cr>")
