@@ -81,6 +81,7 @@ return {
     ChevronShortRight = "",
     ChevronShortUp = "",
     Circle = "",
+    Round = "",
     Close = "",
     CloudDownload = "",
     Code = "",
