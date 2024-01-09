@@ -32,10 +32,6 @@ end, { silent = true, expr = true }) -- expr = true will execute return value of
 -- xnoremap <silent> p p:let @+=@0<CR>:let @"=@0<CR>
 -- use P instead of p because it doesn't override register
 map("n", "Y", "y$", { desc = "Copy to end of line" })
-map({ "n", "x" }, "gy", '"+y', { desc = "Copy to system clipboard" })
-map("n", "gp", '"+p', { desc = "Paste from system clipboard" })
-map("x", "gp", '"+P', { desc = "Paste from system clipboard" })
-
 map("x", "g/", "<esc>/\\%V", { silent = false, desc = "Search inside visual selection" })
 
 -- Open a URL under the cursor with the current operating system (without netrw)

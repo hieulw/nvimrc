@@ -5,8 +5,9 @@ vim.opt.writebackup = false -- This is recommended by coc
 vim.opt.swapfile = false    -- This is recommented by coc
 vim.opt.viewoptions = { "cursor", "folds" }
 
-vim.opt.mouse = "a"          -- Enable your mouse
-vim.opt.termguicolors = true -- use 24-bit (true-color)
+vim.opt.mouse = "a"               -- Enable your mouse
+vim.opt.clipboard = "unnamedplus" -- System clipboard
+vim.opt.termguicolors = true      -- use 24-bit (true-color)
 vim.opt.guifont = "CaskaydiaCove NFM:h15"
 vim.opt.colorcolumn = "100"
 
