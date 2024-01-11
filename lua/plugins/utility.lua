@@ -15,8 +15,8 @@ return {
         update_root = false,
       },
       git = {
-        enable = false,
-        ignore = true,
+        enable = true,
+        show_on_dirs = false,
       },
       actions = {
         open_file = {

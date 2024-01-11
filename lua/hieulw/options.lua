@@ -52,6 +52,11 @@ vim.opt.ignorecase = true                                   -- Ignore case when 
 vim.opt.incsearch = true                                    -- Show search results while typing
 vim.opt.infercase = true                                    -- Infer letter cases for a richer built-in keyword completion
 vim.opt.smartcase = true                                    -- Don't ignore case when searching if pattern has upper case
+
+vim.opt.tabstop = 2                                         -- Insert 2 spaces for a tab
+vim.opt.shiftwidth = 2                                      -- Change the number of space characters inserted for indentation set smarttab
+vim.opt.expandtab = true                                    -- Converts tabs to spaces
+vim.opt.autoindent = true                                   -- Good auto indent
 vim.opt.smartindent = false                                 -- Makes indenting smart
 
 vim.opt.completeopt = { "menuone", "noinsert", "noselect" } -- no autofilling and no auto select first item in autocompletion menu

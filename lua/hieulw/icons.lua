@@ -140,7 +140,7 @@ return {
     Information = "",
     BoldQuestion = "",
     Question = "",
-    BoldHint = "",
+    BoldHint = "",
     Hint = "",
     Debug = "",
     Trace = "✎",

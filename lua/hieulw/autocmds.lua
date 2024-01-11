@@ -109,20 +109,30 @@ autocmd("BufWritePre", {
   end,
 })
 
-autocmd("BufWinLeave", {
+autocmd({ "BufWinLeave", "BufWritePost", "WinLeave" }, {
   desc = "remember cursor position, folds of current buffer",
   pattern = "?*",
   group = augroup("remember_folds"),
-  callback = function()
-    vim.cmd("silent! mkview 1")
+  callback = function(e)
+    if vim.b[e.buf].view_activated then
+      vim.cmd.mkview({ mods = { emsg_silent = true } })
+    end
   end,
 })
 autocmd("BufWinEnter", {
   desc = "load cursor position, folds of current buffer",
   pattern = "?*",
   group = augroup("remember_folds"),
-  callback = function()
-    vim.cmd("silent! loadview 1")
+  callback = function(e)
+    if not vim.b[e.buf].view_activated then
+      local filetype = vim.api.nvim_get_option_value("filetype", { buf = e.buf })
+      local buftype = vim.api.nvim_get_option_value("buftype", { buf = e.buf })
+      local ignore_filetypes = { "gitcommit", "gitrebase", "svg", "hgcommit" }
+      if buftype == "" and filetype and filetype ~= "" and not vim.tbl_contains(ignore_filetypes, filetype) then
+        vim.b[e.buf].view_activated = true
+        vim.cmd.loadview({ mods = { emsg_silent = true } })
+      end
+    end
   end,
 })
 
