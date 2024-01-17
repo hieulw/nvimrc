@@ -37,7 +37,12 @@ return {
   {
     "axkirillov/hbac.nvim",
     event = "LazyFile",
-    opts = { threshold = 10 },
+    opts = {
+      threshold = 10,
+      close_command = function(bufnr)
+        MiniBufremove.delete(bufnr)
+      end,
+    },
   },
   {
     "max397574/better-escape.nvim",

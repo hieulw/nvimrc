@@ -57,7 +57,7 @@ vim.opt.tabstop = 2                                         -- Insert 2 spaces f
 vim.opt.shiftwidth = 2                                      -- Change the number of space characters inserted for indentation set smarttab
 vim.opt.expandtab = true                                    -- Converts tabs to spaces
 vim.opt.autoindent = true                                   -- Good auto indent
-vim.opt.smartindent = false                                 -- Makes indenting smart
+vim.opt.smartindent = true                                  -- Makes indenting smart
 
 vim.opt.completeopt = { "menuone", "noinsert", "noselect" } -- no autofilling and no auto select first item in autocompletion menu
 vim.opt.virtualedit = "block"                               -- Allow going past the end of line in visual block mode

@@ -167,6 +167,7 @@ return {
     end,
   },
   { "nvim-tree/nvim-web-devicons", event = "VeryLazy" },
+  { "muniftanjim/nui.nvim" },
   {
     "linrongbin16/lsp-progress.nvim",
     event = "LspAttach",
