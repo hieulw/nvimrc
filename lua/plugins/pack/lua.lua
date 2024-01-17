@@ -14,6 +14,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    dependencies = { "folke/neodev.nvim", opts = {} },
     opts = {
       servers = {
         lua_ls = {
@@ -32,17 +33,7 @@ return {
         },
       },
       setup = {
-        lua_ls = function(_, _)
-          local lsp_utils = require("plugins.lsp.utils")
-          lsp_utils.on_attach("lua_ls", function(_, buffer)
-            vim.keymap.set("n", "<leader>dX", function()
-              require("osv").run_this()
-            end, { buffer = buffer, desc = "OSV Run" })
-            vim.keymap.set("n", "<leader>dL", function()
-              require("osv").launch({ port = 8086 })
-            end, { buffer = buffer, desc = "OSV Launch" })
-          end)
-        end,
+        lua_ls = function() end,
       },
     },
   },

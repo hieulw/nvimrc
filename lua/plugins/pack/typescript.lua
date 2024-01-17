@@ -20,6 +20,7 @@ return {
   },
   {
     "pmizio/typescript-tools.nvim",
+    dependencies = { "oleggulevskyy/better-ts-errors.nvim" },
     ft = {
       "javascript",
       "javascriptreact",
@@ -44,6 +45,7 @@ return {
     },
     config = function(_, opts)
       require("plugins.lsp.utils").on_attach("tsserver", function(_, bufnr)
+        require("better-ts-errors").setup()
         vim.keymap.set(
           "n",
           "<leader>lo",
