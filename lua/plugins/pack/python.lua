@@ -35,7 +35,7 @@ return {
                 diagnosticMode = "openFilesOnly",
                 typeCheckingMode = "off",
                 useLibraryCodeForTypes = true,
-                -- stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs/stubs",
+                stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs/stubs",
                 extraPaths = {},
               },
             },
@@ -51,6 +51,9 @@ return {
             -- Auto organize imports on save
             vim.api.nvim_create_autocmd("BufWritePre", {
               callback = function(e)
+                if vim.bo[e.buf].filetype ~= "python" then
+                  return
+                end
                 ---@class lsp.Client
                 client.request_sync("workspace/executeCommand", {
                   command = "ruff.applyOrganizeImports",
@@ -66,8 +69,7 @@ return {
           end)
         end,
         pyright = function(_, _)
-          local lsp_utils = require("plugins.lsp.utils")
-          lsp_utils.on_attach("pyright", function(_, bufnr)
+          require("plugins.lsp.utils").on_attach("pyright", function(_, bufnr)
             vim.keymap.set(
               "n",
               "<leader>lo",

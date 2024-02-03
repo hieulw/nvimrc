@@ -1,17 +1,6 @@
 local M = {}
 
 local handlers = {
-  -- HACK: always go to the first definition
-  ["textDocument/definition"] = function(err, result, ...)
-    if vim.tbl_islist(result) or type(result) == "table" then
-      if #result > 1 then
-        result = result[2]
-      else
-        result = result[1]
-      end
-    end
-    vim.lsp.handlers["textDocument/definition"](err, result, ...)
-  end,
   -- HACK: do not print the label
   ["workspace/applyEdit"] = function(_, workspace_edit, ctx)
     assert(

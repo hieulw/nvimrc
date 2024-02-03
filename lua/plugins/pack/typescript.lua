@@ -19,6 +19,40 @@ return {
     end,
   },
   {
+    "neovim/nvim-lspconfig",
+    dependencies = { "pmizio/typescript-tools.nvim" },
+    opts = {
+      servers = {
+        eslint = {
+          settings = {
+            -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
+            workingDirectory = { mode = "auto" },
+          },
+        },
+        -- biome = {},
+      },
+      setup = {
+        eslint = function()
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            callback = function(event)
+              local client = vim.lsp.get_clients({ bufnr = event.buf, name = "eslint" })[1]
+              if client then
+                local diag = vim.diagnostic.get(event.buf, { namespace = vim.lsp.diagnostic.get_namespace(client.id) })
+                if #diag > 0 then
+                  vim.cmd("EslintFixAll")
+                end
+              end
+            end,
+          })
+        end,
+        tsserver = function()
+          -- skip mason-lspconfig auto setup
+          return true
+        end,
+      },
+    },
+  },
+  {
     "pmizio/typescript-tools.nvim",
     dependencies = { "oleggulevskyy/better-ts-errors.nvim" },
     ft = {
@@ -56,7 +90,7 @@ return {
         vim.keymap.set("n", "<leader>lu", "<cmd>TSToolsRemoveUnused<cr>", { buffer = bufnr, desc = "Removed Unused" })
         vim.keymap.set(
           "n",
-          "<leader>lz",
+          "<leader>ld",
           "<cmd>TSToolsGoToSourceDefinition<cr>",
           { buffer = bufnr, desc = "Go To Source Definition" }
         )
@@ -76,39 +110,5 @@ return {
       end)
       require("typescript-tools").setup(opts)
     end,
-  },
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = { "pmizio/typescript-tools.nvim" },
-    opts = {
-      servers = {
-        eslint = {
-          settings = {
-            -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
-            workingDirectory = { mode = "auto" },
-          },
-        },
-        -- biome = {},
-      },
-      setup = {
-        eslint = function()
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            callback = function(event)
-              local client = vim.lsp.get_clients({ bufnr = event.buf, name = "eslint" })[1]
-              if client then
-                local diag = vim.diagnostic.get(event.buf, { namespace = vim.lsp.diagnostic.get_namespace(client.id) })
-                if #diag > 0 then
-                  vim.cmd("EslintFixAll")
-                end
-              end
-            end,
-          })
-        end,
-        tsserver = function()
-          -- skip mason-lspconfig auto setup
-          return true
-        end,
-      },
-    },
   },
 }

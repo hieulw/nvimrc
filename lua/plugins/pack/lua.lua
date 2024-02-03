@@ -30,10 +30,30 @@ return {
               hint = { enable = false },
             },
           },
+          handlers = {
+            -- HACK: always go to the first definition
+            ["textDocument/definition"] = function(err, result, ...)
+              if vim.tbl_islist(result) or type(result) == "table" then
+                if #result > 1 then
+                  result = result[2]
+                else
+                  result = result[1]
+                end
+              end
+              vim.lsp.handlers["textDocument/definition"](err, result, ...)
+            end,
+          },
         },
       },
       setup = {
-        lua_ls = function() end,
+        lua_ls = function()
+          require("plugins.lsp.utils").on_attach("lua_ls", function(_, buffer)
+            vim.keymap.set("n", "<leader>lx", function()
+              vim.cmd("noautocmd write")
+              vim.cmd.luafile("%")
+            end, { buffer = buffer, desc = "Save and execute lua file" })
+          end)
+        end,
       },
     },
   },
