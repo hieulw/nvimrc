@@ -25,7 +25,8 @@ return {
       indent = { enable = false },
       highlight = {
         enable = true,
-        additional_vim_regex_highlighting = false,
+        disable = { "bash" },
+        additional_vim_regex_highlighting = { "markdown" },
       },
       incremental_selection = {
         enable = true,
