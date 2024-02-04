@@ -1,0 +1,9 @@
+{
+  "pyenv": {
+    "body": [
+      "[tools]",
+      "python = {version=\"${1:latest}\", virtualenv=\"${2:.venv}\"}"
+    ],
+    "prefix": "pyenv"
+  }
+}

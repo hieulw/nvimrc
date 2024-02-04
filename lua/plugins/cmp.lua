@@ -41,15 +41,15 @@ return {
         formatting = {
           format = function(entry, item)
             item.kind = string.format("%s %s", kind_icons[item.kind], item.kind)
-            item.menu = ({
-              nvim_lsp = "[lsp]",
-              nvim_lsp_signature_help = "[signature]",
-              nvim_lsp_document_symbol = "[symbol]",
-              vsnip = "[vsnip]",
-              buffer = "[buffer]",
-              path = "[path]",
-              cmdline = nil,
-            })[entry.source.name]
+            -- item.menu = ({
+            --   nvim_lsp = "[lsp]",
+            --   nvim_lsp_signature_help = "[signature]",
+            --   nvim_lsp_document_symbol = "[symbol]",
+            --   vsnip = "[vsnip]",
+            --   buffer = "[buffer]",
+            --   path = "[path]",
+            --   cmdline = nil,
+            -- })[entry.source.name]
             item.abbr = item.abbr:match("[^(]+") -- fn(...args) -> fn
             return item
           end,
@@ -68,7 +68,7 @@ return {
           ["<Down>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
           ["<C-p>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
-              cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+              cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
             elseif has_words_before() then
               cmp.complete()
             else
@@ -77,7 +77,7 @@ return {
           end),
           ["<C-n>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
-              cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
             elseif has_words_before() then
               cmp.complete()
             else
@@ -118,6 +118,7 @@ return {
           { name = "nvim_lsp", priority = 1000 },
           { name = "nvim_lsp_signature_help" },
           { name = "vsnip", priority = 750 },
+        }, {
           { name = "buffer", priority = 500 },
           { name = "path", priority = 250 },
         }),
@@ -137,6 +138,7 @@ return {
       local cmp_autopairs = require("nvim-autopairs.completion.cmp")
       local autopairs = require("nvim-autopairs")
 
+      vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/snippets"
       autopairs.setup({ fast_wrap = {} })
       cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
@@ -152,5 +154,37 @@ return {
         view = { entries = { name = "wildmenu", separator = " " } },
       })
     end,
+  },
+  {
+    "chrisgrieser/nvim-scissors",
+    keys = function()
+      local scissors = require("scissors")
+      return {
+        { "<leader>se", scissors.editSnippet, mode = "n", desc = "Edit snippet" },
+        { "<leader>sa", scissors.addNewSnippet, mode = { "n", "x" }, desc = "Add new snippet" },
+      }
+    end,
+    opts = {
+      snippetDir = vim.fn.stdpath("config") .. "/snippets",
+      editSnippetPopup = {
+        height = 0.4, -- relative to the window, number between 0 and 1
+        width = 0.6,
+        border = "rounded",
+        keymaps = {
+          cancel = "q",
+          saveChanges = "<CR>", -- alternatively, can also use `:w`
+          goBackToSearch = "<BS>",
+          deleteSnippet = "<C-x>",
+          duplicateSnippet = "<C-d>",
+          openInFile = "<C-o>",
+          insertNextToken = "<C-t>", -- insert & normal mode
+          jumpBetweenBodyAndPrefix = "<C-Tab>", -- insert & normal mode
+        },
+      },
+      telescope = {
+        alsoSearchSnippetBody = false,
+      },
+      jsonFormatter = "jq", -- "yq"|"jq"|"none"
+    },
   },
 }
