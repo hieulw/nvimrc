@@ -5,6 +5,7 @@ return {
     init = function()
       vim.g.codeium_disable_bindings = 1
       vim.g.codeium_manual = true
+      vim.g.codeium_enabled = false
       vim.g.codeium_filetypes = {
         TelescopePrompt = false,
         ["dap-repl"] = false,

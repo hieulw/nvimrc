@@ -1,6 +1,7 @@
 return {
   {
     "kndndrj/nvim-dbee",
+    enabled = false,
     build = function()
       require("dbee").install()
     end,

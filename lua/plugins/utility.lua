@@ -2,7 +2,7 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     keys = {
-      { "<leader>e", "<cmd>NvimTreeFindFileToggle<cr>", mode = "n", desc = "Toggle File Explorer" },
+      { "<leader>e", "<cmd>NvimTreeToggle<cr>", mode = "n", desc = "Toggle File Explorer" },
     },
     opts = {
       filters = {

@@ -16,7 +16,7 @@ return {
       pcall(require("nvim-treesitter.install").update({ with_sync = false }))
     end,
     opts = {
-      ensure_installed = "all",
+      ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
       autotag = {
         enable = true,
         enable_close_on_slash = false,
@@ -25,7 +25,16 @@ return {
       indent = { enable = false },
       highlight = {
         enable = true,
-        disable = { "bash" },
+        disable = function(lang, buf)
+          if vim.list_contains({ "bash" }, lang) then
+            return true
+          end
+          local max_filesize = 100 * 1024 -- 100 KB
+          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_filesize then
+            return true
+          end
+        end,
         additional_vim_regex_highlighting = { "markdown" },
       },
       incremental_selection = {
@@ -57,6 +66,9 @@ return {
             end
             return "html"
           end,
+        },
+        pattern = {
+          [".*/hypr/hypr.*%.conf"] = "hyprlang",
         },
       })
     end,

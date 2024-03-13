@@ -1,5 +1,11 @@
 return {
   {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, { "python" })
+    end,
+  },
+  {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
@@ -28,12 +34,17 @@ return {
         pyright = {
           settings = {
             python = {
-              --reference https://github.com/fannheyward/coc-pyright#configurations
+              --reference https://github.com/microsoft/pyright/blob/main/docs/settings.md
+              pyright = {
+                disableLanguageServices = false,
+                disableOrganizeImports = false,
+                disableTaggedHints = false,
+              },
               analysis = {
                 autoImportCompletions = true,
                 autoSearchPaths = true,
                 diagnosticMode = "openFilesOnly",
-                typeCheckingMode = "off",
+                typeCheckingMode = "standard",
                 useLibraryCodeForTypes = true,
                 stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs/stubs",
                 extraPaths = {},
@@ -44,8 +55,7 @@ return {
       },
       setup = {
         ruff_lsp = function()
-          local lsp_utils = require("plugins.lsp.utils")
-          lsp_utils.on_attach("ruff_lsp", function(client, _)
+          require("plugins.lsp.utils").on_attach("ruff_lsp", function(client, _)
             -- Disable hover in favor of Pyright
             client.server_capabilities.hoverProvider = false
             -- Auto organize imports on save
