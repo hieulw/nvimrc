@@ -1,6 +1,8 @@
 local map = vim.keymap.set
 
 map({ "n", "v" }, vim.g.mapleader, "<Nop>", { silent = true })
+map({ "n", "v" }, "<C-f>", "<Nop>", { silent = true })
+map({ "n", "v" }, "<C-b>", "<Nop>", { silent = true })
 
 -- Switch between vertical and horizontal
 map("n", "<leader>sh", "<C-w>t<C-w>K")
@@ -28,20 +30,6 @@ end, { silent = true, expr = true }) -- expr = true will execute return value of
 -- use P instead of p because it doesn't override register
 map("n", "Y", "y$", { desc = "Copy to end of line" })
 map("x", "g/", "<esc>/\\%V", { silent = false, desc = "Search inside visual selection" })
-
--- Open a URL under the cursor with the current operating system (without netrw)
-map("n", "gx", function(path)
-  local cmd
-  if vim.fn.has("unix") == 1 and vim.fn.executable("xdg-open") == 1 then
-    cmd = { "xdg-open" }
-  elseif (vim.fn.has("mac") == 1 or vim.fn.has("unix") == 1) and vim.fn.executable("open") == 1 then
-    cmd = { "open" }
-  end
-  if not cmd then
-    vim.notify("Available system opening tool not found!", vim.log.levels.ERROR)
-  end
-  vim.fn.jobstart(vim.fn.extend(cmd, { path or vim.fn.expand("<cfile>") }), { detach = true })
-end)
 
 -- quickfix list
 map("n", "]q", "<cmd>cnext<cr>", { desc = "Next Quickfix" })
