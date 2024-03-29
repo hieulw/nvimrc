@@ -40,6 +40,10 @@ return {
         preselect = cmp.PreselectMode.None,
         formatting = {
           format = function(entry, item)
+            local ok, twtools = pcall(require, "tailwind-tools.cmp")
+            if ok then
+              twtools.lspkind_format(entry, item)
+            end
             item.kind = string.format("%s %s", kind_icons[item.kind], item.kind)
             item.abbr = item.abbr:match("[^(]+") -- fn(...args) -> fn
             return item

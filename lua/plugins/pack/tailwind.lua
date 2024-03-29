@@ -47,4 +47,12 @@ return {
       },
     },
   },
+  -- {
+  --   "luckasranarison/tailwind-tools.nvim",
+  --   opts = {
+  --     document_color = {
+  --       enabled = false, -- can be toggled by commands
+  --     },
+  --   }, -- your configuration
+  -- },
 }
