@@ -166,8 +166,8 @@ return {
       }
     end,
   },
-  { "nvim-tree/nvim-web-devicons", event = "VeryLazy" },
-  { "muniftanjim/nui.nvim" },
+  { "nvim-tree/nvim-web-devicons", event = "LazyFile" },
+  { "muniftanjim/nui.nvim", event = "LazyFile" },
   {
     "linrongbin16/lsp-progress.nvim",
     event = "LspAttach",
