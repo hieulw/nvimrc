@@ -78,6 +78,11 @@ return {
         "mode",
       }
 
+      local filetype = {
+        "filetype",
+        icon_only = true,
+      }
+
       local diagnostics = {
         "diagnostics",
         sources = { "nvim_diagnostic" },
@@ -95,6 +100,16 @@ return {
 
       local diff = {
         "diff",
+        source = function()
+          local gitsigns = vim.b.gitsigns_status_dict
+          if gitsigns then
+            return {
+              added = gitsigns.added,
+              modified = gitsigns.changed,
+              removed = gitsigns.removed,
+            }
+          end
+        end,
         symbols = {
           added = icon.git.LineAdded .. " ",
           modified = icon.git.LineModified .. " ",
@@ -111,11 +126,9 @@ return {
             return ""
           end
 
-          local buf_ft = vim.bo.filetype
           local buf_client_names = {}
           local copilot_active = false
 
-          -- add client
           for _, client in pairs(buf_clients) do
             if not vim.list_contains({ "null-ls", "copilot", "yamlls" }, client.name) then
               table.insert(buf_client_names, client.name)
@@ -159,7 +172,7 @@ return {
           lualine_a = { mode },
           lualine_b = {},
           lualine_c = { "filename", lsp },
-          lualine_x = { diff, diagnostics },
+          lualine_x = { diff, diagnostics, filetype },
           lualine_y = {},
           lualine_z = {},
         },
