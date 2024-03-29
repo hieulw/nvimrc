@@ -13,11 +13,6 @@ map("n", "<C-e>", "5<C-e>")
 map("t", "<Esc>", "<C-\\><C-n>")
 map("n", "<leader><bs>", "<cmd>set hlsearch!<cr>", { noremap = true, silent = true })
 
--- Fugitive Conflict Resolution
-map("n", "<leader>gd", ":Gvdiff!<CR>")
-map("n", "<leader>gdh", ":diffget //2<CR>")
-map("n", "<leader>gdl", ":diffget //3<CR>")
-
 -- Apply @record to multiple lines
 -- https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db
 map("x", "@", function()

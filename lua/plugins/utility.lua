@@ -35,16 +35,6 @@ return {
     opts = {},
   },
   {
-    "axkirillov/hbac.nvim",
-    event = "LazyFile",
-    opts = {
-      threshold = 10,
-      close_command = function(bufnr)
-        MiniBufremove.delete(bufnr)
-      end,
-    },
-  },
-  {
     "max397574/better-escape.nvim",
     event = "InsertCharPre",
     opts = {

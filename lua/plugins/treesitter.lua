@@ -51,9 +51,7 @@ return {
       -- PERF: https://github.com/nvim-treesitter/nvim-treesitter/issues/3581
       -- commenting out the comment queries in injections.scm seem to fix performance issues
       require("nvim-treesitter.configs").setup(opts)
-      require("ts_context_commentstring").setup({
-        enable_autocmd = false,
-      })
+      require("ts_context_commentstring").setup({ enable_autocmd = false })
       vim.g.skip_ts_context_commentstring_module = true
       vim.treesitter.language.register("bash", { "tmux", "zsh", "sh" })
       vim.filetype.add({
@@ -68,7 +66,7 @@ return {
           end,
         },
         pattern = {
-          [".*/hypr/hypr.*%.conf"] = "hyprlang",
+          [".*/hypr/.*%.conf"] = "hyprlang",
         },
       })
     end,
@@ -79,6 +77,9 @@ return {
     config = function()
       vim.g.matchup_matchparen_hi_surround_always = 1
       vim.g.matchup_matchparen_offscreen = { method = "popup" }
+      vim.g.matchup_motion_enabled = 0
+      vim.g.matchup_text_obj_enabled = 0
+      vim.g.matchup_surround_enabled = 0
     end,
   },
   {

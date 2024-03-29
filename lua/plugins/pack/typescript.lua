@@ -1,5 +1,15 @@
 return {
   {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
+        "tsx",
+        "typescript",
+        "javascript",
+      })
+    end,
+  },
+  {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
@@ -33,17 +43,16 @@ return {
       },
       setup = {
         eslint = function()
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            callback = function(event)
-              local client = vim.lsp.get_clients({ bufnr = event.buf, name = "eslint" })[1]
-              if client then
-                local diag = vim.diagnostic.get(event.buf, { namespace = vim.lsp.diagnostic.get_namespace(client.id) })
+          require("plugins.lsp.utils").on_attach("tsserver", function(client, _)
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              callback = function(e)
+                local diag = vim.diagnostic.get(e.buf, { namespace = vim.lsp.diagnostic.get_namespace(client.id) })
                 if #diag > 0 then
                   vim.cmd("EslintFixAll")
                 end
-              end
-            end,
-          })
+              end,
+            })
+          end)
         end,
         tsserver = function()
           -- skip mason-lspconfig auto setup

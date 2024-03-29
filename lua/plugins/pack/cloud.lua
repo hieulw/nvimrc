@@ -1,5 +1,13 @@
 return {
   {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
+        "bicep",
+      })
+    end,
+  },
+  {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
@@ -22,7 +30,9 @@ return {
         bicep = {
           cmd = {
             "dotnet",
-            vim.fn.stdpath("data") .. "/mason/packages/bicep-lsp/extension/bicepLanguageServer/Bicep.LangServer.dll",
+            vim.fn.stdpath("data")
+              .. "/mason/packages/bicep-lsp"
+              .. "/extension/bicepLanguageServer/Bicep.LangServer.dll",
           },
         },
         powershell_es = {

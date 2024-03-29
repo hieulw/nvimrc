@@ -41,15 +41,6 @@ return {
         formatting = {
           format = function(entry, item)
             item.kind = string.format("%s %s", kind_icons[item.kind], item.kind)
-            -- item.menu = ({
-            --   nvim_lsp = "[lsp]",
-            --   nvim_lsp_signature_help = "[signature]",
-            --   nvim_lsp_document_symbol = "[symbol]",
-            --   vsnip = "[vsnip]",
-            --   buffer = "[buffer]",
-            --   path = "[path]",
-            --   cmdline = nil,
-            -- })[entry.source.name]
             item.abbr = item.abbr:match("[^(]+") -- fn(...args) -> fn
             return item
           end,
