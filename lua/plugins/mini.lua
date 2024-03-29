@@ -1,0 +1,149 @@
+-- Thanks to Evgeni Chasnovski for amazing plugins
+-- https://github.com/echasnovski/mini.nvim
+return {
+  {
+    "echasnovski/mini.ai",
+    event = "LazyFile",
+    opts = function()
+      local ai = require("mini.ai")
+      return {
+        custom_textobjects = {
+          o = ai.gen_spec.treesitter({
+            a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+          }, {}),
+          f = ai.gen_spec.treesitter({
+            a = "@function.outer",
+            i = "@function.inner",
+          }),
+          c = ai.gen_spec.treesitter({
+            a = "@class.outer",
+            i = "@class.inner",
+          }),
+        },
+        search_method = "cover_or_next",
+        mappings = {
+          around_next = "",
+          inside_next = "",
+          around_last = "",
+          inside_last = "",
+          goto_left = "",
+          goto_right = "",
+        },
+      }
+    end,
+  },
+  {
+    "echasnovski/mini.align",
+    keys = { "ga", "gA" },
+    opts = {
+      mappings = {
+        start = "ga",
+        start_with_preview = "gA",
+      },
+    },
+  },
+  {
+    "echasnovski/mini.bufremove",
+    keys = {
+      { "<leader>bd", "<cmd>=MiniBufremove.delete()<cr>", mode = "n", desc = "Buffer delete" },
+      { "<leader>bw", "<cmd>=MiniBufremove.wipeout()<cr>", mode = "n", desc = "Buffer wipeout" },
+    },
+    opts = {},
+  },
+  {
+    "echasnovski/mini.clue",
+    event = "LazyFile",
+    opts = function()
+      local clue = require("mini.clue")
+      return {
+        triggers = {
+          { mode = "n", keys = "<Leader>" }, -- Leader triggers
+          { mode = "x", keys = "<Leader>" },
+          { mode = "n", keys = "g" }, -- `g` key
+          { mode = "x", keys = "g" },
+          { mode = "n", keys = "'" }, -- Marks
+          { mode = "n", keys = "`" },
+          { mode = "x", keys = "'" },
+          { mode = "x", keys = "`" },
+          { mode = "n", keys = "]" }, -- Brackets
+          { mode = "n", keys = "[" },
+          { mode = "n", keys = '"' }, -- Registers
+          { mode = "x", keys = '"' },
+          { mode = "i", keys = "<C-r>" },
+          { mode = "c", keys = "<C-r>" },
+          { mode = "n", keys = "<C-w>" }, -- Window commands
+          { mode = "n", keys = "z" }, -- `z` key
+          { mode = "x", keys = "z" },
+        },
+        clues = {
+          clue.gen_clues.g(),
+          clue.gen_clues.marks(),
+          clue.gen_clues.registers(),
+          clue.gen_clues.windows(),
+          clue.gen_clues.z(),
+        },
+        window = {
+          delay = vim.o.timeoutlen,
+        },
+      }
+    end,
+  },
+  {
+    "echasnovski/mini.comment",
+    dependencies = { "joosepalviste/nvim-ts-context-commentstring" },
+    keys = { "gc", "gcc" },
+    opts = {
+      options = {
+        custom_commentstring = function()
+          return require("ts_context_commentstring").calculate_commentstring() or vim.bo.commentstring
+        end,
+      },
+      mappings = {
+        comment = "gc",
+        comment_line = "gcc",
+        comment_visual = "gc",
+        textobject = "iC",
+      },
+    },
+  },
+  {
+    "echasnovski/mini.files",
+    keys = { { "-", "<cmd>=MiniFiles.open()<cr>", mode = "n", desc = "Toggle File Explorer" } },
+    opts = {},
+  },
+  {
+    "echasnovski/mini.jump",
+    keys = { "f", "t", "F", "T" },
+    opts = {
+      mappings = {
+        forward = "f",
+        backward = "F",
+        forward_till = "t",
+        backward_till = "T",
+        repeat_jump = ";",
+      },
+    },
+  },
+  {
+    "echasnovski/mini.move",
+    keys = {
+      { "H", mode = "v" },
+      { "L", mode = "v" },
+      { "K", mode = "v" },
+      { "J", mode = "v" },
+    },
+    opts = {
+      mappings = {
+        left = "H",
+        right = "L",
+        down = "J",
+        up = "K",
+        line_left = "",
+        line_right = "",
+        line_down = "",
+        line_up = "",
+      },
+    },
+  },
+}
