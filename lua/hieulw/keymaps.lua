@@ -4,16 +4,12 @@ map({ "n", "v" }, vim.g.mapleader, "<Nop>", { silent = true })
 map({ "n", "v" }, "<C-f>", "<Nop>", { silent = true })
 map({ "n", "v" }, "<C-b>", "<Nop>", { silent = true })
 
--- Switch between vertical and horizontal
-map("n", "<leader>sh", "<C-w>t<C-w>K")
-map("n", "<leader>sv", "<C-w>t<C-w>H")
-
 -- Better scroll
 map("n", "<C-y>", "5<C-y>")
 map("n", "<C-e>", "5<C-e>")
 
 map("t", "<Esc>", "<C-\\><C-n>")
-map("n", "<leader><bs>", "<cmd>set hlsearch!<cr>", { noremap = true, silent = true })
+map("n", "<leader><bs>", "<cmd>set hlsearch!<cr>", { noremap = true, desc = "Clear Highlight" })
 
 -- Apply @record to multiple lines
 -- https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db
@@ -64,5 +60,5 @@ map("i", "<M-w>", "<S-Right>")
 map("i", "<M-b>", "<S-Left>")
 
 -- Utilities
-map("n", "<leader>pl", "<cmd>Lazy<cr>")
-map("n", "<leader>pm", "<cmd>Mason<cr>")
+map("n", "<leader>pl", "<cmd>Lazy<cr>", { desc = "Show Lazy" })
+map("n", "<leader>pm", "<cmd>Mason<cr>", { desc = "Show Mason" })

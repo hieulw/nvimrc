@@ -44,29 +44,17 @@ autocmd("FileType", {
   pattern = {
     "OverseerForm",
     "OverseerList",
-    "PlenaryTestPopup",
     "checkhealth",
-    "floggraph",
-    "fugitive",
     "git",
     "help",
     "lspinfo",
     "man",
-    "neoai-input",
-    "neoai-output",
     "neotest-output",
     "neotest-output-panel",
     "neotest-summary",
-    "netrw",
-    "notify",
     "oil",
     "qf",
     "query",
-    "spectre_panel",
-    "startuptime",
-    "toggleterm",
-    "tsplayground",
-    "vim",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
@@ -160,19 +148,5 @@ autocmd("FileType", {
       vim.fn.matchadd("TelescopeParent", "\t\t.*$")
       vim.api.nvim_set_hl(0, "TelescopeParent", { link = "GruvBoxBg2" })
     end)
-  end,
-})
-
-autocmd({ "BufNewFile", "BufRead" }, {
-  desc = "Add custom comment string for unsupported filetype",
-  pattern = "?*",
-  group = augroup("comment_string"),
-  callback = function(e)
-    local filetype = vim.api.nvim_get_option_value("filetype", { buf = e.buf })
-    if vim.list_contains({ "bicep" }, filetype) then
-      vim.opt_local.commentstring = "// %s"
-    elseif vim.list_contains({ "hyprlang" }, filetype) then
-      vim.opt_local.commentstring = "# %s"
-    end
   end,
 })
