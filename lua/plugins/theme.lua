@@ -33,37 +33,47 @@ return {
     "ellisonleao/gruvbox.nvim",
     lazy = false,
     priority = 1000,
-    config = function()
-      require("gruvbox").setup({
-        undercurl = true,
-        underline = true,
-        bold = true,
-        italic = {
-          strings = true,
-          comments = true,
-          operators = false,
-          folds = true,
-        },
-        strikethrough = true,
-        invert_selection = false,
-        invert_signs = false,
-        invert_tabline = false,
-        invert_intend_guides = false,
-        inverse = true, -- invert background for search, diffs, statuslines and errors
-        contrast = "", -- can be "hard", "soft" or empty string
-        palette_overrides = {},
-        overrides = {
-          TelescopeResultsDiffChange = { link = "GitSignsChange" },
-          TelescopeResultsDiffAdd = { link = "GitSignsAdd" },
-          TelescopeResultsDiffDelete = { link = "GitSignsDelete" },
-          CmpItemAbbrMatchFuzzy = { link = "CmpIntemAbbrMatch" },
-          CmpItemAbbrDeprecated = { link = "DiagnosticDeprecated" },
-          PmenuSel = { link = "TabLineSel" },
-        },
-        dim_inactive = false,
-        transparent_mode = true,
-      })
-
+    opts = {
+      terminal_colors = true, -- add neovim terminal colors
+      undercurl = true,
+      underline = true,
+      bold = true,
+      italic = {
+        strings = true,
+        comments = true,
+        operators = false,
+        folds = true,
+      },
+      strikethrough = true,
+      invert_selection = false,
+      invert_signs = false,
+      invert_tabline = false,
+      invert_intend_guides = false,
+      inverse = true, -- invert background for search, diffs, statuslines and errors
+      contrast = "", -- can be "hard", "soft" or empty string
+      palette_overrides = {},
+      overrides = {
+        TelescopeResultsDiffChange = { link = "GitSignsChange" },
+        TelescopeResultsDiffAdd = { link = "GitSignsAdd" },
+        TelescopeResultsDiffDelete = { link = "GitSignsDelete" },
+        CmpItemAbbrMatchFuzzy = { link = "CmpIntemAbbrMatch" },
+        CmpItemAbbrDeprecated = { link = "DiagnosticDeprecated" },
+        DapStoppedLine = { default = true, link = "Visual" },
+        DapUIPlayPause = { link = "GruvboxGreen" },
+        DapUIRestart = { link = "GruvboxGreen" },
+        DapUIStepInto = { link = "GruvboxAqua" },
+        DapUIStepOver = { link = "GruvboxAqua" },
+        DapUIStepOut = { link = "GruvboxAqua" },
+        DapUIStepBack = { link = "GruvboxAqua" },
+        DapUIStop = { link = "GruvboxRed" },
+        PmenuSel = { link = "TabLineSel" },
+        WinBarNC = { link = "WinBar" },
+      },
+      dim_inactive = false,
+      transparent_mode = true,
+    },
+    config = function(_, opts)
+      require("gruvbox").setup(opts)
       vim.opt.background = "dark"
       vim.cmd.colorscheme("gruvbox")
     end,

@@ -55,6 +55,8 @@ autocmd("FileType", {
     "oil",
     "qf",
     "query",
+    "dap-float",
+    "dap-repl",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false

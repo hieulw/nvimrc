@@ -12,6 +12,7 @@ return {
       "hrsh7th/vim-vsnip",
       "rafamadriz/friendly-snippets",
       "windwp/nvim-autopairs",
+      "rcarriga/cmp-dap",
     },
     version = false,
     event = { "InsertEnter", "CmdlineEnter" },
@@ -32,10 +33,7 @@ return {
 
       return {
         enabled = function()
-          if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then
-            return false
-          end
-          return true
+          return vim.api.nvim_get_option_value("buftype", { buf = 0 }) ~= "prompt" or require("cmp_dap").is_dap_buffer()
         end,
         preselect = cmp.PreselectMode.None,
         formatting = {
@@ -138,6 +136,10 @@ return {
       cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
       cmp.setup(opts)
+      cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+        mapping = cmp.mapping.preset.insert(),
+        sources = cmp.config.sources({ name = "dap" }),
+      })
       cmp.setup.cmdline({ "/", "?" }, {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({ { name = "nvim_lsp_document_symbol" } }, { { name = "buffer" } }),
