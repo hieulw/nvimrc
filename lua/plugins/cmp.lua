@@ -88,8 +88,7 @@ return {
               if cmp.get_selected_entry() then
                 cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
               else
-                cmp.select_next_item()
-                cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+                cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })
               end
             elseif vim.fn["vsnip#available"](1) == 1 then
               feedkey("<Plug>(vsnip-expand-or-jump)", "")
@@ -98,9 +97,7 @@ return {
             end
           end, { "i", "s" }),
           ["<C-k>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+            if vim.fn["vsnip#jumpable"](-1) == 1 then
               feedkey("<Plug>(vsnip-jump-prev)", "")
             else
               fallback()

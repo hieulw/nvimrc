@@ -1,34 +1,18 @@
 local M = {}
-
-local handlers = {
-  -- HACK: do not print the label
-  ["workspace/applyEdit"] = function(_, workspace_edit, ctx)
-    assert(
-      workspace_edit,
-      "workspace/applyEdit must be called with `ApplyWorkspaceEditParams`. Server is violating the specification"
-    )
-    local client_id = ctx.client_id
-    local client = assert(vim.lsp.get_client_by_id(client_id))
-    local status, result = pcall(vim.lsp.util.apply_workspace_edit, workspace_edit.edit, client.offset_encoding)
-    return {
-      applied = status,
-      failureReason = result,
-    }
-  end,
-}
+local utils = require("plugins.lsp.utils")
 
 function M.setup(_, opts)
-  local lsp_utils = require("plugins.lsp.utils")
-  lsp_utils.on_attach(nil, function(client, bufnr)
+  utils.on_attach(nil, function(client, bufnr)
     require("plugins.lsp.format").on_attach(client, bufnr)
     require("plugins.lsp.keymaps").on_attach(client, bufnr)
   end)
 
   require("lsp-file-operations").setup()
   require("plugins.lsp.diagnostics").setup()
+  require("plugins.lsp.handlers").setup()
 
   local servers = opts.servers
-  local capabilities = lsp_utils.capabilities()
+  local capabilities = utils.capabilities()
 
   local function _setup(server)
     local server_opts = vim.tbl_deep_extend("force", {

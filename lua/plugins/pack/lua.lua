@@ -22,7 +22,7 @@ return {
           runtime = true, -- runtime path
           types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
           -- plugins = false, -- installed opt or start plugins in packpath
-          plugins = { "nvim-lspconfig" },
+          -- plugins = { "nvim-lspconfig" },
         },
         lspconfig = true,
         pathStrict = true, -- lsp will load even though the file still not open yet
@@ -42,19 +42,6 @@ return {
               diagnostics = { globals = { "vim" } },
               hint = { enable = false },
             },
-          },
-          handlers = {
-            -- HACK: always go to the first definition
-            ["textDocument/definition"] = function(err, result, ...)
-              if vim.tbl_islist(result) or type(result) == "table" then
-                if #result > 1 then
-                  result = result[2]
-                else
-                  result = result[1]
-                end
-              end
-              vim.lsp.handlers["textDocument/definition"](err, result, ...)
-            end,
           },
         },
       },
