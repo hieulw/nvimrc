@@ -64,7 +64,7 @@ return {
             vim.keymap.set("n", "<leader>lx", function()
               vim.cmd("noautocmd write")
               vim.cmd.luafile("%")
-            end, { buffer = buffer, desc = "Save and execute lua file" })
+            end, { buffer = buffer, desc = "Save and execute" })
           end)
         end,
       },

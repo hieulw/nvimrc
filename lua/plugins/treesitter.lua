@@ -99,9 +99,7 @@ return {
     keys = function()
       local treejs = require("treesj")
       return {
-        { "<leader>tj", treejs.join, mode = "n", desc = "Join node" },
-        { "<leader>ts", treejs.split, mode = "n", desc = "Split node" },
-        { "<leader>tm", treejs.toggle, mode = "n", desc = "Toggle node" },
+        { "<leader>tm", treejs.toggle, mode = "n", desc = "Toggle Split Join" },
       }
     end,
     opts = { use_default_keymaps = false, max_join_length = 1000 },
@@ -110,14 +108,57 @@ return {
     "drybalka/tree-climber.nvim",
     keys = function()
       local treecl = require("tree-climber")
+      local opts = { skip_comments = true, highlight = true, higroup = "Visual" }
       return {
-        { "<M-n>", treecl.goto_next, mode = { "n", "v", "o" }, desc = "Go to next node" },
-        { "<M-p>", treecl.goto_prev, mode = { "n", "v", "o" }, desc = "Go to previous node" },
-        { "<M-i>", treecl.goto_child, mode = { "n", "v", "o" }, desc = "Go to child node" },
-        { "<M-o>", treecl.goto_parent, mode = { "n", "v", "o" }, desc = "Go to parent node" },
+        {
+          "<M-n>",
+          function()
+            treecl.goto_next(opts)
+          end,
+          mode = { "n", "v" },
+          desc = "Go to next node",
+        },
+        {
+          "<M-p>",
+          function()
+            treecl.goto_prev(opts)
+          end,
+          mode = { "n", "v" },
+          desc = "Go to previous node",
+        },
+        {
+          "<M-i>",
+          function()
+            treecl.goto_child(opts)
+          end,
+          mode = { "n", "v" },
+          desc = "Go to child node",
+        },
+        {
+          "<M-o>",
+          function()
+            treecl.goto_parent(opts)
+          end,
+          mode = { "n", "v" },
+          desc = "Go to parent node",
+        },
+        {
+          "<M-S-n>",
+          function()
+            treecl.swap_next(opts)
+          end,
+          mode = { "n" },
+          desc = "Swap next node",
+        },
+        {
+          "<M-S-p>",
+          function()
+            treecl.swap_prev(opts)
+          end,
+          mode = { "n" },
+          desc = "Swap previous node",
+        },
         { "in", treecl.select_node, mode = { "v", "o" }, desc = "Select inside node" },
-        { "<leader>tn", treecl.swap_next, mode = { "n" }, desc = "Swap next node" },
-        { "<leader>tp", treecl.swap_prev, mode = { "n" }, desc = "Swap previous node" },
       }
     end,
   },

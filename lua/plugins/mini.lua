@@ -46,8 +46,8 @@ return {
   {
     "echasnovski/mini.bufremove",
     keys = {
-      { "<leader>bd", "<cmd>=MiniBufremove.delete()<cr>", mode = "n", desc = "Buffer delete" },
-      { "<leader>bw", "<cmd>=MiniBufremove.wipeout()<cr>", mode = "n", desc = "Buffer wipeout" },
+      { "<leader>bd", "<cmd>=MiniBufremove.delete()<cr>", mode = "n", desc = "Delete Buffer" },
+      { "<leader>bw", "<cmd>=MiniBufremove.wipeout()<cr>", mode = "n", desc = "Wipeout Buffer" },
     },
     opts = {},
   },
@@ -56,6 +56,23 @@ return {
     event = "LazyFile",
     opts = function()
       local clue = require("mini.clue")
+      local function gen_leaders()
+        return {
+          { mode = "n", keys = "<Leader>b", desc = "+Buffers" },
+          { mode = "n", keys = "<Leader>d", desc = "+Debug" },
+          { mode = "n", keys = "<Leader>dh", postkeys = "<Leader>d" },
+          { mode = "n", keys = "<Leader>dj", postkeys = "<Leader>d" },
+          { mode = "n", keys = "<Leader>dk", postkeys = "<Leader>d" },
+          { mode = "n", keys = "<Leader>dl", postkeys = "<Leader>d" },
+          { mode = "n", keys = "<Leader>f", desc = "+Finders" },
+          { mode = "n", keys = "<Leader>h", desc = "+Git" },
+          { mode = "n", keys = "<Leader>l", desc = "+LSP" },
+          { mode = "n", keys = "<Leader>p", desc = "+Popups" },
+          { mode = "n", keys = "<Leader>s", desc = "+Snippets" },
+          { mode = "n", keys = "<Leader>t", desc = "+TS/Terminal" },
+          { mode = "n", keys = "<Leader>w", desc = "+Windows" },
+        }
+      end
       return {
         triggers = {
           { mode = "n", keys = "<Leader>" }, -- Leader triggers
@@ -80,11 +97,13 @@ return {
           clue.gen_clues.g(),
           clue.gen_clues.marks(),
           clue.gen_clues.registers(),
-          clue.gen_clues.windows(),
+          clue.gen_clues.windows({
+            submode_move = true,
+            submode_navigate = true,
+            submode_resize = true,
+          }),
           clue.gen_clues.z(),
-        },
-        window = {
-          delay = vim.o.timeoutlen,
+          gen_leaders(),
         },
       }
     end,
@@ -92,7 +111,7 @@ return {
   {
     "echasnovski/mini.comment",
     dependencies = { "joosepalviste/nvim-ts-context-commentstring" },
-    keys = { "gc", "gcc" },
+    keys = { { "gc", mode = { "v", "n" } }, "gcc" },
     opts = {
       options = {
         custom_commentstring = function()

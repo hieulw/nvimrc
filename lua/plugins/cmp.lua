@@ -155,8 +155,8 @@ return {
     keys = function()
       local scissors = require("scissors")
       return {
-        { "<leader>se", scissors.editSnippet, mode = "n", desc = "Edit snippet" },
-        { "<leader>sa", scissors.addNewSnippet, mode = { "n", "x" }, desc = "Add new snippet" },
+        { "<leader>se", scissors.editSnippet, mode = "n", desc = "Edit Snippet" },
+        { "<leader>sa", scissors.addNewSnippet, mode = { "n", "x" }, desc = "Add Snippet" },
       }
     end,
     opts = {

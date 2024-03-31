@@ -5,7 +5,7 @@ return {
     keys = {
       { "<leader>ff", "<cmd>Telescope find_files<CR>", mode = "n", desc = "Find File" },
       { "<leader>fg", "<cmd>Telescope live_grep<CR>", mode = "n", desc = "Grep String" },
-      { "<leader><tab>", "<cmd>Telescope buffers<CR>", mode = "n", desc = "Buffers" },
+      { "<leader>fb", "<cmd>Telescope buffers<CR>", mode = "n", desc = "Buffers" },
       { "<leader>fe", "<cmd>Telescope file_browser<CR>", mode = "n", desc = "File Explorer" },
       { "<leader>f?", "<cmd>Telescope builtin<CR>", mode = "n", desc = "Builtin" },
       { "<leader><leader>", "<cmd>Telescope resume<CR>", mode = "n", desc = "Resume Telescope" },

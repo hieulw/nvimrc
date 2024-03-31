@@ -4,13 +4,14 @@ function M.on_attach(client, buffer)
   local self = M.new(client, buffer)
   local format = require("plugins.lsp.format").format
 
-  self:map("gd", vim.lsp.buf.definition, { desc = "Go to definition" })
-  self:map("gy", vim.lsp.buf.type_definition, { desc = "Go to type definition" })
-  self:map("gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
-  self:map("gI", vim.lsp.buf.implementation, { desc = "Go to implementation" })
-  self:map("gr", vim.lsp.buf.references, { desc = "Show references" })
-  self:map("K", vim.lsp.buf.hover, { desc = "Show hover document" })
-  self:map("gK", vim.lsp.buf.signature_help, { desc = "Show signatures" })
+  self:map("gd", vim.lsp.buf.definition, { desc = "Go to definition", has = "definition" })
+  self:map("gy", vim.lsp.buf.type_definition, { desc = "Go to type definition", has = "typeDefinition" })
+  self:map("gD", vim.lsp.buf.declaration, { desc = "Go to declaration", has = "declaration" })
+  self:map("gI", vim.lsp.buf.implementation, { desc = "Go to implementation", has = "implementation" })
+  self:map("gr", vim.lsp.buf.references, { desc = "Show references", has = "references" })
+  self:map("K", vim.lsp.buf.hover, { desc = "Show hover document", has = "hover" })
+  self:map("gK", vim.lsp.buf.signature_help, { desc = "Signature Help", has = "signatureHelp" })
+  self:map("<C-k>", vim.lsp.buf.signature_help, { mode = "i", has = "signatureHelp" })
 
   self:map("gl", vim.diagnostic.open_float, { desc = "Show diagnostics" })
   self:map("]d", M.diagnostic_goto(true), { desc = "Next Diagnostic" })
@@ -20,20 +21,19 @@ function M.on_attach(client, buffer)
   self:map("]w", M.diagnostic_goto(true, "WARNING"), { desc = "Next Warning" })
   self:map("[w", M.diagnostic_goto(false, "WARNING"), { desc = "Prev Warning" })
 
-  self:map("<leader>la", vim.lsp.buf.code_action, { desc = "Code actions" })
-  self:map("<leader>lf", format, { has = "documentFormatting", desc = "Format" })
-  self:map("<leader>lf", format, { mode = "v", has = "documentRangeFormatting", desc = "Format" })
-  self:map("<leader>lr", M.rename, { has = "rename", desc = "LSP Rename" })
-  self:map("<leader>ls", require("telescope.builtin").lsp_document_symbols)
-  self:map("<leader>lS", require("telescope.builtin").lsp_dynamic_workspace_symbols)
+  self:map("<leader>la", vim.lsp.buf.code_action, { desc = "Code Actions", has = "codeAction" })
+  self:map("<leader>lf", format, { desc = "Format", has = "documentFormatting" })
+  self:map("<leader>lf", format, { mode = "v", desc = "Format", has = "documentRangeFormatting" })
+  self:map("<leader>lr", M.rename, { desc = "LSP Rename", has = "rename" })
 end
 
 function M.new(client, buffer)
   return setmetatable({ client = client, buffer = buffer }, { __index = M })
 end
 
-function M:has(cap)
-  return self.client.server_capabilities[cap .. "Provider"]
+function M:has(method)
+  method = method:find("/") and method or "textDocument/" .. method
+  return self.client.supports_method(method)
 end
 
 function M:map(lhs, rhs, opts)
