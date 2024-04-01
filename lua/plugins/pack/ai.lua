@@ -1,30 +1,67 @@
 return {
   {
-    "exafunction/codeium.vim",
+    "monkoose/neocodeium",
     event = "InsertEnter",
-    init = function()
-      vim.g.codeium_disable_bindings = 1
-      vim.g.codeium_manual = true
-      vim.g.codeium_enabled = false
-      vim.g.codeium_filetypes = {
+    opts = {
+      manual = true,
+      show_label = true,
+      debounce = true,
+      filetypes = {
         TelescopePrompt = false,
         ["dap-repl"] = false,
-      }
-    end,
-    config = function()
-      local has_cmp, cmp = pcall(require, "cmp")
-      vim.keymap.set("i", "<C-]>", function()
-        return vim.fn["codeium#Accept"]()
+      },
+    },
+    config = function(_, opts)
+      local codeium = require("neocodeium")
+      local cmp = require("cmp")
+      local icons = require("hieulw.icons")
+      local lualine = require("lualine")
+      codeium.setup(opts)
+
+      -- completion
+      cmp.event:on("menu_opened", function()
+        vim.cmd("NeoCodeium disable")
+        codeium.clear()
+      end)
+      cmp.event:on("menu_closed", function()
+        vim.cmd("NeoCodeium enable")
+      end)
+
+      -- keymaps
+      vim.keymap.set("i", "<M-l>", function()
+        if codeium.visible() then
+          codeium.accept()
+        else
+          return "<Right>"
+        end
       end, { expr = true, silent = true })
-      vim.keymap.set("i", "<M-]>", function()
-        if has_cmp then
+      vim.keymap.set("i", "<M-n>", function()
+        if cmp.visible() then
           cmp.abort()
         end
-        return vim.fn["codeium#CycleOrComplete"]()
-      end, { expr = true, silent = true })
-      vim.keymap.set("i", "<M-[>", function()
-        return vim.fn["codeium#CycleCompletions"](-1)
-      end, { expr = true, silent = true })
+        codeium.cycle_or_complete()
+      end, { silent = true })
+      vim.keymap.set("i", "<M-p>", function()
+        codeium.cycle_or_complete(-1)
+      end, { silent = true })
+
+      -- statusbar
+      lualine.setup({
+        sections = {
+          lualine_c = vim.list_extend(lualine.get_config().sections.lualine_c, {
+            function()
+              local status = vim.trim(codeium.get_status())
+              if not status then
+                return
+              end
+              if opts.manual == false then
+                status = "AUTO:" .. status
+              end
+              return icons.misc.Robot .. " " .. status
+            end,
+          }),
+        },
+      })
     end,
   },
 }
