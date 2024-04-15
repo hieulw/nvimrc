@@ -68,6 +68,7 @@ return {
         DapUIStop = { link = "GruvboxRed" },
         PmenuSel = { link = "TabLineSel" },
         WinBarNC = { link = "WinBar" },
+        NormalSB = { link = "Normal" },
       },
       dim_inactive = false,
       transparent_mode = true,
