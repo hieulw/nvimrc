@@ -34,7 +34,7 @@ return {
         pyright = {
           settings = {
             python = {
-              --reference https://github.com/microsoft/pyright/blob/main/docs/settings.md
+              -- Ref: https://github.com/microsoft/pyright/blob/main/docs/settings.md
               pyright = {
                 disableLanguageServices = false,
                 disableOrganizeImports = false,

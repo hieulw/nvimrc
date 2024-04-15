@@ -20,9 +20,8 @@ return {
         "prettierd",
         "yaml-language-server",
         "json-lsp",
-        -- "css-lsp",
-        -- "emmet-language-server",
-        -- "html-lsp",
+        "css-lsp",
+        "html-lsp",
       })
     end,
   },
@@ -37,26 +36,28 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    dependencies = { "someone-stole-my-name/yaml-companion.nvim" },
     opts = {
       servers = {
-        yamlls = {
-          settings = {
-            yaml = {},
-          },
-        },
+        yamlls = {},
         jsonls = {},
-        -- cssls = {},
-        -- emmet_language_server = {},
-        -- html = {},
+        cssls = {},
+        html = {},
       },
       setup = {
         yamlls = function(_, opts)
-          local config = require("yaml-companion").setup({ lspconfig = opts })
+          local config = require("yaml-companion").setup({
+            builtin_matchers = {
+              kubernetes = { enabled = true },
+              cloud_init = { enabled = true },
+            },
+            lspconfig = opts,
+          })
           require("lspconfig").yamlls.setup(config)
+          require("telescope").load_extension("yaml_schema")
           return true
         end,
       },
     },
   },
+  { "hieulw/yaml-companion.nvim", ft = "yaml" },
 }

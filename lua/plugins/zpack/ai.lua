@@ -50,7 +50,7 @@ return {
         sections = {
           lualine_c = vim.list_extend(lualine.get_config().sections.lualine_c, {
             function()
-              local status = vim.trim(codeium.get_status())
+              local status = vim.trim(codeium.get_status()):lower()
               if not status then
                 return
               end
