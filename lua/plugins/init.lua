@@ -1,4 +1,4 @@
--- Reference: https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/util/plugin.lua#L63
+-- Ref: https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/util/plugin.lua#L63
 local function lazy_file()
   -- Add support for the LazyFile event
   local use_lazy_file = false

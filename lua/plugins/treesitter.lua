@@ -5,10 +5,10 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
       "joosepalviste/nvim-ts-context-commentstring",
-      { "windwp/nvim-ts-autotag", event = "InsertEnter" },
+      "windwp/nvim-ts-autotag",
     },
     init = function(plugin)
-      -- REF: https://github.com/LazyVim/LazyVim/commit/1e1b68d633d4bd4faa912ba5f49ab6b8601dc0c9
+      -- Ref: https://github.com/LazyVim/LazyVim/commit/1e1b68d633d4bd4faa912ba5f49ab6b8601dc0c9
       require("lazy.core.loader").add_to_rtp(plugin)
       require("nvim-treesitter.query_predicates")
     end,
@@ -19,7 +19,9 @@ return {
       ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
       autotag = {
         enable = true,
-        enable_close_on_slash = false,
+        enable_rename = true,
+        enable_close = true,
+        enable_close_on_slash = true,
       },
       matchup = { enable = true },
       indent = { enable = false },
@@ -64,6 +66,7 @@ return {
             end
             return "html"
           end,
+          tfstate = "json",
         },
         pattern = {
           [".*/hypr/.*%.conf"] = "hyprlang",
@@ -90,8 +93,9 @@ return {
   {
     "johmsalas/text-case.nvim",
     event = "LazyFile",
-    config = function()
-      require("textcase").setup({})
+    opts = { default_keymappings_enabled = true, prefix = "ga" },
+    config = function(_, opts)
+      require("textcase").setup(opts)
     end,
   },
   {
@@ -99,7 +103,7 @@ return {
     keys = function()
       local treejs = require("treesj")
       return {
-        { "<leader>tm", treejs.toggle, mode = "n", desc = "Toggle Split Join" },
+        { "gJ", treejs.toggle, mode = "n", desc = "Toggle Split Join" },
       }
     end,
     opts = { use_default_keymaps = false, max_join_length = 1000 },

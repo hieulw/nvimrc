@@ -70,20 +70,25 @@ return {
     keys = function()
       local ufo = require("ufo")
       return {
-        { "zR", ufo.openAllFolds, mode = "n", desc = "Open all folds" },
-        { "zM", ufo.closeAllFolds, mode = "n", desc = "Close all folds" },
-        { "zr", ufo.openFoldsExceptKinds, mode = "n", desc = "Fold less" },
-        { "zm", ufo.closeFoldsWith, mode = "n", desc = "Fold more" },
+        { "]z", ufo.goNextClosedFold, mode = "n", desc = "Next Fold" },
+        { "[z", ufo.goPreviousClosedFold, mode = "n", desc = "Prev Fold" },
         { "zp", ufo.peekFoldedLinesUnderCursor, mode = "n", desc = "Peek fold" },
       }
     end,
     opts = {
+      close_fold_kinds_for_ft = {
+        default = { "imports", "comment" },
+      },
       preview = {
         mappings = {
           scrollB = "<C-b>",
           scrollF = "<C-f>",
           scrollU = "<C-u>",
           scrollD = "<C-d>",
+          switch = "zp",
+        },
+        win_config = {
+          winblend = 0,
         },
       },
       provider_selector = function(_, filetype, buftype)

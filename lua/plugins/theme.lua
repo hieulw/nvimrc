@@ -1,6 +1,6 @@
 return {
   {
-    "NvChad/nvim-colorizer.lua",
+    "nvchad/nvim-colorizer.lua",
     event = "LazyFile",
     config = function()
       require("colorizer").setup({

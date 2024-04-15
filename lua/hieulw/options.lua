@@ -8,7 +8,7 @@ vim.opt.viewoptions = { "cursor", "folds" }
 vim.opt.mouse = "a" -- Enable your mouse
 vim.opt.clipboard = "unnamedplus" -- System clipboard
 vim.opt.termguicolors = true -- use 24-bit (true-color)
-vim.opt.guifont = "CaskaydiaCove NFM:h15"
+vim.opt.guifont = "CaskaydiaCove NF:h15"
 vim.opt.colorcolumn = "100"
 
 -- Appearance

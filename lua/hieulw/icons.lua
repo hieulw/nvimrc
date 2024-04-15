@@ -150,13 +150,14 @@ return {
     Trace = "✎",
   },
   misc = {
-    Robot = "ﮧ",
+    Robot = "󰚩",
     Squirrel = "",
     Tag = "",
     Watch = "",
     Smiley = "",
     Package = "",
     CircuitBoard = "",
+    LSP = "",
   },
   dap = {
     Stopped = { " ", "DiagnosticWarn", "DapStoppedLine" },
