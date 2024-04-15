@@ -129,47 +129,6 @@ return {
         always_visible = false,
       }
 
-      local lsp = {
-        function()
-          local buf_clients = vim.lsp.get_clients({ bufnr = 0 })
-          if #buf_clients == 0 then
-            return ""
-          end
-
-          local buf_client_names = {}
-          local copilot_active = false
-
-          for _, client in pairs(buf_clients) do
-            if not vim.list_contains({ "null-ls", "copilot", "yamlls" }, client.name) then
-              table.insert(buf_client_names, client.name)
-            end
-
-            if client.name == "yamlls" then
-              local schema = require("yaml-companion").get_buf_schema(0)
-              if schema.result[1].name == "none" then
-                table.insert(buf_client_names, client.name)
-              else
-                table.insert(buf_client_names, string.format("%s(%s)", client.name, schema.result[1].name))
-              end
-            end
-
-            if client.name == "copilot" then
-              copilot_active = true
-            end
-          end
-
-          local unique_client_names = table.concat(buf_client_names, " ")
-          local language_servers = string.format("%s", unique_client_names)
-
-          if copilot_active then
-            language_servers = language_servers .. "%#SLCopilot#" .. " " .. icon.git.Octoface .. "%*"
-          end
-
-          return language_servers
-        end,
-        colored = true,
-      }
-
       return {
         options = {
           theme = vim.g.colors_name == "gruvbox" and custom_gruvbox or "auto",
@@ -181,7 +140,7 @@ return {
         sections = {
           lualine_a = { mode },
           lualine_b = {},
-          lualine_c = { "filename", lsp },
+          lualine_c = { "filename" },
           lualine_x = { diff, diagnostics, filetype },
           lualine_y = {},
           lualine_z = {},
@@ -191,24 +150,4 @@ return {
   },
   { "nvim-tree/nvim-web-devicons", event = "LazyFile" },
   { "muniftanjim/nui.nvim", event = "LazyFile" },
-  {
-    "linrongbin16/lsp-progress.nvim",
-    event = "LspAttach",
-    config = function()
-      local lualine = require("lualine")
-      local lsp_progress = require("lsp-progress")
-      lsp_progress.setup({})
-      lualine.setup({
-        sections = {
-          lualine_c = vim.list_extend(lualine.get_config().sections.lualine_c, { lsp_progress.progress }),
-        },
-      })
-      vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
-      vim.api.nvim_create_autocmd("User", {
-        group = "lualine_augroup",
-        pattern = "LspProgressStatusUpdated",
-        callback = lualine.refresh,
-      })
-    end,
-  },
 }

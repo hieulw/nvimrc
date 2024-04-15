@@ -9,7 +9,6 @@ function M.on_attach(client, buffer)
   self:map("gD", vim.lsp.buf.declaration, { desc = "Go to declaration", has = "declaration" })
   self:map("gI", vim.lsp.buf.implementation, { desc = "Go to implementation", has = "implementation" })
   self:map("gr", vim.lsp.buf.references, { desc = "Show references", has = "references" })
-  self:map("K", vim.lsp.buf.hover, { desc = "Show hover document", has = "hover" })
   self:map("gK", vim.lsp.buf.signature_help, { desc = "Signature Help", has = "signatureHelp" })
   self:map("<C-k>", vim.lsp.buf.signature_help, { mode = "i", has = "signatureHelp" })
 

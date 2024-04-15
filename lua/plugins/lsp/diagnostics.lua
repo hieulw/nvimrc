@@ -12,24 +12,20 @@ function M.setup()
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
   end
 
-  -- LSP handlers configuration
-  local diagnostic = {
+  -- Diagnostic configuration
+  vim.diagnostic.config({
     virtual_text = false,
     signs = false,
     underline = true,
     update_in_insert = false,
     severity_sort = true,
     float = {
-      -- focusable = true,
+      focusable = true,
       style = "minimal",
       border = "rounded",
       source = "always",
-      header = "",
-      -- prefix = "",
     },
-  }
-  -- Diagnostic configuration
-  vim.diagnostic.config(diagnostic)
+  })
 end
 
 return M
