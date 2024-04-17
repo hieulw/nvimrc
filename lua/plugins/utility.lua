@@ -76,6 +76,7 @@ return {
       }
     end,
     opts = {
+      enable_get_fold_virt_text = true,
       close_fold_kinds_for_ft = {
         default = { "imports", "comment" },
       },
@@ -92,25 +93,73 @@ return {
         },
       },
       provider_selector = function(_, filetype, buftype)
-        local function handleFallbackException(bufnr, err, providerName)
+        local ufo = require("ufo")
+        local function fallback_provider(bufnr, err, provider)
           if type(err) == "string" and err:match("UfoFallbackException") then
-            return require("ufo").getFolds(bufnr, providerName)
+            return ufo.getFolds(bufnr, provider)
           else
             return require("promise").reject(err)
           end
         end
-
-        return (filetype == "" or buftype == "nofile") and "indent" -- only use indent until a file is opened
+        local function treesitter_folds(bufnr)
+          local res = ufo.getFolds(bufnr, "treesitter")
+          if res == nil then
+            return nil
+          end
+          local folds = {} ---@type table<integer,UfoFoldingRange>
+          for _, fold in ipairs(res) do
+            if not folds[fold.startLine] then
+              folds[fold.startLine] = fold
+            end
+          end
+          return folds
+        end
+        -- only use indent until a file is opened
+        return (filetype == "" or buftype == "nofile") and "indent"
           or function(bufnr)
-            return require("ufo")
+            return ufo
               .getFolds(bufnr, "lsp")
-              :catch(function(err)
-                return handleFallbackException(bufnr, err, "treesitter")
+              :thenCall(function(res) ---@param res UfoFoldingRange[]
+                if res == nil then
+                  return nil
+                end
+                local ts_folds = treesitter_folds(bufnr)
+                if ts_folds then
+                  for _, fold in ipairs(res) do
+                    if ts_folds[fold.startLine] then
+                      fold.endLine = ts_folds[fold.startLine].endLine
+                      fold.endCharacter = nil
+                    end
+                  end
+                end
+                return res
               end)
               :catch(function(err)
-                return handleFallbackException(bufnr, err, "indent")
+                return fallback_provider(bufnr, err, "treesitter")
+              end)
+              :catch(function(err)
+                return fallback_provider(bufnr, err, "indent")
               end)
           end
+      end,
+      fold_virt_text_handler = function(vtext, slnum, elnum, width, truncate, ctx)
+        ---@see https://github.com/kevinhwang91/nvim-ufo/issues/26
+        local end_patterns = { "end[,)]*", "[%])}]+[,;]?", "</[%w.]*>" }
+        local endline = vim.trim(vim.fn.getline(elnum))
+        local end_vtext = {}
+        for _, pattern in ipairs(end_patterns) do
+          if endline:find(pattern) == 1 then
+            end_vtext = ctx.get_fold_virt_text(elnum)
+            end_vtext[1][1] = end_vtext[1][1]:gsub("^%s+", "")
+            break
+          end
+        end
+        table.insert(vtext, {
+          (" %s %d "):format(require("hieulw.icons").misc.Fold, elnum - slnum),
+          "UfoFoldedEllipsis",
+        })
+        vim.list_extend(vtext, end_vtext)
+        return vtext
       end,
     },
   },
