@@ -1,4 +1,4 @@
-local function get_pack_plugins()
+return (function()
   local plugins = {}
   local packs = require("hieulw.config").pack
   for k, v in pairs(packs) do
@@ -10,6 +10,4 @@ local function get_pack_plugins()
     end
   end
   return plugins
-end
-
-return get_pack_plugins()
+end)()

@@ -1,5 +1,5 @@
 -- Thanks to Evgeni Chasnovski for amazing plugins
--- https://github.com/echasnovski/mini.nvim
+--@see https://github.com/echasnovski/mini.nvim
 return {
   {
     "echasnovski/mini.ai",

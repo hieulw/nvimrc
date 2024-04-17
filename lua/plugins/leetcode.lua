@@ -23,7 +23,7 @@ return {
       focus_result = "L",
     },
     theme = {},
-    -- Ref: https://github.com/3rd/image.nvim/issues/62
+    ---@see https://github.com/3rd/image.nvim/issues/62
     image_support = false,
   },
   config = function(_, opts)

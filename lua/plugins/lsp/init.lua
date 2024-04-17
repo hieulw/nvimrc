@@ -45,13 +45,14 @@ return {
     config = function()
       local lualine = require("lualine")
       local lsp_progress = require("lsp-progress")
+      local icons = require("hieulw.icons")
       lsp_progress.setup({
+        spinner = icons.spinner,
         format = function(messages)
           if #messages > 0 then
-            return table.concat(messages, " ")
+            return icons.kind.Event .. " " .. table.concat(messages, " ")
           end
 
-          local sign = require("hieulw.icons").kind.Event
           local clients = vim.lsp.get_clients()
           local client_names = {}
 
@@ -68,7 +69,7 @@ return {
               table.insert(client_names, client.name)
             end
           end
-          return sign .. " " .. table.concat(client_names, " ")
+          return icons.kind.Event .. " " .. table.concat(client_names, " ")
         end,
       })
       lualine.setup({

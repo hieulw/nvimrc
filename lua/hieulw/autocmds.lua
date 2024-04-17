@@ -58,9 +58,9 @@ autocmd("FileType", {
     "dap-float",
     "dap-repl",
   },
-  callback = function(event)
-    vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true, desc = "Close buffer" })
+  callback = function(e)
+    vim.bo[e.buf].buflisted = false
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = e.buf, silent = true, desc = "Close buffer" })
   end,
 })
 
@@ -91,11 +91,11 @@ autocmd("BufWinEnter", {
 autocmd("BufWritePre", {
   desc = "auto create dir when saving a file, in case some intermediate directory does not exist",
   group = augroup("auto_create_dir"),
-  callback = function(event)
-    if event.match:match("^%w%w+://") then
+  callback = function(e)
+    if e.match:match("^%w%w+://") then
       return
     end
-    local file = vim.loop.fs_realpath(event.match) or event.match
+    local file = vim.loop.fs_realpath(e.match) or e.match
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
 })
@@ -118,7 +118,7 @@ autocmd("BufWinEnter", {
     if not vim.b[e.buf].view_activated then
       local filetype = vim.api.nvim_get_option_value("filetype", { buf = e.buf })
       local buftype = vim.api.nvim_get_option_value("buftype", { buf = e.buf })
-      local ignore_filetypes = { "gitcommit", "gitrebase", "svg", "hgcommit" }
+      local ignore_filetypes = { "gitcommit", "gitrebase" }
       if buftype == "" and filetype and filetype ~= "" and not vim.tbl_contains(ignore_filetypes, filetype) then
         vim.b[e.buf].view_activated = true
         vim.cmd.loadview({ mods = { emsg_silent = true } })
@@ -140,7 +140,7 @@ autocmd("CmdlineLeave", {
   command = "set nohlsearch",
 })
 
--- https://github.com/nvim-telescope/telescope.nvim/issues/2014
+---@see https://github.com/nvim-telescope/telescope.nvim/issues/2014
 autocmd("FileType", {
   desc = "Add telescope result highlight",
   pattern = { "TelescopeResults" },

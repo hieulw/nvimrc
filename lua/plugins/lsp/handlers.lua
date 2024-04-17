@@ -1,6 +1,6 @@
 local M = {}
 
--- Ref: https://github.com/MariaSolOs/dotfiles/blob/fedora/.config/nvim/lua/lsp.lua#L171-L273
+---@see https://github.com/MariaSolOs/dotfiles/blob/fedora/.config/nvim/lua/lsp.lua#L171-L273
 local function add_inline_highlights(buf)
   local md_namespace = vim.api.nvim_create_namespace("mariasolos/lsp_float")
   for l, line in ipairs(vim.api.nvim_buf_get_lines(buf, 0, -1, false)) do

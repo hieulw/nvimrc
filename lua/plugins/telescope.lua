@@ -86,7 +86,6 @@ return {
           file_browser = {
             -- disables netrw and use telescope-file-browser in its place
             theme = theme,
-            hijack_netrw = true,
             preview = true,
             path = "%:p:h",
             mappings = {

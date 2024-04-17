@@ -72,7 +72,7 @@ return {
       setup = {
         gopls = function(_, opts)
           -- workaround for gopls not supporting semanticTokensProvider
-          -- https://github.com/golang/go/issues/54531#issuecomment-1464982242
+          ---@see https://github.com/golang/go/issues/54531#issuecomment-1464982242
           require("plugins.lsp.utils").on_attach("gopls", function(client, _)
             if not client.server_capabilities.semanticTokensProvider then
               local semantic = client.config.capabilities.textDocument.semanticTokens

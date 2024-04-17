@@ -1,6 +1,6 @@
 local M = {}
 
--- Bundle every config we need for specific language
+--- Bundle every configs|plugins we need for specific language
 ---@type table<string,boolean>
 M.pack = {
   ai = true,
@@ -12,8 +12,8 @@ M.pack = {
   markdown = true,
   php = false,
   python = true,
-  tailwind = false,
-  typescript = false,
+  tailwind = true,
+  typescript = true,
 }
 
 return M

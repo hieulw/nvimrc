@@ -43,7 +43,7 @@ return {
     function()
       require("dap").step_back()
     end,
-    desc = "Step Into",
+    desc = "Step Back",
   },
   {
     "<leader>dj",

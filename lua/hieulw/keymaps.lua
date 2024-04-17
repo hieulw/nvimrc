@@ -1,5 +1,6 @@
 local map = vim.keymap.set
 
+-- Reset keymap
 map({ "n", "v" }, vim.g.mapleader, "<Nop>", { silent = true })
 map({ "n", "v" }, "<C-f>", "<Nop>", { silent = true })
 map({ "n", "v" }, "<C-b>", "<Nop>", { silent = true })
@@ -12,7 +13,7 @@ map("t", "<Esc>", "<C-\\><C-n>")
 map("n", "<leader><bs>", "<cmd>set hlsearch!<cr>", { noremap = true, desc = "Clear Highlight" })
 
 -- Apply @record to multiple lines
--- https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db
+---@see https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db
 map("x", "@", function()
   local register = vim.fn.nr2char(vim.fn.getchar())
   vim.print("@" .. vim.fn.getcmdline())
@@ -20,8 +21,8 @@ map("x", "@", function()
 end, { silent = true, expr = true }) -- expr = true will execute return value of function
 
 -- Better Yank & Paste
--- https://stackoverflow.com/questions/290465/how-to-paste-over-without-overwriting-register
--- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
+---@see https://stackoverflow.com/questions/290465/how-to-paste-over-without-overwriting-register
+---@see https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
 -- xnoremap <silent> p p:let @+=@0<CR>:let @"=@0<CR>
 -- use P instead of p because it doesn't override register
 map("n", "Y", "y$", { desc = "Copy to end of line" })

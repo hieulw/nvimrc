@@ -158,7 +158,9 @@ return {
     Package = "",
     CircuitBoard = "",
     LSP = "",
+    Fold = "",
   },
+  spinner = { "", "", "", "", "", "", "", "", "", "", "", "", "" },
   dap = {
     Stopped = { " ", "DiagnosticWarn", "DapStoppedLine" },
     Breakpoint = " ",

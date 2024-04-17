@@ -8,7 +8,7 @@ return {
       "windwp/nvim-ts-autotag",
     },
     init = function(plugin)
-      -- Ref: https://github.com/LazyVim/LazyVim/commit/1e1b68d633d4bd4faa912ba5f49ab6b8601dc0c9
+      ---@see https://github.com/LazyVim/LazyVim/commit/1e1b68d633d4bd4faa912ba5f49ab6b8601dc0c9
       require("lazy.core.loader").add_to_rtp(plugin)
       require("nvim-treesitter.query_predicates")
     end,
@@ -50,7 +50,7 @@ return {
       },
     },
     config = function(_, opts)
-      -- PERF: https://github.com/nvim-treesitter/nvim-treesitter/issues/3581
+      ---@see https://github.com/nvim-treesitter/nvim-treesitter/issues/3581
       -- commenting out the comment queries in injections.scm seem to fix performance issues
       require("nvim-treesitter.configs").setup(opts)
       require("ts_context_commentstring").setup({ enable_autocmd = false })

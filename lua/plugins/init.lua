@@ -1,5 +1,5 @@
--- Ref: https://github.com/LazyVim/LazyVim/blob/879e29504d43e9f178d967ecc34d482f902e5a91/lua/lazyvim/util/plugin.lua#L63
-local function lazy_file()
+---@see https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/plugin.lua#L63
+(function()
   -- Add support for the LazyFile event
   local use_lazy_file = false
   local lazy_file_events = { "BufReadPost", "BufNewFile", "BufWritePre" }
@@ -65,9 +65,7 @@ local function lazy_file()
       load()
     end,
   })
-end
-
-lazy_file()
+end)()
 
 return {
   { "folke/lazy.nvim", version = "*" },
