@@ -85,7 +85,39 @@ return {
     "nvim-lualine/lualine.nvim",
     opts = function()
       local icon = require("hieulw.icons")
-      local custom_gruvbox = require("hieulw.colors").lualine
+      local colors = require("gruvbox").palette
+      local theme = {
+        normal = {
+          a = { bg = "None", fg = colors.light4, gui = "bold" },
+          b = { bg = "None", fg = colors.light1 },
+          c = { bg = "None", fg = colors.light4 },
+        },
+        insert = {
+          a = { bg = "None", fg = colors.bright_blue, gui = "bold" },
+          b = { bg = "None", fg = colors.light1 },
+          c = { bg = "None", fg = colors.light1 },
+        },
+        visual = {
+          a = { bg = "None", fg = colors.bright_yellow, gui = "bold" },
+          b = { bg = "None", fg = colors.light1 },
+          c = { bg = "None", fg = colors.light1 },
+        },
+        replace = {
+          a = { bg = "None", fg = colors.bright_red, gui = "bold" },
+          b = { bg = "None", fg = colors.light1 },
+          c = { bg = "None", fg = colors.light1 },
+        },
+        command = {
+          a = { bg = "None", fg = colors.bright_green, gui = "bold" },
+          b = { bg = "None", fg = colors.light1 },
+          c = { bg = "None", fg = colors.light1 },
+        },
+        inactive = {
+          a = { bg = "None", fg = colors.light4, gui = "bold" },
+          b = { bg = "None", fg = colors.light4 },
+          c = { bg = "None", fg = colors.light4 },
+        },
+      }
 
       local mode = {
         "mode",
@@ -134,7 +166,7 @@ return {
 
       return {
         options = {
-          theme = vim.g.colors_name == "gruvbox" and custom_gruvbox or "auto",
+          theme = theme,
           globalstatus = true,
           section_separators = "",
           component_separators = "",
