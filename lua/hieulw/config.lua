@@ -16,4 +16,8 @@ M.pack = {
   typescript = true,
 }
 
+--- Root patterns for auto detect and change root
+---@type string[]
+M.root_patterns = { ".git", "Makefile" }
+
 return M
