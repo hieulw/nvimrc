@@ -6,7 +6,6 @@ return {
       { "<leader>ff", "<cmd>Telescope find_files<CR>", mode = "n", desc = "Find File" },
       { "<leader>fg", "<cmd>Telescope live_grep<CR>", mode = "n", desc = "Grep String" },
       { "<leader>fb", "<cmd>Telescope buffers<CR>", mode = "n", desc = "Buffers" },
-      { "<leader>fe", "<cmd>Telescope file_browser<CR>", mode = "n", desc = "File Explorer" },
       { "<leader>f?", "<cmd>Telescope builtin<CR>", mode = "n", desc = "Builtin" },
       { "<leader><leader>", "<cmd>Telescope resume<CR>", mode = "n", desc = "Resume Telescope" },
     },
@@ -14,12 +13,10 @@ return {
       "nvim-lua/plenary.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-telescope/telescope-ui-select.nvim",
-      "nvim-telescope/telescope-file-browser.nvim",
     },
     config = function()
       local telescope = require("telescope")
       local actions = require("telescope.actions")
-      local fb_actions = require("telescope").extensions.file_browser.actions
       local icon = require("hieulw.icons")
       local theme = "dropdown" -- ivy | dropdown | cursor
       local file_name_display = function(_, path)
@@ -83,26 +80,11 @@ return {
             override_file_sorter = true, -- override the file sorter
             case_mode = "smart_case", -- or "ignore_case" or "respect_case"
           },
-          file_browser = {
-            -- disables netrw and use telescope-file-browser in its place
-            theme = theme,
-            preview = true,
-            path = "%:p:h",
-            mappings = {
-              ["i"] = {
-                ["<bs>"] = false,
-              },
-              ["n"] = {
-                ["<bs>"] = fb_actions.goto_parent_dir,
-              },
-            },
-          },
         },
       })
 
       telescope.load_extension("fzf")
       telescope.load_extension("ui-select")
-      telescope.load_extension("file_browser")
     end,
   },
 }

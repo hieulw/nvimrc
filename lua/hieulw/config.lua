@@ -18,6 +18,6 @@ M.pack = {
 
 --- Root patterns for auto detect and change root
 ---@type string[]
-M.root_patterns = { ".git", "Makefile" }
+M.root_patterns = { ".git" }
 
 return M

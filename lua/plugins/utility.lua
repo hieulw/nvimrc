@@ -5,14 +5,15 @@ return {
       { "<leader>e", "<cmd>NvimTreeToggle<cr>", mode = "n", desc = "Toggle File Explorer" },
     },
     opts = {
+      hijack_cursor = true,
       filters = {
-        custom = { ".git" },
+        custom = { "^.git$" },
         dotfiles = false,
       },
       sync_root_with_cwd = true,
       update_focused_file = {
         enable = true,
-        update_root = false,
+        update_root = true,
       },
       git = {
         enable = true,
@@ -27,6 +28,52 @@ return {
         root_folder_label = false,
         highlight_git = false,
       },
+      on_attach = function(bufnr)
+        local api = require("nvim-tree.api")
+        local mappings = {
+          { "<C-]>", api.tree.change_root_to_node, "CD" },
+          { "<C-v>", api.node.open.vertical, "Open: Vertical Split" },
+          { "<C-x>", api.node.open.horizontal, "Open: Horizontal Split" },
+          { "h", api.node.navigate.parent_close, "Close Directory" },
+          { "l", api.node.open.edit, "Open" },
+          { "H", api.node.navigate.parent, "Parent Directory" },
+          { "J", api.node.navigate.sibling.next, "Next Sibling" },
+          { "K", api.node.navigate.sibling.prev, "Previous Sibling" },
+          { "L", api.node.open.no_window_picker, "Open: No Window Picker" },
+          { "-", api.tree.change_root_to_parent, "Up" },
+          { "a", api.fs.create, "Create File Or Directory" },
+          { "x", api.fs.cut, "Cut" },
+          { "c", api.fs.copy.node, "Copy" },
+          { "p", api.fs.paste, "Paste" },
+          { "d", api.fs.remove, "Delete" },
+          { "D", api.fs.trash, "Trash" },
+          { "r", api.fs.rename, "Rename" },
+          { "R", api.fs.rename_full, "Rename: Full Path" },
+          { "e", api.fs.rename_basename, "Rename: Basename" },
+          { "yy", api.fs.copy.absolute_path, "Copy Absolute Path" },
+          { "y$", api.fs.copy.filename, "Copy Name" },
+          { "ye", api.fs.copy.basename, "Copy Basename" },
+          { "Y", api.fs.copy.relative_path, "Copy Relative Path" },
+          { "gx", api.node.run.system, "Run System" },
+          { "g?", api.tree.toggle_help, "Help" },
+          { ".", api.node.run.cmd, "Run Command" },
+          { "q", api.tree.close, "Close" },
+          { "<leader>tb", api.tree.toggle_no_buffer_filter, "Toggle Filter: No Buffer" },
+          { "<leader>tg", api.tree.toggle_git_clean_filter, "Toggle Filter: Git Clean" },
+          { "<leader>td", api.tree.toggle_hidden_filter, "Toggle Filter: Dotfiles" },
+          { "<leader>ti", api.tree.toggle_gitignore_filter, "Toggle Filter: Git Ignore" },
+          { "<leader>tc", api.tree.toggle_custom_filter, "Toggle Filter: Hidden" },
+        }
+        for _, mapping in ipairs(mappings) do
+          vim.keymap.set("n", mapping[1], mapping[2], {
+            desc = mapping[3],
+            buffer = bufnr,
+            noremap = true,
+            silent = true,
+            nowait = true,
+          })
+        end
+      end,
     },
   },
   {

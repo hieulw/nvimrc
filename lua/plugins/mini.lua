@@ -122,7 +122,7 @@ return {
         comment = "gc",
         comment_line = "gcc",
         comment_visual = "gc",
-        textobject = "iC",
+        textobject = "",
       },
     },
   },
