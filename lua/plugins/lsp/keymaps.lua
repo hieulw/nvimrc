@@ -23,7 +23,7 @@ function M.on_attach(client, buffer)
   self:map("<leader>la", vim.lsp.buf.code_action, { desc = "Code Actions", has = "codeAction" })
   self:map("<leader>lf", format, { desc = "Format", has = "documentFormatting" })
   self:map("<leader>lf", format, { mode = "v", desc = "Format", has = "documentRangeFormatting" })
-  self:map("<leader>lr", M.rename, { desc = "LSP Rename", has = "rename" })
+  self:map("<leader>lr", M.rename, { desc = "Rename", has = "rename" })
 end
 
 function M.new(client, buffer)

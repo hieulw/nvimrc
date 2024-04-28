@@ -16,15 +16,16 @@ return {
       local cmp = require("cmp")
       local icons = require("hieulw.icons")
       local lualine = require("lualine")
+
       codeium.setup(opts)
 
       -- completion
       cmp.event:on("menu_opened", function()
-        vim.cmd("NeoCodeium disable")
+        vim.cmd.NeoCodeium("disable")
         codeium.clear()
       end)
       cmp.event:on("menu_closed", function()
-        vim.cmd("NeoCodeium enable")
+        vim.cmd.NeoCodeium("enable")
       end)
 
       -- keymaps
@@ -57,7 +58,7 @@ return {
               if opts.manual == false then
                 status = "AUTO:" .. status
               end
-              return icons.misc.Robot .. " " .. status
+              return icons.ui.Robot .. " " .. status
             end,
           }),
         },

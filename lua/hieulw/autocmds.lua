@@ -8,7 +8,7 @@ autocmd("TextYankPost", {
   callback = function()
     vim.highlight.on_yank()
   end,
-  group = augroup("YankHighlight"),
+  group = augroup("yank_highlight"),
   pattern = "*",
 })
 
@@ -24,7 +24,7 @@ autocmd("TermOpen", {
     vim.opt_local.filetype = "terminal"
     vim.cmd("startinsert")
   end),
-  group = augroup("OpenTerminal"),
+  group = augroup("open_terminal"),
   pattern = "term://*",
 })
 

@@ -30,8 +30,8 @@ return {
 
       telescope.setup({
         defaults = {
-          prompt_prefix = string.format("%s ", icon.prompt.Search),
-          selection_caret = string.format("%s ", icon.prompt.Selected),
+          prompt_prefix = string.format("%s ", icon.ui.Search),
+          selection_caret = string.format("%s ", icon.ui.Selected),
           multi_icon = string.format("%s", icon.ui.Plus),
           path_display = { "truncate" },
           sorting_strategy = "ascending",

@@ -3,12 +3,7 @@ return {
     "neovim/nvim-lspconfig",
     event = "LazyFile",
     dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
       "williamboman/mason.nvim",
-      -- "williamboman/mason-lspconfig.nvim",
-      "nvimtools/none-ls.nvim",
-      -- "jay-babu/mason-null-ls.nvim",
-      -- Additional lua configuration, makes nvim stuff amazing!
       "antosha417/nvim-lsp-file-operations",
     },
     opts = {},
@@ -40,6 +35,11 @@ return {
     end,
   },
   {
+    "nvimtools/none-ls.nvim",
+    event = "LazyFile",
+    opts = { sources = {} },
+  },
+  {
     "linrongbin16/lsp-progress.nvim",
     event = "LspAttach",
     config = function()
@@ -50,7 +50,7 @@ return {
         spinner = icons.spinner,
         format = function(messages)
           if #messages > 0 then
-            return icons.kind.Event .. " " .. table.concat(messages, " ")
+            return icons.ui.LSP .. " " .. table.concat(messages, " ")
           end
 
           local clients = vim.lsp.get_clients()
@@ -84,10 +84,5 @@ return {
         callback = lualine.refresh,
       })
     end,
-  },
-  {
-    "nvimtools/none-ls.nvim",
-    event = "LazyFile",
-    opts = { sources = {} },
   },
 }

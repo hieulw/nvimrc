@@ -14,7 +14,6 @@ return {
       "windwp/nvim-autopairs",
       "rcarriga/cmp-dap",
     },
-    version = false,
     event = { "InsertEnter", "CmdlineEnter" },
     opts = function()
       local cmp = require("cmp")
@@ -57,32 +56,48 @@ return {
           end,
         },
         mapping = cmp.mapping.preset.insert({
-          ["<Up>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-          ["<Down>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-          ["<C-p>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-            elseif has_words_before() then
-              cmp.complete()
-            else
-              fallback()
-            end
-          end),
-          ["<C-n>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-            elseif has_words_before() then
-              cmp.complete()
-            else
-              fallback()
-            end
-          end),
-          ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-          ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-          ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+          ["<C-p>"] = cmp.mapping({
+            i = function(fallback)
+              if cmp.visible() then
+                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+              elseif has_words_before() then
+                cmp.complete()
+              else
+                fallback()
+              end
+            end,
+            c = function()
+              if cmp.visible() then
+                cmp.select_prev_item()
+              else
+                cmp.complete()
+              end
+            end,
+          }),
+          ["<C-n>"] = cmp.mapping({
+            i = function(fallback)
+              if cmp.visible() then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+              elseif has_words_before() then
+                cmp.complete()
+              else
+                fallback()
+              end
+            end,
+            c = function()
+              if cmp.visible() then
+                cmp.select_next_item()
+              else
+                cmp.complete()
+              end
+            end,
+          }),
+          ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i" }),
+          ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i" }),
+          ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i" }),
           ["<C-y>"] = cmp.config.disable,
           ["<C-e>"] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
-          ["<CR>"] = cmp.mapping.confirm({ select = false }),
+          ["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = false }), { "i", "c" }),
           ["<C-j>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               if cmp.get_selected_entry() then
@@ -95,7 +110,7 @@ return {
             else
               fallback()
             end
-          end, { "i", "s" }),
+          end, { "i", "s", "c" }),
           ["<C-k>"] = cmp.mapping(function(fallback)
             if vim.fn["vsnip#jumpable"](-1) == 1 then
               feedkey("<Plug>(vsnip-jump-prev)", "")
@@ -125,6 +140,7 @@ return {
     end,
     config = function(_, opts)
       local cmp = require("cmp")
+      local cmp_config = require("cmp.config")
       local cmp_autopairs = require("nvim-autopairs.completion.cmp")
       local autopairs = require("nvim-autopairs")
 
@@ -134,18 +150,17 @@ return {
 
       cmp.setup(opts)
       cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
-        mapping = cmp.mapping.preset.insert(),
+        mapping = cmp_config.get().mapping,
         sources = cmp.config.sources({ name = "dap" }),
       })
       cmp.setup.cmdline({ "/", "?" }, {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmp_config.get().mapping,
         sources = cmp.config.sources({ { name = "nvim_lsp_document_symbol" } }, { { name = "buffer" } }),
       })
       cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmp_config.get().mapping,
         sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
         sorting = { comparators = { cmp.config.compare.recently_used } },
-        view = { entries = { name = "wildmenu", separator = " " } },
       })
     end,
   },

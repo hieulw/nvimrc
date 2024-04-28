@@ -1,4 +1,3 @@
-require("hieulw.global")
 require("hieulw.options")
 require("hieulw.lazy")
 require("hieulw.autocmds")

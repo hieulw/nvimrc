@@ -44,6 +44,7 @@ vim.opt.fillchars:append({
 vim.opt.winblend = 0 -- Make floating windows no transparent
 vim.opt.pumblend = 0 -- Make builtin completion menus no transparent
 vim.opt.pumheight = 10 -- Makes popup menu smaller
+vim.opt.cmdheight = 1
 
 vim.opt.list = true -- Show some helper symbols
 vim.opt.listchars = { tab = "→ ", trail = "·", nbsp = "·", extends = "❯", precedes = "❮" }

@@ -2,7 +2,7 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     keys = {
-      { "<leader>e", "<cmd>NvimTreeToggle<cr>", mode = "n", desc = "Toggle File Explorer" },
+      { "<leader>e", "<cmd>NvimTreeToggle<cr>", mode = "n", desc = "File Explorer" },
     },
     opts = {
       hijack_cursor = true,
@@ -191,7 +191,7 @@ return {
       end,
       fold_virt_text_handler = function(vtext, slnum, elnum, width, truncate, ctx)
         ---@see https://github.com/kevinhwang91/nvim-ufo/issues/26
-        local end_patterns = { "end[,)]*", "[%])}]+[,;]?", "</[%w.]*>" }
+        local end_patterns = { "end[,)]*", "[%])}]+[,;]?", "['\"`]", "</[%w.]*>" }
         local endline = vim.trim(vim.fn.getline(elnum))
         local end_vtext = {}
         for _, pattern in ipairs(end_patterns) do
@@ -202,7 +202,7 @@ return {
           end
         end
         table.insert(vtext, {
-          (" %s %d "):format(require("hieulw.icons").misc.Fold, elnum - slnum),
+          (" %s %d "):format(require("hieulw.icons").ui.Fold, elnum - slnum),
           "UfoFoldedEllipsis",
         })
         vim.list_extend(vtext, end_vtext)
@@ -216,5 +216,14 @@ return {
     config = function()
       require("im_select").setup()
     end,
+  },
+  {
+    "danymat/neogen",
+    opts = { snippet_engine = "vsnip", languages = {} },
+    cmd = "Neogen",
+    keys = {
+      { "cdc", "<cmd>Neogen class<cr>", mode = "n", desc = "Generate Class Doc" },
+      { "cdf", "<cmd>Neogen func<cr>", mode = "n", desc = "Generate Func Doc" },
+    },
   },
 }
