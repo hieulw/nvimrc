@@ -58,7 +58,7 @@ return {
       vim.treesitter.language.register("bash", { "tmux", "zsh", "sh" })
       vim.filetype.add({
         extension = {
-          html = function(path, bufnr)
+          html = function(_, bufnr)
             local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false) or { "" }
             local content = table.concat(lines, "\n")
             if vim.regex([[{{\|{#\|{%\s.+\s%}\|#}\|}}]]):match_str(content) ~= nil then
@@ -93,7 +93,7 @@ return {
   {
     "johmsalas/text-case.nvim",
     event = "LazyFile",
-    opts = { default_keymappings_enabled = true, prefix = "ga" },
+    opts = { default_keymappings_enabled = true, prefix = "cr" },
     config = function(_, opts)
       require("textcase").setup(opts)
     end,

@@ -75,6 +75,9 @@ return {
       end
       return {
         triggers = {
+          { mode = "n", keys = "c" },
+          { mode = "n", keys = "d" },
+          { mode = "n", keys = "y" },
           { mode = "n", keys = "<Leader>" }, -- Leader triggers
           { mode = "x", keys = "<Leader>" },
           { mode = "n", keys = "g" }, -- `g` key
@@ -128,8 +131,10 @@ return {
   },
   {
     "echasnovski/mini.files",
-    keys = { { "-", "<cmd>=MiniFiles.open()<cr>", mode = "n", desc = "Toggle File Explorer" } },
-    opts = {},
+    keys = { { "-", "<cmd>=MiniFiles.open()<cr>", mode = "n", desc = "File Explorer" } },
+    opts = {
+      mappings = { synchronize = "<cr>" },
+    },
   },
   {
     "echasnovski/mini.jump",
