@@ -39,6 +39,9 @@ function M.setup(_, opts)
   end
 
   local ensure_installed = {} ---@type string[]
+  if servers == nil then
+    return
+  end
   for server, server_opts in pairs(servers) do
     if server_opts then
       server_opts = server_opts == true and {} or server_opts

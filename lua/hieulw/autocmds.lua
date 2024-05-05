@@ -155,11 +155,7 @@ autocmd("BufEnter", {
 
     local root = RootCache[vim.fs.dirname(path)]
     if root == nil then
-      local root_file = vim.fs.find(root_patterns, { path = path, upward = true })[1]
-      if root_file == nil then
-        return
-      end
-      root = vim.fs.dirname(root_file)
+      root = vim.fs.root(e.buf, root_patterns)
       RootCache[path] = root
     end
 

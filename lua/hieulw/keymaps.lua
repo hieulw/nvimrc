@@ -4,6 +4,7 @@ local map = vim.keymap.set
 map({ "n", "v" }, vim.g.mapleader, "<Nop>", { silent = true })
 map({ "n", "v" }, "<C-f>", "<Nop>", { silent = true })
 map({ "n", "v" }, "<C-b>", "<Nop>", { silent = true })
+map({ "n", "v" }, "<C-z>", "<Nop>", { silent = true })
 map({ "n", "v" }, "<tab>", "<Nop>", { silent = true })
 map("n", "<C-i>", "<C-i>", { noremap = true })
 

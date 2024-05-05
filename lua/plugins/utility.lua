@@ -1,5 +1,10 @@
 return {
   {
+    "tpope/vim-abolish",
+    keys = { "crs", "crm", "crp", "crc", "cru", "cr_", "cr-", "cr.", "cr<space>" },
+    cmd = { "Abolish", "Subvert" },
+  },
+  {
     "nvim-tree/nvim-tree.lua",
     keys = {
       { "<leader>e", "<cmd>NvimTreeToggle<cr>", mode = "n", desc = "File Explorer" },
@@ -84,6 +89,7 @@ return {
   {
     "max397574/better-escape.nvim",
     event = "InsertCharPre",
+    enabled = false,
     opts = {
       timeout = tonumber(vim.opt.timeoutlen),
       mapping = { "kj" },
@@ -222,8 +228,8 @@ return {
     opts = { snippet_engine = "vsnip", languages = {} },
     cmd = "Neogen",
     keys = {
-      { "cdc", "<cmd>Neogen class<cr>", mode = "n", desc = "Generate Class Doc" },
-      { "cdf", "<cmd>Neogen func<cr>", mode = "n", desc = "Generate Func Doc" },
+      { "cd", "<cmd>Neogen<cr>", mode = "n", desc = "Generate Annotation" },
     },
   },
+  { "nvim-lua/plenary.nvim" },
 }
