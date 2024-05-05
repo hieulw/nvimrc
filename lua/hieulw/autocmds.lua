@@ -57,6 +57,7 @@ autocmd("FileType", {
     "query",
     "dap-float",
     "dap-repl",
+    "dbout",
   },
   callback = function(e)
     vim.bo[e.buf].buflisted = false

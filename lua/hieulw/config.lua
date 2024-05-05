@@ -12,6 +12,7 @@ M.pack = {
   markdown = true,
   php = false,
   python = true,
+  sql = true,
   tailwind = true,
   typescript = true,
 }
