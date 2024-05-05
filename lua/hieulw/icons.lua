@@ -1,15 +1,17 @@
 return {
   kind = {
-    Class = "󰠱",
     Codeium = "",
+    Copilot = "",
+    TabNine = "󰏚",
+
+    Class = "󰠱",
     Color = "󰏘",
     Constant = "󰏿",
     Constructor = "",
-    Copilot = "",
     Enum = "",
     EnumMember = "",
     Event = "",
-    Field = "󰇽",
+    Field = "",
     File = "󰈙",
     Folder = "󰉋",
     Function = "󰊕",
@@ -22,7 +24,7 @@ return {
     Reference = "",
     Snippet = "",
     Text = "",
-    TypeParameter = "󰅲",
+    TypeParameter = "󰗴",
     Unit = "",
     Value = "󰎠",
 
@@ -30,7 +32,7 @@ return {
     Boolean = "",
     Collapsed = "",
     Control = "",
-    Key = "",
+    Key = "󰌋",
     Namespace = "󰦮",
     Null = "",
     Number = "󰎠",
@@ -38,7 +40,6 @@ return {
     Package = "",
     String = "",
     Struct = "󰆼",
-    TabNine = "󰏚",
     Variable = "󰀫",
   },
   git = {
@@ -51,6 +52,7 @@ return {
   ui = {
     Search = "",
     Selected = "❯",
+    Pointer = "➜",
     Bug = "",
     Circle = "",
     Round = "",
@@ -59,6 +61,12 @@ return {
     Robot = "󰚩",
     LSP = "",
     Fold = "",
+  },
+  task = {
+    Canceled = " ",
+    Failure = " ",
+    Success = " ",
+    Running = " ",
   },
   diagnostics = {
     BoldError = "",

@@ -100,6 +100,7 @@ return {
           }
           if config.start_neovim then
             local dap_run = dap.run
+            ---@diagnostic disable-next-line: duplicate-set-field
             dap.run = function(c)
               adapter.port = c.port
               adapter.host = c.host

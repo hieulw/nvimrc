@@ -10,10 +10,12 @@ function M.setup(_, opts)
 
   for name, sign in pairs(icons.dap) do
     sign = type(sign) == "table" and sign or { sign }
-    vim.fn.sign_define(
-      "Dap" .. name,
-      { text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] }
-    )
+    vim.fn.sign_define("Dap" .. name, {
+      text = sign[1],
+      texthl = sign[2] or "DiagnosticInfo",
+      linehl = sign[3],
+      numhl = sign[3],
+    })
   end
 
   -- setup UI
@@ -26,9 +28,8 @@ function M.setup(_, opts)
       {
         elements = {
           { id = "stacks", size = 0.20 },
-          { id = "scopes", size = 0.40 },
-          { id = "watches", size = 0.30 },
-          { id = "breakpoints", size = 0.10 },
+          { id = "scopes", size = 0.48 },
+          { id = "watches", size = 0.32 },
         },
         position = "right",
         size = 40,
@@ -40,7 +41,7 @@ function M.setup(_, opts)
       lualine_c = vim.list_extend(lualine.get_config().sections.lualine_c, {
         function()
           if dap.status() ~= "" then
-            return icons.ui.Bug .. " " .. dap.status()
+            return ("%s %s"):format(icons.ui.Bug, string.lower(dap.status()))
           end
           return dap.status()
         end,
@@ -67,4 +68,5 @@ function M.setup(_, opts)
     dap.adapters[_adapters] = _opts
   end
 end
+
 return M

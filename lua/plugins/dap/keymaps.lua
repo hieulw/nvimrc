@@ -27,7 +27,9 @@ return {
   {
     "<leader>dB",
     function()
-      require("dap").set_breakpoint(vim.fn.input("[Condition]> "))
+      vim.ui.input({ prompt = "Condition" }, function(value)
+        require("dap").set_breakpoint(value)
+      end)
     end,
     desc = "Breakpoint Condition",
   },
