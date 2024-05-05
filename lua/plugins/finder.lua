@@ -1,90 +1,96 @@
 return {
   {
-    "nvim-telescope/telescope.nvim",
-    cmd = "Telescope",
+    "ibhagwan/fzf-lua",
+    cmd = "FzfLua",
     keys = {
-      { "<leader>ff", "<cmd>Telescope find_files<CR>", mode = "n", desc = "Find File" },
-      { "<leader>fg", "<cmd>Telescope live_grep<CR>", mode = "n", desc = "Grep String" },
-      { "<leader>fb", "<cmd>Telescope buffers<CR>", mode = "n", desc = "Buffers" },
-      { "<leader>f?", "<cmd>Telescope builtin<CR>", mode = "n", desc = "Builtin" },
-      { "<leader><leader>", "<cmd>Telescope resume<CR>", mode = "n", desc = "Resume Telescope" },
+      { "<leader>ff", "<cmd>FzfLua files<CR>", mode = "n", desc = "Find Files" },
+      { "<leader>fo", "<cmd>FzfLua files<CR>", mode = "n", desc = "Old Files" },
+      { "<leader>fg", "<cmd>FzfLua live_grep<CR>", mode = "n", desc = "Grep String" },
+      { "<leader>fg", "<cmd>FzfLua grep_visual<cr>", mode = "x", desc = "Grep String" },
+      { "<leader>fb", "<cmd>FzfLua buffers<CR>", mode = "n", desc = "Buffers" },
+      { "<leader>f?", "<cmd>FzfLua builtin<CR>", mode = "n", desc = "Builtins" },
+      { "<leader><leader>", "<cmd>FzfLua resume<CR>", mode = "n", desc = "Resume Finder" },
     },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      "nvim-telescope/telescope-ui-select.nvim",
-    },
-    config = function()
-      local telescope = require("telescope")
-      local actions = require("telescope.actions")
+    opts = function()
+      local action = require("fzf-lua.actions")
       local icon = require("hieulw.icons")
-      local theme = "dropdown" -- ivy | dropdown | cursor
-      local file_name_display = function(_, path)
-        local tail = vim.fs.basename(path)
-        local parent = vim.fs.dirname(path)
-        if parent == "." then
-          return tail
-        end
-        return string.format("%s\t\t%s", tail, parent)
-      end
 
-      telescope.setup({
-        defaults = {
-          prompt_prefix = string.format("%s ", icon.ui.Search),
-          selection_caret = string.format("%s ", icon.ui.Selected),
-          multi_icon = string.format("%s", icon.ui.Plus),
-          path_display = { "truncate" },
-          sorting_strategy = "ascending",
-          layout_strategy = "flex",
-          preview = false,
-          layout_config = {
-            prompt_position = "top",
-            width = 0.87,
-            height = 0.80,
-            preview_cutoff = 120,
-          },
-          mappings = {
-            i = {
-              ["<C-j>"] = actions.cycle_history_next,
-              ["<C-k>"] = actions.cycle_history_prev,
-            },
-            n = { ["q"] = actions.close },
+      return {
+        winopts = {
+          width = math.min(vim.o.columns, 80),
+          height = math.min(vim.o.lines, 30),
+          row = 0.1,
+          col = 0.5,
+          preview = {
+            layout = "vertical",
+            vertical = "up:60%",
+            scrollbar = "border",
+            winopts = { number = false },
           },
         },
-        pickers = {
-          builtin = { include_extensions = true },
-          buffers = {
-            preview = true,
-            theme = theme,
-            ignore_current_buffer = true,
-            sort_lastused = true,
-            sort_mru = true,
-            path_display = file_name_display,
+        keymap = {
+          builtin = {
+            ["<C-/>"] = "toggle-help",
+            ["<C-Space>"] = "toggle-fullscreen",
+            ["<C-d>"] = "preview-page-down",
+            ["<C-u>"] = "preview-page-up",
           },
-          find_files = {
-            theme = theme,
-            follow = true,
-            hidden = true,
-            path_display = file_name_display,
-          },
-          live_grep = {
-            theme = theme,
-            preview = true,
-          },
-        },
-        extensions = {
-          ["ui-select"] = { require("telescope.themes").get_ivy() },
           fzf = {
-            fuzzy = true, -- false will only do exact matching
-            override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true, -- override the file sorter
-            case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+            ["alt-a"] = "toggle-all",
           },
         },
-      })
-
-      telescope.load_extension("fzf")
-      telescope.load_extension("ui-select")
+        actions = {
+          files = {
+            ["default"] = action.file_edit_or_qf,
+            ["ctrl-x"] = action.file_split,
+            ["ctrl-v"] = action.file_vsplit,
+            ["ctrl-t"] = action.file_tabedit,
+            ["ctrl-q"] = action.file_sel_to_qf,
+          },
+          buffers = {
+            ["default"] = action.buf_edit,
+            ["ctrl-x"] = action.buf_split,
+            ["ctrl-v"] = action.buf_vsplit,
+            ["ctrl-t"] = action.buf_tabedit,
+          },
+        },
+        fzf_opts = {
+          ["--cycle"] = true,
+          ["--no-hscroll"] = true,
+          ["--pointer"] = icon.ui.Pointer,
+          ["--marker"] = icon.ui.Selected,
+        },
+        defaults = {
+          git_icons = false,
+          prompt = ("%s "):format(icon.ui.Search),
+        },
+        files = {
+          cwd_prompt = false,
+          previewer = false,
+          formatter = "path.filename_first",
+          winopts = { height = math.min(vim.o.lines, 15) },
+        },
+        grep = {
+          path_shorten = 1,
+        },
+      }
+    end,
+    config = function(_, opts)
+      local fzflua = require("fzf-lua")
+      fzflua.setup(opts)
+      fzflua.register_ui_select(function(o, items)
+        local min_h, max_h = 0.24, 0.6
+        local h = (#items + 4) / vim.o.lines
+        if h < min_h then
+          h = min_h
+        elseif h > max_h then
+          h = max_h
+        end
+        if o.kind == "codeaction" then
+          h = max_h
+        end
+        return { winopts = { height = h, row = 0.10 } }
+      end)
     end,
   },
 }

@@ -53,7 +53,7 @@ return {
             lspconfig = opts,
           })
           require("lspconfig").yamlls.setup(config)
-          require("telescope").load_extension("yaml_schema")
+          -- require("telescope").load_extension("yaml_schema")
           return true
         end,
       },

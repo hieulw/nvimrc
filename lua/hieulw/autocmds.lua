@@ -141,19 +141,6 @@ autocmd("CmdlineLeave", {
   command = "set nohlsearch",
 })
 
----@see https://github.com/nvim-telescope/telescope.nvim/issues/2014
-autocmd("FileType", {
-  desc = "Add telescope result highlight",
-  pattern = { "TelescopeResults" },
-  group = augroup("telescope_parent_highlight"),
-  callback = function(e)
-    vim.api.nvim_buf_call(e.buf, function()
-      vim.fn.matchadd("TelescopeParent", "\t\t.*$")
-      vim.api.nvim_set_hl(0, "TelescopeParent", { link = "GruvBoxBg2" })
-    end)
-  end,
-})
-
 ---@see https://www.reddit.com/r/neovim/comments/zy5s0l/you_dont_need_vimrooter
 autocmd("BufEnter", {
   desc = "Find root and change current directory",
