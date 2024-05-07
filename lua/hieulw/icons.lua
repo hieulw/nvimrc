@@ -61,6 +61,7 @@ return {
     Robot = "󰚩",
     LSP = "",
     Fold = "",
+    ThinSpace = " ",
   },
   task = {
     Canceled = " ",

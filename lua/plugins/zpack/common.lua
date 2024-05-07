@@ -5,6 +5,7 @@ return {
       vim.list_extend(opts.ensure_installed, {
         "hyprlang",
         "bash",
+        "just",
         "json",
         "jsonc",
         "yaml",
@@ -53,7 +54,7 @@ return {
             lspconfig = opts,
           })
           require("lspconfig").yamlls.setup(config)
-          -- require("telescope").load_extension("yaml_schema")
+          require("fzf-lua").yaml_companion = require("yaml-companion").open_ui_select
           return true
         end,
       },
