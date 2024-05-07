@@ -223,13 +223,4 @@ return {
       require("im_select").setup()
     end,
   },
-  {
-    "danymat/neogen",
-    opts = { snippet_engine = "vsnip", languages = {} },
-    cmd = "Neogen",
-    keys = {
-      { "cd", "<cmd>Neogen<cr>", mode = "n", desc = "Generate Annotation" },
-    },
-  },
-  { "nvim-lua/plenary.nvim" },
 }

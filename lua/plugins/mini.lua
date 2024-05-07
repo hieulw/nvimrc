@@ -69,7 +69,7 @@ return {
           { mode = "n", keys = "<Leader>l", desc = "+LSP" },
           { mode = "n", keys = "<Leader>p", desc = "+Popups" },
           { mode = "n", keys = "<Leader>s", desc = "+Snippets" },
-          { mode = "n", keys = "<Leader>t", desc = "+TS/Terminal" },
+          { mode = "n", keys = "<Leader>t", desc = "+Test/Task" },
           { mode = "n", keys = "<Leader>w", desc = "+Windows" },
         }
       end

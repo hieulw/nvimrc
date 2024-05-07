@@ -1,4 +1,6 @@
-return {
+local M = {}
+
+M.dap = {
   {
     "<leader>dC",
     function()
@@ -8,7 +10,7 @@ return {
           config = vim.deepcopy(config)
           ---@cast args string[]
           config.args = function()
-            local new_args = vim.fn.input("[Arguments]> ", table.concat(args, " ")) --[[@as string]]
+            local new_args = vim.fn.input("Arguments: ", table.concat(args, " ")) --[[@as string]]
             return vim.split(vim.fn.expand(new_args) --[[@as string]], " ")
           end
           return config
@@ -99,3 +101,90 @@ return {
     mode = { "n", "v" },
   },
 }
+
+M.neotest = {
+  {
+    "<leader>tt",
+    function()
+      require("neotest").run.run(vim.fn.expand("%"))
+    end,
+    desc = "Run File",
+  },
+  {
+    "<leader>tT",
+    function()
+      require("neotest").run.run(vim.uv.cwd())
+    end,
+    desc = "Run All Test Files",
+  },
+  {
+    "<leader>tr",
+    function()
+      require("neotest").run.run()
+    end,
+    desc = "Run Nearest",
+  },
+  {
+    "<leader>tl",
+    function()
+      require("neotest").run.run_last()
+    end,
+    desc = "Run Last",
+  },
+  {
+    "<leader>ts",
+    function()
+      require("neotest").summary.toggle()
+    end,
+    desc = "Toggle Summary",
+  },
+  {
+    "<leader>to",
+    function()
+      require("neotest").output.open({ enter = true, auto_close = true })
+    end,
+    desc = "Show Output",
+  },
+  {
+    "<leader>tO",
+    function()
+      require("neotest").output_panel.toggle()
+    end,
+    desc = "Toggle Output Panel",
+  },
+  {
+    "<leader>tS",
+    function()
+      require("neotest").run.stop()
+    end,
+    desc = "Stop",
+  },
+  {
+    "<leader>td",
+    function()
+      require("neotest").run.run({ strategy = "dap" })
+    end,
+    desc = "Debug Nearest",
+  },
+}
+
+M.overseer = {
+  { "<leader>ta", "<cmd>OverseerToggle<cr>", mode = "n", desc = "Toggle Task Results" },
+  { "<leader>tcl", "<cmd>OverseerRun<cr>", mode = "n", desc = "Show Task Commands" },
+  {
+    "<leader>tcc",
+    function()
+      local overseer = require("overseer")
+      local tasks = overseer.list_tasks({ recent_first = true })
+      if vim.tbl_isempty(tasks) then
+        vim.notify("No tasks found", vim.log.levels.WARN)
+      else
+        overseer.run_action(tasks[1], "restart")
+      end
+    end,
+    mode = "n",
+    desc = "Run Last Task",
+  },
+}
+
+return M
