@@ -10,10 +10,12 @@ return {
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         "gopls",
+        "gofumpt",
         "goimports",
         "golines",
         "gomodifytags",
         "impl",
+        "delve",
       })
     end,
   },
@@ -24,6 +26,7 @@ return {
       vim.list_extend(opts.sources, {
         nls.builtins.formatting.goimports,
         nls.builtins.formatting.golines,
+        nls.builtins.formatting.gofumpt,
         nls.builtins.code_actions.gomodifytags,
         nls.builtins.code_actions.impl,
       })
@@ -36,6 +39,7 @@ return {
         gopls = {
           settings = {
             gopls = {
+              gofumpt = true,
               codelenses = {
                 gc_details = false,
                 generate = true,
@@ -66,16 +70,16 @@ return {
               completeUnimported = true,
               staticcheck = true,
               directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
-              semanticTokens = false,
+              semanticTokens = true,
             },
           },
         },
       },
       setup = {
         gopls = function(_, opts)
-          -- workaround for gopls not supporting semanticTokensProvider
-          ---@see https://github.com/golang/go/issues/54531#issuecomment-1464982242
-          require("plugins.lsp.utils").on_attach("gopls", function(client, _)
+          require("plugins.lsp.utils").on_attach("gopls", function(client, buffer)
+            -- workaround for gopls not supporting semanticTokensProvider
+            ---@see https://github.com/golang/go/issues/54531#issuecomment-1464982242
             if not client.server_capabilities.semanticTokensProvider then
               local semantic = client.config.capabilities.textDocument.semanticTokens
               client.server_capabilities.semanticTokensProvider = {
@@ -87,8 +91,29 @@ return {
                 range = true,
               }
             end
+
+            -- workaround for the lack of a DAP strategy in neotest-go
+            ---@see https://github.com/nvim-neotest/neotest-go/issues/12
+            vim.keymap.set("n", "<leader>td", function()
+              require("dap-go").debug_test()
+            end, { buffer = buffer, desc = "Debug Nearest (Go)" })
           end)
         end,
+      },
+    },
+  },
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = { "leoluz/nvim-dap-go", config = true },
+  },
+  {
+    "nvim-neotest/neotest",
+    dependencies = { "nvim-neotest/neotest-go" },
+    opts = {
+      adapters = {
+        ["neotest-go"] = {
+          recursive_run = true,
+        },
       },
     },
   },
