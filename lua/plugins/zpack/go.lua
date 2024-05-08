@@ -112,6 +112,7 @@ return {
     opts = {
       adapters = {
         ["neotest-go"] = {
+          args = { "-coverprofile=coverage.out" },
           recursive_run = true,
         },
       },
