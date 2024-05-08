@@ -104,32 +104,18 @@ M.dap = {
 
 M.neotest = {
   {
-    "<leader>tt",
+    "<leader>tf",
     function()
       require("neotest").run.run(vim.fn.expand("%"))
     end,
-    desc = "Run File",
+    desc = "Test File",
   },
   {
-    "<leader>tT",
+    "<leader>ta",
     function()
       require("neotest").run.run(vim.uv.cwd())
     end,
-    desc = "Run All Test Files",
-  },
-  {
-    "<leader>tr",
-    function()
-      require("neotest").run.run()
-    end,
-    desc = "Run Nearest",
-  },
-  {
-    "<leader>tl",
-    function()
-      require("neotest").run.run_last()
-    end,
-    desc = "Run Last",
+    desc = "Test All",
   },
   {
     "<leader>ts",
@@ -146,13 +132,6 @@ M.neotest = {
     desc = "Show Output",
   },
   {
-    "<leader>tO",
-    function()
-      require("neotest").output_panel.toggle()
-    end,
-    desc = "Toggle Output Panel",
-  },
-  {
     "<leader>tS",
     function()
       require("neotest").run.stop()
@@ -164,15 +143,34 @@ M.neotest = {
     function()
       require("neotest").run.run({ strategy = "dap" })
     end,
-    desc = "Debug Nearest",
+    desc = "Test & Debug Nearest",
+  },
+  {
+    "<leader>tc",
+    function()
+      if not vim.g.coverage_loaded then
+        require("coverage").load(true)
+        vim.g.coverage_loaded = true
+      else
+        require("coverage").toggle()
+      end
+    end,
+    desc = "Test Coverage",
+  },
+  {
+    "<leader>tC",
+    function()
+      require("coverage").summary()
+    end,
+    desc = "Test Coverage Summary",
   },
 }
 
 M.overseer = {
-  { "<leader>ta", "<cmd>OverseerToggle<cr>", mode = "n", desc = "Toggle Task Results" },
-  { "<leader>tcl", "<cmd>OverseerRun<cr>", mode = "n", desc = "Show Task Commands" },
+  { "<leader>tt", "<cmd>OverseerToggle<cr>", mode = "n", desc = "Toggle Task Results" },
+  { "<leader>tr", "<cmd>OverseerRun<cr>", mode = "n", desc = "Show Task Commands" },
   {
-    "<leader>tcc",
+    "<leader>tl",
     function()
       local overseer = require("overseer")
       local tasks = overseer.list_tasks({ recent_first = true })

@@ -20,8 +20,10 @@ return {
     keys = require("plugins.dap.keymaps").neotest,
     opts = {
       adapters = {},
-      status = { virtual_text = true },
-      output = { open_on_run = true },
+      status = { virtual_text = true, signs = false },
+      diagnostic = { enabled = true },
+      output = { open_on_run = false },
+      output_panel = { enabled = false },
     },
     config = function(_, opts)
       if not opts.adapters then
@@ -63,6 +65,20 @@ return {
 
       require("neotest").setup(opts)
     end,
+  },
+  {
+    "andythigpen/nvim-coverage",
+    cmd = "Coverage",
+    opts = {
+      auto_reload = true,
+      summary = {
+        width_percentage = 0.5,
+        height_percentage = 0.6,
+        window = { winblend = 0 },
+        min_coverage = 80.0,
+      },
+    },
+    config = require("plugins.dap.coverage").setup,
   },
   {
     "stevearc/overseer.nvim",
