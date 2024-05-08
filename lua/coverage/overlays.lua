@@ -8,8 +8,7 @@ local default_priority = 10
 --- @class OverlayMark
 --- @field buffer integer
 --- @field id? integer
---- @field start_pos integer[]
---- @field end_pos integer[]
+--- @field lnum integer
 --- @field name integer
 --- @field priority integer
 --- @field highlight string
@@ -39,15 +38,13 @@ M.place = function(overlays)
     overlay.id = vim.api.nvim_buf_set_extmark(
       overlay.buffer,
       overlay.name,
-      overlay.start_pos[1] - 1, -- minus one because of zero-indexed
-      overlay.start_pos[2] - 1,
+      overlay.lnum - 1, -- minus one because of zero-indexed
+      0,
       {
+        end_row = overlay.lnum,
         priority = overlay.priority,
-        end_row = overlay.end_pos[1] - 1,
-        end_col = overlay.end_pos[2] - 1,
         hl_group = overlay.highlight,
         hl_eol = false,
-        hl_mode = "blend",
       }
     )
   end
@@ -95,49 +92,43 @@ M.clear = function()
   cached_overlays = nil
 end
 
---- Returns a new covered sign in the format used by sign_placelist.
+--- Returns a new covered sign in the format used by nvim_buf_set_extmark.
 --- @param buffer string|integer buffer name or id
---- @param start_pos integer[] line, col of starting position
---- @param end_pos integer[] line, col of ending position
+--- @param lnum integer
 --- @return OverlayMark
-M.new_covered = function(buffer, start_pos, end_pos)
+M.new_covered = function(buffer, lnum)
   return {
     buffer = buffer,
-    start_pos = start_pos,
-    end_pos = end_pos,
+    lnum = lnum,
     name = M.name("covered"),
     priority = default_priority,
     highlight = "DiffAdd",
   }
 end
 
---- Returns a new uncovered sign in the format used by sign_placelist.
+--- Returns a new uncovered sign in the format used by nvim_buf_set_extmark.
 --- @param buffer string|integer buffer name or id
---- @param start_pos integer[] line, col of starting position
---- @param end_pos integer[] line, col of ending position
+--- @param lnum integer
 --- @return OverlayMark
-M.new_uncovered = function(buffer, start_pos, end_pos)
+M.new_uncovered = function(buffer, lnum)
   return {
     buffer = buffer,
-    start_pos = start_pos,
-    end_pos = end_pos,
+    lnum = lnum,
     name = M.name("uncovered"),
     priority = default_priority,
     highlight = "DiffDelete",
   }
 end
 
---- Returns a new partial coverage sign in the format used by sign_placelist.
+--- Returns a new partial coverage sign in the format used by nvim_buf_set_extmark.
 --- @param buffer string|integer buffer name or id
---- @param start_pos integer[] line, col of starting position
---- @param end_pos integer[] line, col of ending position
+--- @param lnum integer
 --- @return OverlayMark
-M.new_partial = function(buffer, start_pos, end_pos)
+M.new_partial = function(buffer, lnum)
   local priority = default_priority + 1
   return {
     buffer = buffer,
-    start_pos = start_pos,
-    end_pos = end_pos,
+    lnum = lnum,
     name = M.name("partial"),
     priority = priority,
     highlight = "DiffChange",

@@ -9,7 +9,7 @@ local overlays = require("coverage.overlays")
 --- Returns a list of signs to be placed.
 M.sign_list = common.sign_list
 
---- Returns a list of signs to be placed.
+--- Returns a list of overlays to be placed.
 --- @param json_data CoverageData data from the generated report
 --- @returns OverlayMark[]
 M.overlay_list = function(json_data)
@@ -18,14 +18,32 @@ M.overlay_list = function(json_data)
   for fname, cov in pairs(json_data.files) do
     local buffer = vim.fn.bufnr(fname, false)
     if buffer ~= -1 then
-      for _, range in ipairs(cov.covered_ranges) do
-        local spos, epos = unpack(range)
-        table.insert(overlay_list, overlays.new_covered(buffer, spos, epos))
+      -- group missing branches by `from` line number
+      local missing_branches_from = {}
+      if cov.missing_branches ~= nil then
+        for _, branch in ipairs(cov.missing_branches) do
+          -- branch is { from, to }
+          table.insert(missing_branches_from, branch[1])
+        end
       end
 
-      for _, range in ipairs(cov.uncovered_ranges) do
-        local spos, epos = unpack(range)
-        table.insert(overlay_list, overlays.new_uncovered(buffer, spos, epos))
+      for _, lnum in ipairs(cov.executed_lines) do
+        -- a line cannot be fully covered if there are executed missing branches from it
+        if not vim.tbl_contains(missing_branches_from, lnum) then
+          table.insert(overlay_list, overlays.new_covered(buffer, lnum))
+        end
+      end
+
+      for _, lnum in ipairs(cov.missing_lines) do
+        table.insert(overlay_list, overlays.new_uncovered(buffer, lnum))
+      end
+
+      for _, lnum in ipairs(missing_branches_from) do
+        -- if from is a missing_line, all branches are missing coverage so we can ignore here
+        -- otherwise, if the line is not missing but branches are, then the line is partially coverged
+        if not vim.tbl_contains(cov.missing_lines, lnum) then
+          table.insert(overlay_list, overlays.new_partial(buffer, lnum))
+        end
       end
     end
   end
@@ -38,7 +56,7 @@ M.summary = common.summary
 -- the fields are: name.go:line.column,line.column numberOfStatements count
 -- see https://github.com/golang/go/blob/0104a31b8fbcbe52728a08867b26415d282c35d2/src/cmd/cover/profile.go#L115
 -- and https://github.com/golang/go/blob/master/src/testing/cover.go#L102
-local line_re = "^(.+):(%d+)%.(%d+),(%d+)%.(%d+) %d+ (%d+)$"
+local line_re = "^(.+):(%d+)%.%d+,(%d+)%.%d+ %d+ (%d+)$"
 
 -- for parsing the module name from go.mod
 local mod_name_re = "^module (.*)$"
@@ -62,30 +80,6 @@ local get_module_name = function()
   return ""
 end
 
---- @class FileCoverage
---- @field covered_ranges table[][] line, col ranges covered under test
---- @field uncovered_ranges table[][] line, col ranges excluded under test
-
---- Returns a table containing file parameters.
---- @return FileCoverage
-local function get_file_meta()
-  return {
-    summary = {
-      covered_lines = 0,
-      excluded_lines = 0,
-      missing_lines = 0,
-      num_statements = 0,
-      percent_covered = 0,
-    },
-    missing_lines = {},
-    missing_branches = {},
-    executed_lines = {},
-    excluded_lines = {},
-    covered_ranges = {},
-    uncovered_ranges = {},
-  }
-end
-
 --- Parses a coverprofile formatted file
 --- @param path Path
 --- @param files table<string, FileCoverage>
@@ -96,12 +90,10 @@ local parse_coverprofile = function(path, files)
   for _, line in ipairs(lines) do
     if line:match(line_re) then
       -- example/main.go:3.14,5.2 0 0
-      local fname, line_start, col_start, line_end, col_end, count = line:match(line_re)
+      local fname, line_start, line_end, count = line:match(line_re)
       fname = fname:gsub(mod_name .. "/", "", 1)
       line_start = tonumber(line_start)
-      col_start = tonumber(col_start)
       line_end = tonumber(line_end)
-      col_end = tonumber(col_end)
       count = tonumber(count)
       if lines_by_filename[fname] == nil then
         lines_by_filename[fname] = {}
@@ -109,15 +101,11 @@ local parse_coverprofile = function(path, files)
       for linenr = line_start, line_end do
         lines_by_filename[fname][linenr] = (lines_by_filename[fname][linenr] or 0) + count
       end
-      if ranges_by_filename[fname] == nil then
-        ranges_by_filename[fname] = {}
-      end
-      ranges_by_filename[fname][{ { line_start, col_start }, { line_end, col_end } }] = count
     end
   end
 
   for fname, linenrs in pairs(lines_by_filename) do
-    local file = get_file_meta()
+    local file = util.new_file_meta()
     for linenr, count in pairs(linenrs) do
       if count == 0 then
         table.insert(file.missing_lines, linenr)
@@ -128,13 +116,6 @@ local parse_coverprofile = function(path, files)
       file.summary.num_statements = file.summary.num_statements + 1
     end
     file.summary.percent_covered = file.summary.covered_lines / file.summary.num_statements * 100
-    for range, count in pairs(ranges_by_filename[fname]) do
-      if count == 0 then
-        table.insert(file.uncovered_ranges, range)
-      else
-        table.insert(file.covered_ranges, range)
-      end
-    end
     files[fname] = file
   end
 end
