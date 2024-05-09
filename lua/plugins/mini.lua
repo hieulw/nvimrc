@@ -170,4 +170,34 @@ return {
       },
     },
   },
+  {
+    "echasnovski/mini.surround",
+    keys = { { "gs", mode = { "n", "x" } }, "gss", "ds", "cs" },
+    opts = function()
+      local ts_input = require("mini.surround").gen_spec.input.treesitter
+      return {
+        custom_surroundings = {
+          f = {
+            input = ts_input({ outer = "@call.outer", inner = "@call.inner" }),
+          },
+        },
+        mappings = {
+          add = "gs",
+          delete = "ds",
+          replace = "cs",
+          find = "",
+          find_left = "",
+          highlight = "",
+          update_n_lines = "",
+          suffix_last = "",
+          suffix_next = "",
+        },
+        search_method = "cover_or_next",
+      }
+    end,
+    config = function(_, opts)
+      require("mini.surround").setup(opts)
+      vim.keymap.set("n", "gss", "gs_", { remap = true })
+    end,
+  },
 }

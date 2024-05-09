@@ -82,11 +82,6 @@ return {
     },
   },
   {
-    "kylechui/nvim-surround",
-    event = "LazyFile",
-    opts = {},
-  },
-  {
     "max397574/better-escape.nvim",
     event = "InsertCharPre",
     enabled = false,
