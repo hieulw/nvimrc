@@ -22,8 +22,9 @@ return {
       adapters = {},
       status = { virtual_text = true, signs = false },
       diagnostic = { enabled = true },
-      output = { open_on_run = false },
+      output = { open_on_run = true },
       output_panel = { enabled = false },
+      summary = { open = "botright vsplit | vertical resize 25" },
     },
     config = function(_, opts)
       if not opts.adapters then

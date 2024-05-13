@@ -1,0 +1,80 @@
+local M = {}
+
+local function override_highlights()
+  local colors = require("gruvbox").palette
+  return {
+    DiffAdd = { bg = "#34381b" },
+    DiffChange = { bg = "#0e363e" },
+    DiffDelete = { bg = "#402120" },
+    CmpItemAbbrMatchFuzzy = { link = "CmpIntemAbbrMatch" },
+    CmpItemAbbrDeprecated = { link = "DiagnosticDeprecated" },
+    CoverageCovered = { link = "GruvboxGreen" },
+    CoverageUncovered = { link = "GruvboxRed" },
+    CoveragePartial = { link = "GruvboxOrange" },
+    CoverageSummaryHeader = { link = "GruvboxBlueBold" },
+    DapStoppedLine = { default = true, link = "Visual" },
+    DapUIPlayPause = { link = "GruvboxGreen" },
+    DapUIRestart = { link = "GruvboxGreen" },
+    DapUIStepInto = { link = "GruvboxAqua" },
+    DapUIStepOver = { link = "GruvboxAqua" },
+    DapUIStepOut = { link = "GruvboxAqua" },
+    DapUIStepBack = { link = "GruvboxAqua" },
+    DapUIStop = { link = "GruvboxRed" },
+    Delimiter = { link = "GruvboxFg1" },
+    NeotestDir = { link = "GruvboxAqua" },
+    NeotestFile = { link = "GruvboxBlue" },
+    NeotestFailed = { link = "GruvboxRed" },
+    NeotestIndent = { link = "GruvboxFg1" },
+    NeotestMark = { link = "GruvboxOrange" },
+    NeotestPassed = { link = "GruvboxGreen" },
+    NeotestTarget = { link = "GruvboxBlue" },
+    NeotestFocused = { link = "GruvboxBlue" },
+    NeotestRunning = { link = "GruvboxYellow" },
+    NeotestSkipped = { link = "GruvboxOrange" },
+    NeotestNamespace = { link = "GruvboxMagenta" },
+    NeotestWatching = { link = "GruvboxYellow" },
+    NeotestAdapterName = { link = "GruvboxGreen" },
+    NeotestExpandMarker = { link = "NeotestIndent" },
+    NeotestWinSelect = { link = "GruvboxBlue" },
+    FzfLuaDirPart = { link = "GruvboxBg2" },
+    PmenuSel = { link = "TabLineSel" },
+    WinBarNC = { link = "WinBar" },
+    NormalSB = { link = "Normal" },
+    Folded = { bg = "None" },
+    UfoFoldedBg = { link = "MatchBackground" },
+    Keyword = { fg = colors.bright_red, italic = true },
+    ["@keyword.import"] = { link = "@keyword" },
+    ["@namespace"] = { link = "GruvboxAqua" },
+    ["@lsp.type.variable"] = {},
+    ["@lsp.mod.readonly"] = { link = "GruvboxPurple" },
+  }
+end
+
+function M.config()
+  return {
+    terminal_colors = true,
+    undercurl = true,
+    underline = true,
+    bold = true,
+    italic = {
+      strings = true,
+      emphasis = true,
+      comments = true,
+      operators = false,
+      folds = false,
+    },
+    strikethrough = true,
+    invert_selection = false,
+    invert_signs = false,
+    invert_tabline = false,
+    invert_intend_guides = false,
+    inverse = true,
+    contrast = nil,
+    palette_overrides = {},
+    overrides = override_highlights(),
+    dim_inactive = false,
+    transparent_mode = true,
+  }
+end
+
+return M
