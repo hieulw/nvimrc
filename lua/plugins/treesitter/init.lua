@@ -71,9 +71,13 @@ return {
   {
     "johmsalas/text-case.nvim",
     event = "LazyFile",
-    enabled = false,
+    enabled = true,
     name = "textcase",
-    opts = { default_keymappings_enabled = true, prefix = "cr" },
+    opts = {
+      default_keymappings_enabled = true,
+      substitude_command_name = "Subvert",
+      prefix = "cr",
+    },
   },
   {
     "wansmer/treesj",

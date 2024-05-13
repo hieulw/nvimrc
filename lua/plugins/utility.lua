@@ -1,10 +1,5 @@
 return {
   {
-    "tpope/vim-abolish",
-    keys = { "crs", "crm", "crp", "crc", "cru", "cr_", "cr-", "cr.", "cr<space>" },
-    cmd = { "Abolish", "Subvert" },
-  },
-  {
     "nvim-tree/nvim-tree.lua",
     keys = {
       { "<leader>e", "<cmd>NvimTreeToggle<cr>", mode = "n", desc = "File Explorer" },
