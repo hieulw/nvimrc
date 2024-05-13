@@ -77,15 +77,6 @@ return {
     },
   },
   {
-    "max397574/better-escape.nvim",
-    event = "InsertCharPre",
-    enabled = false,
-    opts = {
-      timeout = tonumber(vim.opt.timeoutlen),
-      mapping = { "kj" },
-    },
-  },
-  {
     "mrjones2014/smart-splits.nvim",
     opts = { ignored_filetypes = { "nofile", "quickfix", "qf", "prompt" }, ignored_buftypes = { "nofile" } },
     keys = function()

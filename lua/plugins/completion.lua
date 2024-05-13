@@ -105,7 +105,7 @@ return {
               else
                 cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })
               end
-            elseif vim.fn["vsnip#available"](1) == 1 then
+            elseif vim.fn["vsnip#jumpable"](1) == 1 then
               feedkey("<Plug>(vsnip-expand-or-jump)", "")
             else
               fallback()
