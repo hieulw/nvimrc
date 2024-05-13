@@ -40,6 +40,7 @@ local function override_highlights()
     PmenuSel = { link = "TabLineSel" },
     WinBarNC = { link = "WinBar" },
     NormalSB = { link = "Normal" },
+    Match = { fg = colors.bright_orange },
     Folded = { bg = "None" },
     UfoFoldedBg = { link = "MatchBackground" },
     Keyword = { fg = colors.bright_red, italic = true },

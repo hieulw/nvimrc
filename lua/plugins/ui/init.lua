@@ -43,6 +43,7 @@ return {
     event = "LazyFile",
     config = function()
       require("plugins.ui.input").setup()
+      require("plugins.ui.quickfix").setup()
     end,
   },
 }

@@ -61,6 +61,9 @@ return {
       vim.g.matchup_motion_enabled = 0
       vim.g.matchup_text_obj_enabled = 0
       vim.g.matchup_surround_enabled = 0
+      vim.g.matchup_matchparen_deferred = 1
+      vim.g.matchup_matchparen_hi_surround_always = 1
+      vim.api.nvim_set_hl(0, "MatchParen", { link = "Match" })
     end,
   },
   {
