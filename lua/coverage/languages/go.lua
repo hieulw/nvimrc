@@ -16,8 +16,8 @@ M.overlay_list = function(json_data)
   --- @type OverlayMark[]
   local overlay_list = {}
   for fname, cov in pairs(json_data.files) do
-    local buffer = vim.fn.bufnr(fname, false)
-    if buffer ~= -1 then
+    local buffer, exists = vim.fn.bufnr(fname, false), vim.fn.buflisted(fname)
+    if buffer ~= -1 and exists == 1 then
       -- group missing branches by `from` line number
       local missing_branches_from = {}
       if cov.missing_branches ~= nil then

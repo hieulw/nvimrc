@@ -35,7 +35,8 @@ M.place = function(overlays)
     M.unplace()
   end
   for _, overlay in ipairs(overlays) do
-    overlay.id = vim.api.nvim_buf_set_extmark(
+    local ok, extmark_id = pcall(
+      vim.api.nvim_buf_set_extmark,
       overlay.buffer,
       overlay.name,
       overlay.lnum - 1, -- minus one because of zero-indexed
@@ -47,6 +48,14 @@ M.place = function(overlays)
         hl_eol = false,
       }
     )
+    if ok then
+      overlay.id = extmark_id
+    else
+      cached_overlays = overlays
+      M.unplace()
+      vim.notify("The coverage file is outdated, please re-run test!", vim.log.levels.WARN)
+      return
+    end
   end
   enabled = true
   cached_overlays = overlays
