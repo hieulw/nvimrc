@@ -67,6 +67,4 @@
   })
 end)()
 
-return {
-  { "folke/lazy.nvim", version = "*" },
-}
+return { "folke/lazy.nvim", version = "*" }
