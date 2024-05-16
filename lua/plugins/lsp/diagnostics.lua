@@ -1,12 +1,12 @@
 local M = {}
 
 function M.setup()
-  local icons = require("hieulw.icons")
+  local icon = require("hieulw.icons")
   local signs = {
-    { name = "DiagnosticSignError", text = icons.diagnostics.Error },
-    { name = "DiagnosticSignWarn", text = icons.diagnostics.Warning },
-    { name = "DiagnosticSignHint", text = icons.diagnostics.Hint },
-    { name = "DiagnosticSignInfo", text = icons.diagnostics.Info },
+    { name = "DiagnosticSignError", text = icon.diagnostics.Error },
+    { name = "DiagnosticSignWarn", text = icon.diagnostics.Warning },
+    { name = "DiagnosticSignHint", text = icon.diagnostics.Hint },
+    { name = "DiagnosticSignInfo", text = icon.diagnostics.Info },
   }
   for _, sign in ipairs(signs) do
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
@@ -23,7 +23,7 @@ function M.setup()
       focusable = true,
       style = "minimal",
       border = "rounded",
-      source = "always",
+      source = "if_many",
     },
   })
 end

@@ -70,14 +70,10 @@ return {
     Running = " ",
   },
   diagnostics = {
-    BoldError = "",
-    Error = "",
-    BoldWarning = "",
-    Warning = "󰗖",
-    BoldInformation = "",
-    Information = "",
-    BoldHint = "󰟃",
-    Hint = "",
+    Error = " ",
+    Warning = " ",
+    Info = " ",
+    Hint = " ",
   },
   spinner = { "", "", "", "", "", "", "", "", "", "", "", "", "" },
   dap = {
