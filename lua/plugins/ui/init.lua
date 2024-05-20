@@ -1,25 +1,13 @@
 return {
   {
-    "nvchad/nvim-colorizer.lua",
+    "brenoprata10/nvim-highlight-colors",
     event = "LazyFile",
-    names = "colorizer",
     opts = {
-      user_default_options = {
-        RGB = true,
-        RRGGBB = true,
-        names = false,
-        RRGGBBAA = true,
-        AARRGGBB = true,
-        rgb_fn = true,
-        hsl_fn = true,
-        css = false,
-        css_fn = false,
-        mode = "virtualtext",
-        tailwind = "lsp",
-        sass = { enable = false, parsers = { "css" } },
-        virtualtext = ("%s "):format(require("hieulw.icons").ui.Round),
-        always_update = false,
-      },
+      render = "foreground",
+      virtual_symbol = require("hieulw.icons").ui.Round,
+      enable_named_colors = false,
+      enable_tailwind = true,
+      custom_colors = {},
     },
   },
   {

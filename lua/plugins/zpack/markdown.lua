@@ -22,18 +22,24 @@ return {
     },
   },
   {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
-    build = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-    config = function()
-      vim.g.mkdp_refresh_slow = 1
-      vim.g.mkdp_auto_close = 0
-      vim.g.mkdp_port = "35532"
-      vim.g.mkdp_theme = "dark"
-      vim.g.mkdp_combine_preview = 1
+    "toppair/peek.nvim",
+    build = "deno task --quiet build:fast",
+    event = "LazyFile",
+    opts = {
+      auto_load = true,
+      close_on_bdelete = true,
+      syntax = true,
+      theme = "dark",
+      update_on_change = true,
+      app = "webview",
+      filetype = { "markdown" },
+      throttle_at = 200000,
+      throttle_time = "auto",
+    },
+    config = function(_, opts)
+      require("peek").setup(opts)
+      vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+      vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
     end,
   },
 }
