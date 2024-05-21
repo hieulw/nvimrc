@@ -4,14 +4,13 @@ return {
     event = "LazyFile",
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
-      "joosepalviste/nvim-ts-context-commentstring",
+      "folke/ts-comments.nvim",
       "windwp/nvim-ts-autotag",
     },
     init = function(plugin)
       ---@see https://github.com/LazyVim/LazyVim/commit/1e1b68d633d4bd4faa912ba5f49ab6b8601dc0c9
       require("lazy.core.loader").add_to_rtp(plugin)
       require("nvim-treesitter.query_predicates")
-      vim.g.skip_ts_context_commentstring_module = true
     end,
     build = function()
       pcall(require("nvim-treesitter.install").update({ with_sync = false }))

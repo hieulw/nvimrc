@@ -112,24 +112,6 @@ return {
     end,
   },
   {
-    "echasnovski/mini.comment",
-    dependencies = { "joosepalviste/nvim-ts-context-commentstring" },
-    keys = { { "gc", mode = { "v", "n" } }, "gcc" },
-    opts = {
-      options = {
-        custom_commentstring = function()
-          return require("ts_context_commentstring").calculate_commentstring() or vim.bo.commentstring
-        end,
-      },
-      mappings = {
-        comment = "gc",
-        comment_line = "gcc",
-        comment_visual = "gc",
-        textobject = "",
-      },
-    },
-  },
-  {
     "echasnovski/mini.files",
     keys = { { "-", "<cmd>=MiniFiles.open()<cr>", mode = "n", desc = "File Explorer" } },
     opts = {
