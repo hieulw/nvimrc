@@ -14,11 +14,12 @@ function M.on_attach(client, buffer)
   self:map("]d", M.diagnostic_goto(true), { desc = "Next Diagnostic" })
   self:map("[d", M.diagnostic_goto(false), { desc = "Prev Diagnostic" })
 
-  self:map("<leader>ld", vim.diagnostic.open_float, { desc = "Show diagnostics" })
   self:map("<leader>la", vim.lsp.buf.code_action, { desc = "Code Actions", has = "codeAction" })
+  self:map("<leader>ld", vim.diagnostic.open_float, { desc = "Show diagnostics" })
+  self:map("<leader>lr", vim.lsp.buf.rename, { desc = "Rename", has = "rename" })
   self:map("<leader>lf", format, { desc = "Format", has = "documentFormatting" })
   self:map("<leader>lf", format, { mode = "v", desc = "Format", has = "documentRangeFormatting" })
-  self:map("<leader>lr", M.rename, { desc = "Rename", has = "rename" })
+  self:map("<leader>li", M.toggle_inlayhint, { desc = "Toggle Inlayhint", has = "textDocument/inlayHint" })
 end
 
 function M.new(client, buffer)
@@ -43,20 +44,19 @@ function M:map(lhs, rhs, opts)
   )
 end
 
-function M.rename()
-  if pcall(require, "inc_rename") then
-    return ":IncRename " .. vim.fn.expand("<cword>")
-  else
-    vim.lsp.buf.rename()
-  end
-end
-
 function M.diagnostic_goto(next, severity)
   local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
   severity = severity and vim.diagnostic.severity[severity] or nil
   return function()
     go({ severity = severity })
   end
+end
+
+function M.toggle_inlayhint()
+  ---@diagnostic disable-next-line: missing-parameter
+  local enabled = not vim.lsp.inlay_hint.is_enabled()
+  vim.lsp.inlay_hint.enable(enabled)
+  vim.notify(enabled and "Inlay Hint Enabled" or "Inlay Hint Disabled", vim.log.levels.INFO)
 end
 
 return M
