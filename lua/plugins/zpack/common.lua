@@ -10,6 +10,7 @@ return {
         "json",
         "jsonc",
         "yaml",
+        "helm",
         "html",
         "css",
       })
@@ -21,6 +22,7 @@ return {
       vim.list_extend(opts.ensure_installed, {
         "prettierd",
         "yaml-language-server",
+        "helm-ls",
         "json-lsp",
         "css-lsp",
         "html-lsp",
@@ -41,6 +43,15 @@ return {
     opts = {
       servers = {
         yamlls = {},
+        helm_ls = {
+          settings = {
+            ["helm-ls"] = {
+              yamlls = {
+                path = "yaml-language-server",
+              },
+            },
+          },
+        },
         jsonls = {},
         cssls = {},
         html = {},
