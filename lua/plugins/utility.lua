@@ -31,7 +31,10 @@ return {
       on_attach = function(bufnr)
         local api = require("nvim-tree.api")
         local mappings = {
+          { "<2-LeftMouse>", api.node.open.edit, "Open" },
+          { "<2-RightMouse>", api.tree.change_root_to_node, "CD" },
           { "<C-]>", api.tree.change_root_to_node, "CD" },
+          { "<C-r>", api.tree.reload, "Refresh" },
           { "<C-v>", api.node.open.vertical, "Open: Vertical Split" },
           { "<C-x>", api.node.open.horizontal, "Open: Horizontal Split" },
           { "h", api.node.navigate.parent_close, "Close Directory" },

@@ -13,7 +13,7 @@ map("n", "<C-y>", "5<C-y>")
 map("n", "<C-e>", "5<C-e>")
 
 map("t", "<Esc>", "<C-\\><C-n>")
-map("n", "<leader><bs>", "<cmd>set hlsearch!<cr>", { noremap = true, desc = "Clear Highlight" })
+map("n", "<leader><bs>", "<cmd>nohlsearch<cr>", { noremap = true, desc = "Clear Highlight" })
 
 -- Apply @record to multiple lines
 ---@see https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db
