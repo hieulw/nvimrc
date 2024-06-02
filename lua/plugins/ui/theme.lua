@@ -48,6 +48,7 @@ local function override_highlights()
     ["@namespace"] = { link = "GruvboxAqua" },
     ["@lsp.type.variable"] = {},
     ["@lsp.mod.readonly"] = { link = "GruvboxPurple" },
+    ["@include"] = {},
   }
 end
 
