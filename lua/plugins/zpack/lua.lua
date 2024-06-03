@@ -13,19 +13,21 @@ return {
     end,
   },
   {
+    "hrsh7th/nvim-cmp",
+    opts = function(_, opts)
+      table.insert(opts.sources, { name = "lazydev", group_index = 0 })
+    end,
+  },
+  {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "folke/neodev.nvim",
-      opts = {
-        library = {
-          enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
-          runtime = true, -- runtime path
-          types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
-          -- plugins = false, -- installed opt or start plugins in packpath
-          -- plugins = { "nvim-lspconfig" },
+      { "bilal2453/luvit-meta", lazy = true },
+      {
+        "folke/lazydev.nvim",
+        ft = "lua",
+        opts = {
+          library = { "luvit-meta/library" },
         },
-        lspconfig = true,
-        pathStrict = true, -- lsp will load even though the file still not open yet
       },
     },
     opts = {
