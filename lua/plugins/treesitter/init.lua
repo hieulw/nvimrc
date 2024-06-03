@@ -5,7 +5,6 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
       "folke/ts-comments.nvim",
-      "windwp/nvim-ts-autotag",
     },
     init = function(plugin)
       ---@see https://github.com/LazyVim/LazyVim/commit/1e1b68d633d4bd4faa912ba5f49ab6b8601dc0c9
@@ -17,12 +16,6 @@ return {
     end,
     opts = {
       ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
-      autotag = {
-        enable = true,
-        enable_rename = true,
-        enable_close = true,
-        enable_close_on_slash = true,
-      },
       matchup = { enable = true },
       indent = { enable = false },
       highlight = {
@@ -50,6 +43,20 @@ return {
       },
     },
     config = require("plugins.treesitter.config").setup,
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    event = "LazyFile",
+    opts = {
+      opts = {
+        enable_rename = true,
+        enable_close = true,
+        enable_close_on_slash = true,
+      },
+      aliases = {
+        blade = "html",
+      },
+    },
   },
   {
     "andymass/vim-matchup",

@@ -5,6 +5,7 @@ return {
       vim.list_extend(opts.ensure_installed, {
         "bicep",
         "terraform",
+        "helm",
       })
     end,
   },
@@ -12,7 +13,9 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
+        "bicep-lsp",
         "terraform-ls",
+        "helm-ls",
         "powershell-editor-services",
       })
     end,
@@ -34,6 +37,15 @@ return {
             vim.fn.stdpath("data")
               .. "/mason/packages/bicep-lsp"
               .. "/extension/bicepLanguageServer/Bicep.LangServer.dll",
+          },
+        },
+        helm_ls = {
+          settings = {
+            ["helm-ls"] = {
+              yamlls = {
+                path = "yaml-language-server",
+              },
+            },
           },
         },
         powershell_es = {
