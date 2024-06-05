@@ -32,7 +32,9 @@ return {
     opts = function(_, opts)
       local nls = require("null-ls")
       vim.list_extend(opts.sources, {
-        nls.builtins.formatting.prettierd,
+        nls.builtins.formatting.prettierd.with({
+          extra_filetypes = { "blade" },
+        }),
       })
     end,
   },
