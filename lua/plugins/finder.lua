@@ -57,8 +57,6 @@ return {
       fzf_opts = {
         ["--cycle"] = true,
         ["--no-hscroll"] = true,
-        ["--pointer"] = icon.ui.Pointer,
-        ["--marker"] = icon.ui.Selected,
       },
       defaults = {
         git_icons = false,
