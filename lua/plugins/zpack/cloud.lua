@@ -6,6 +6,7 @@ return {
         "bicep",
         "terraform",
         "helm",
+        "groovy",
       })
     end,
   },
@@ -17,6 +18,7 @@ return {
         "terraform-ls",
         "helm-ls",
         "powershell-editor-services",
+        "npm-groovy-lint",
       })
     end,
   },
@@ -24,7 +26,10 @@ return {
     "nvimtools/none-ls.nvim",
     opts = function(_, opts)
       local nls = require("null-ls")
-      vim.list_extend(opts.sources, {})
+      vim.list_extend(opts.sources, {
+        nls.builtins.formatting.npm_groovy_lint,
+        nls.builtins.diagnostics.npm_groovy_lint,
+      })
     end,
   },
   {
