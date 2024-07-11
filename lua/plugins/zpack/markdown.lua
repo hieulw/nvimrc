@@ -37,6 +37,7 @@ return {
       throttle_time = "auto",
     },
     config = function(_, opts)
+      -- install: pacman -S webkit2gtk
       require("peek").setup(opts)
       vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
       vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
