@@ -71,7 +71,7 @@ return {
       },
       setup = {
         eslint = function()
-          require("plugins.lsp.utils").on_attach("typescript-tools", function(client, _)
+          require("plugins.lsp.utils").on_attach("eslint", function(client, _)
             vim.api.nvim_create_autocmd("BufWritePre", {
               callback = function(e)
                 local diag = vim.diagnostic.get(e.buf, { namespace = vim.lsp.diagnostic.get_namespace(client.id) })
