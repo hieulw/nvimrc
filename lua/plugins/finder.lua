@@ -65,12 +65,10 @@ return {
       files = {
         cwd_prompt = false,
         previewer = false,
-        formatter = "path.filename_first",
+        formatter = { "path.filename_first", 2 },
         winopts = { height = math.min(vim.o.lines, 15) },
       },
-      grep = {
-        path_shorten = 1,
-      },
+      grep = {},
     }
   end,
   config = function(_, opts)
