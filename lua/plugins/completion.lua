@@ -186,8 +186,7 @@ return {
           deleteSnippet = "<C-x>",
           duplicateSnippet = "<C-d>",
           openInFile = "<C-o>",
-          insertNextToken = "<C-t>", -- insert & normal mode
-          jumpBetweenBodyAndPrefix = "<C-Tab>", -- insert & normal mode
+          insertNextPlaceholder = "<C-t>", -- insert & normal mode
         },
       },
       telescope = {
