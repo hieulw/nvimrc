@@ -26,7 +26,10 @@ return {
         "folke/lazydev.nvim",
         ft = "lua",
         opts = {
-          library = { "luvit-meta/library" },
+          library = {
+            { path = "luvit-meta/library", words = { "vim%.uv" } },
+            "~/.config/wezterm",
+          },
         },
       },
     },

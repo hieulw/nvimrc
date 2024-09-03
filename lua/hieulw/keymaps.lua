@@ -42,27 +42,28 @@ map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("i", ",", ",<c-g>u")
 map("i", ".", ".<c-g>u")
 
--- Jumplist mutations
-map("n", "<M-k>", [[ (v:count > 5 ? "m'" . v:count : "") . 'gk']], { expr = true, silent = true })
-map("n", "<M-j>", [[ (v:count > 5 ? "m'" . v:count : "") . 'gj']], { expr = true, silent = true })
--- Move only sideways in command mode. Using `silent = false` makes movements
--- to be immediately shown.
-map("c", "<M-h>", "<Left>", { silent = false, desc = "Left" })
-map("c", "<M-l>", "<Right>", { silent = false, desc = "Right" })
--- Don't `noremap` in insert mode to have these keybindings behave exactly
--- like arrows (crucial inside TelescopePrompt)
-map("i", "<M-h>", "<Left>", { noremap = false, desc = "Left" })
-map("i", "<M-j>", "<Down>", { noremap = false, desc = "Down" })
-map("i", "<M-k>", "<Up>", { noremap = false, desc = "Up" })
-map("i", "<M-l>", "<Right>", { noremap = false, desc = "Right" })
-map("t", "<M-h>", "<Left>", { desc = "Left" })
-map("t", "<M-j>", "<Down>", { desc = "Down" })
-map("t", "<M-k>", "<Up>", { desc = "Up" })
-map("t", "<M-l>", "<Right>", { desc = "Right" })
+if vim.fn.has("mac") == 0 then
+  -- Jumplist mutations
+  map("n", "<M-k>", [[ (v:count > 5 ? "m'" . v:count : "") . 'gk']], { expr = true, silent = true })
+  map("n", "<M-j>", [[ (v:count > 5 ? "m'" . v:count : "") . 'gj']], { expr = true, silent = true })
+  -- Move only sideways in command mode. Using `silent = false` makes movements
+  -- to be immediately shown.
+  map("c", "<M-h>", "<Left>", { silent = false, desc = "Left" })
+  map("c", "<M-l>", "<Right>", { silent = false, desc = "Right" })
+  -- Don't `noremap` in insert mode to have these keybindings behave exactly
+  -- like arrows (crucial inside TelescopePrompt)
+  map("i", "<M-h>", "<Left>", { noremap = false, desc = "Left" })
+  map("i", "<M-j>", "<Down>", { noremap = false, desc = "Down" })
+  map("i", "<M-k>", "<Up>", { noremap = false, desc = "Up" })
+  map("i", "<M-l>", "<Right>", { noremap = false, desc = "Right" })
+  map("t", "<M-h>", "<Left>", { desc = "Left" })
+  map("t", "<M-j>", "<Down>", { desc = "Down" })
+  map("t", "<M-k>", "<Up>", { desc = "Up" })
+  map("t", "<M-l>", "<Right>", { desc = "Right" })
 
-map("i", "<M-w>", "<S-Right>")
-map("i", "<M-b>", "<S-Left>")
-
+  map("i", "<M-w>", "<S-Right>")
+  map("i", "<M-b>", "<S-Left>")
+end
 -- Utilities
 map("n", "<leader>pl", "<cmd>Lazy<cr>", { desc = "Show Lazy" })
 map("n", "<leader>pm", "<cmd>Mason<cr>", { desc = "Show Mason" })

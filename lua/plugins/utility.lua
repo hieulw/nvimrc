@@ -81,18 +81,22 @@ return {
   },
   {
     "mrjones2014/smart-splits.nvim",
-    opts = { ignored_filetypes = { "nofile", "quickfix", "qf", "prompt" }, ignored_buftypes = { "nofile" } },
+    opts = {
+      ignored_filetypes = { "NvimTree" },
+      ignored_buftypes = { "nofile", "quickfix", "prompt" },
+      resize_mode = { silent = true },
+    },
     keys = function()
-      local ok, split = pcall(require, "smart-splits")
-      if not ok then
-        return {}
-      end
+      local split = require("smart-splits")
       return {
         { "<C-h>", split.move_cursor_left, mode = { "n" }, desc = "Move cursor to left pane" },
         { "<C-j>", split.move_cursor_down, mode = { "n" }, desc = "Move cursor to bottom pane" },
         { "<C-k>", split.move_cursor_up, mode = { "n" }, desc = "Move cursor to top pane" },
         { "<C-l>", split.move_cursor_right, mode = { "n" }, desc = "Move cursor to right pane" },
-        { "<leader>wr", split.start_resize_mode, mode = { "n" }, desc = "Enter resize mode" },
+        { "<M-Left>", split.resize_left, mode = { "n" }, desc = "Resize pane to the left" },
+        { "<M-Down>", split.resize_down, mode = { "n" }, desc = "Resize pane to the bottom" },
+        { "<M-Up>", split.resize_up, mode = { "n" }, desc = "Resize pane to the top" },
+        { "<M-Right>", split.resize_right, mode = { "n" }, desc = "Resize pane to the right" },
         { "<leader>wh", split.swap_buf_left, mode = { "n" }, desc = "Swap with left pane" },
         { "<leader>wj", split.swap_buf_down, mode = { "n" }, desc = "Swap with bottom pane" },
         { "<leader>wk", split.swap_buf_up, mode = { "n" }, desc = "Swap with top pane" },
