@@ -29,9 +29,11 @@ return {
       end)
 
       -- keymaps
-      vim.keymap.set("i", "<M-;>", function()
+      vim.keymap.set("i", "<M-l>", function()
         if codeium.visible() then
           codeium.accept()
+        else
+          return "<Right>"
         end
       end, { expr = true, silent = true })
       vim.keymap.set("i", "<M-n>", function()
