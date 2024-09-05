@@ -164,3 +164,11 @@ autocmd("BufEnter", {
     end
   end,
 })
+
+---@see https://github.com/nvim-treesitter/nvim-treesitter/issues/3304
+autocmd("BufWritePost", {
+  pattern = "*.scm",
+  callback = function()
+    require("nvim-treesitter.query").invalidate_query_cache()
+  end,
+})
