@@ -51,14 +51,17 @@ return {
         sections = {
           lualine_c = vim.list_extend(lualine.get_config().sections.lualine_c, {
             function()
-              local status = vim.trim(codeium.get_status()):lower()
-              if not status then
-                return
-              end
-              if opts.manual == false then
-                status = "AUTO:" .. status
-              end
-              return icons.ui.Robot .. " " .. status
+              local status, _ = require("neocodeium").get_status()
+              local status_symbols = {
+                [0] = "󱜙 ", -- Enabled
+                [1] = "󱚧 ", -- Disabled Globally
+                [2] = "󱚧 ", -- Disabled for Buffer (catch-all)
+                [3] = "󱚧 ", -- Disabled for Buffer filetype
+                [4] = "󱚧 ", -- Disabled Callback
+                [5] = "󱚧 ", -- Disabled for Buffer encoding
+              }
+
+              return status_symbols[status]
             end,
           }),
         },
