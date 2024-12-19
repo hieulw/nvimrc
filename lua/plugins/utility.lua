@@ -28,6 +28,9 @@ return {
         root_folder_label = false,
         highlight_git = false,
       },
+      view = {
+        adaptive_size = true,
+      },
       on_attach = function(bufnr)
         local api = require("nvim-tree.api")
         local mappings = {

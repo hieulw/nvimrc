@@ -10,7 +10,7 @@ return {
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         "pyright",
-        "ruff-lsp",
+        "ruff",
         "djlint",
       })
     end,
@@ -30,7 +30,7 @@ return {
     dependencies = { "microsoft/python-type-stubs" },
     opts = {
       servers = {
-        ruff_lsp = {},
+        ruff = {},
         pyright = {
           settings = {
             python = {
@@ -54,8 +54,8 @@ return {
         },
       },
       setup = {
-        ruff_lsp = function()
-          require("plugins.lsp.utils").on_attach("ruff_lsp", function(client, _)
+        ruff = function()
+          require("plugins.lsp.utils").on_attach("ruff", function(client, _)
             -- Disable hover in favor of Pyright
             client.server_capabilities.hoverProvider = false
             -- Auto organize imports on save

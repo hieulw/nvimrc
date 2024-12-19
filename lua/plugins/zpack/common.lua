@@ -34,6 +34,7 @@ return {
       vim.list_extend(opts.sources, {
         nls.builtins.formatting.prettierd.with({
           extra_filetypes = { "blade" },
+          disabled_filetypes = { "yaml" },
         }),
       })
     end,

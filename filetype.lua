@@ -14,6 +14,7 @@ vim.filetype.add({
   pattern = {
     [".*/hypr/.*%.conf"] = "hyprlang",
     [".*/templates/.*%.yaml"] = "helm",
+    [".*/templates/.*%.tpl"] = "helm",
     [".*%.blade%.php"] = "blade",
     ["Dockerfile-.*"] = "dockerfile",
     ["Jenkinsfile-.*"] = "groovy",

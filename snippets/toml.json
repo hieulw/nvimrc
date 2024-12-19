@@ -2,7 +2,10 @@
   "pyenv": {
     "body": [
       "[tools]",
-      "python = {version=\"${1:latest}\", virtualenv=\"${2:.venv}\"}"
+      "python = \"${1:latest}\"",
+      "",
+      "[env]",
+      "_.python.venv = { path = \"${2:.venv}\", create = true }"
     ],
     "prefix": "pyenv"
   }

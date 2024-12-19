@@ -29,7 +29,7 @@ return {
       auto_load = true,
       close_on_bdelete = true,
       syntax = true,
-      theme = "dark",
+      theme = "light",
       update_on_change = true,
       app = "webview",
       filetype = { "markdown" },

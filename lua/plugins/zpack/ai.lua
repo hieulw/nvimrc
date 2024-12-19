@@ -2,6 +2,7 @@ return {
   {
     "monkoose/neocodeium",
     event = "InsertEnter",
+    enabled = false,
     opts = {
       manual = true,
       show_label = true,
@@ -68,4 +69,32 @@ return {
       })
     end,
   },
+  {
+    "supermaven-inc/supermaven-nvim",
+    -- event = "InsertEnter",
+    opts = {
+      condition = function()
+        if vim.fn.expand("%:p"):match(".*/gopass.*$") ~= nil then
+          return true
+        end
+        return false
+      end,
+    },
+    config = function(_, opts)
+      local supermaven = require("supermaven-nvim")
+      local lualine = require("lualine")
+      supermaven.setup(opts)
+
+      lualine.setup({
+        sections = {
+          lualine_c = vim.list_extend(lualine.get_config().sections.lualine_c, {
+            function()
+              return require("supermaven-nvim.api").is_running() and "󱜙 " or "󱚧 "
+            end,
+          }),
+        },
+      })
+    end,
+  },
+  "olimorris/codecompanion.nvim",
 }
