@@ -3,7 +3,7 @@ local M = {}
 --- Bundle every configs|plugins we need for specific language
 ---@type table<string,boolean>
 M.pack = {
-  ai = vim.fn.has("wsl") == 0,
+  ai = true,
   cloud = true,
   common = true,
   csharp = true,

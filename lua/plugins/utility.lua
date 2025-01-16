@@ -210,7 +210,7 @@ return {
   {
     "hieulw/im-select.nvim",
     event = "InsertCharPre",
-    cond = vim.fn.has("linux") == 1,
+    enabled = vim.fn.has("linux") ~= 1,
     config = function()
       require("im_select").setup()
     end,
