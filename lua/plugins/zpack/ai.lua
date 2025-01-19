@@ -77,6 +77,9 @@ return {
         if vim.fn.expand("%:p"):match(".*/gopass.*$") ~= nil then
           return true
         end
+        if vim.fn.expand("%:p"):match(".*/.ssh/.*$") ~= nil then
+          return true
+        end
         return false
       end,
     },
