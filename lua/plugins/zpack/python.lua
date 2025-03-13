@@ -9,6 +9,7 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
+        "basedpyright",
         "pyright",
         "ruff",
         "djlint",
@@ -31,15 +32,35 @@ return {
     opts = {
       servers = {
         ruff = {},
+        -- basedpyright = {
+        --   ---@see https://docs.basedpyright.com/latest/configuration/language-server-settings/
+        --   settings = {
+        --     basedpyright = {
+        --       disableLanguageServices = false,
+        --       disableOrganizeImports = false,
+        --       disableTaggedHints = false,
+        --       analysis = {
+        --         autoImportCompletions = true,
+        --         autoSearchPaths = true,
+        --         diagnosticMode = "openFilesOnly",
+        --         typeCheckingMode = "standard",
+        --         stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs/stubs",
+        --       },
+        --     },
+        --     python = {
+        --       pythonPath = vim.fn.expand("${workspaceFolder}/.venv/bin/python"),
+        --     },
+        --   },
+        -- },
         pyright = {
+          ---@see https://github.com/microsoft/pyright/blob/main/docs/settings.md
           settings = {
+            pyright = {
+              disableLanguageServices = false,
+              disableOrganizeImports = true,
+              disableTaggedHints = false,
+            },
             python = {
-              ---@see https://github.com/microsoft/pyright/blob/main/docs/settings.md
-              pyright = {
-                disableLanguageServices = false,
-                disableOrganizeImports = false,
-                disableTaggedHints = false,
-              },
               analysis = {
                 autoImportCompletions = true,
                 autoSearchPaths = true,
@@ -49,6 +70,7 @@ return {
                 stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs/stubs",
                 extraPaths = {},
               },
+              pythonPath = vim.fn.expand("${workspaceFolder}/.venv/bin/python"),
             },
           },
         },
@@ -76,6 +98,16 @@ return {
                 }, nil, e.buf)
               end,
             })
+          end)
+        end,
+        basedpyright = function(_, _)
+          require("plugins.lsp.utils").on_attach("basedpyright", function(_, bufnr)
+            vim.keymap.set(
+              "n",
+              "<leader>lo",
+              "<cmd>PyrightOrganizeImports<cr>",
+              { desc = "Organize Imports", buffer = bufnr }
+            )
           end)
         end,
         pyright = function(_, _)
