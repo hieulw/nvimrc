@@ -32,6 +32,7 @@ vim.opt.foldlevel = 99 -- No folding by default
 vim.opt.foldlevelstart = 99 -- No folding by default
 vim.opt.conceallevel = 0 -- So that I can see `` in markdown files
 
+vim.opt.statuscolumn = "%s %l %r"
 vim.opt.signcolumn = "number" -- Always show the signcolumn
 vim.opt.fillchars:append({
   eob = " ",
@@ -41,6 +42,7 @@ vim.opt.fillchars:append({
   foldclose = "",
 })
 
+vim.opt.winborder = "rounded" -- Make the floating window borders rounded
 vim.opt.winblend = 0 -- Make floating windows no transparent
 vim.opt.pumblend = 0 -- Make builtin completion menus no transparent
 vim.opt.pumheight = 10 -- Makes popup menu smaller

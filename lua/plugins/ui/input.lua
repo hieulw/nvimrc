@@ -58,7 +58,7 @@ function M.setup()
     opts = vim.tbl_extend("keep", opts, { cancelreturn = vim.NIL })
 
     if input then
-      vim.api.nvim_err_writeln("busy: another input is pending!")
+      vim.api.nvim_echo({ { "busy: another input is pending!" } }, true, { err = true })
       return
     end
 

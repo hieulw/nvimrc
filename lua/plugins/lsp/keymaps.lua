@@ -5,18 +5,14 @@ function M.on_attach(client, buffer)
   local format = require("plugins.lsp.format").format
 
   self:map("gd", vim.lsp.buf.definition, { desc = "Go to definition", has = "definition" })
-  self:map("gy", vim.lsp.buf.type_definition, { desc = "Go to type definition", has = "typeDefinition" })
-  self:map("gD", vim.lsp.buf.declaration, { desc = "Go to declaration", has = "declaration" })
-  self:map("gI", vim.lsp.buf.implementation, { desc = "Go to implementation", has = "implementation" })
-  self:map("gr", vim.lsp.buf.references, { desc = "Show references", has = "references" })
-  self:map("<C-k>", vim.lsp.buf.signature_help, { mode = "i", has = "signatureHelp" })
+  self:map("grt", vim.lsp.buf.type_definition, { desc = "Go to type definition", has = "typeDefinition" })
+  self:map("grd", vim.lsp.buf.declaration, { desc = "Go to declaration", has = "declaration" })
+  self:map("gri", vim.lsp.buf.implementation, { desc = "Go to implementation", has = "implementation" })
+  self:map("grr", vim.lsp.buf.references, { desc = "Show references", has = "references" })
+  self:map("grn", vim.lsp.buf.rename, { desc = "Rename", has = "rename" })
+  self:map("gra", vim.lsp.buf.code_action, { desc = "Code actions", has = "codeAction", mode = { "n", "x" } })
+  self:map("<C-S>", vim.lsp.buf.signature_help, { desc = "Signature help", has = "signatureHelp", mode = { "i", "s" } })
 
-  self:map("]d", M.diagnostic_goto(true), { desc = "Next Diagnostic" })
-  self:map("[d", M.diagnostic_goto(false), { desc = "Prev Diagnostic" })
-
-  self:map("<leader>la", vim.lsp.buf.code_action, { desc = "Code Actions", has = "codeAction" })
-  self:map("<leader>ld", vim.diagnostic.open_float, { desc = "Show diagnostics" })
-  self:map("<leader>lr", vim.lsp.buf.rename, { desc = "Rename", has = "rename" })
   self:map("<leader>lf", format, { desc = "Format", has = "documentFormatting" })
   self:map("<leader>lf", format, { mode = "v", desc = "Format", has = "documentRangeFormatting" })
   self:map("<leader>li", M.toggle_inlayhint, { desc = "Toggle Inlayhint", has = "textDocument/inlayHint" })
@@ -42,14 +38,6 @@ function M:map(lhs, rhs, opts)
     type(rhs) == "string" and ("<cmd>%s<cr>"):format(rhs) or rhs,
     { silent = true, buffer = self.buffer, expr = opts.expr, desc = opts.desc }
   )
-end
-
-function M.diagnostic_goto(next, severity)
-  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
-  severity = severity and vim.diagnostic.severity[severity] or nil
-  return function()
-    go({ severity = severity })
-  end
 end
 
 function M.toggle_inlayhint()
