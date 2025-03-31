@@ -71,16 +71,10 @@ return {
   },
   {
     "supermaven-inc/supermaven-nvim",
-    -- event = "InsertEnter",
     opts = {
       condition = function()
-        if vim.fn.expand("%:p"):match(".*/gopass.*$") ~= nil then
-          return true
-        end
-        if vim.fn.expand("%:p"):match(".*/.ssh/.*$") ~= nil then
-          return true
-        end
-        return false
+        local path = vim.fn.expand("%:p")
+        return path:match(".*/gopass.*$") ~= nil or path:match(".*/.ssh/.*$") ~= nil
       end,
     },
     config = function(_, opts)
