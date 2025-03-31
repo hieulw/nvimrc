@@ -72,6 +72,11 @@ return {
   {
     "supermaven-inc/supermaven-nvim",
     opts = {
+      keymaps = {
+        accept_suggestion = "<C-j>",
+        clear_suggestion = "<C-e>",
+        accept_word = "<C-y>",
+      },
       condition = function()
         local path = vim.fn.expand("%:p")
         return path:match(".*/gopass.*$") ~= nil or path:match(".*/.ssh/.*$") ~= nil

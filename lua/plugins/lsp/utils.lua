@@ -59,16 +59,14 @@ function M.list_hovers(ft)
 end
 
 function M.capabilities()
-  local capabilities = vim.tbl_deep_extend(
-    "force",
-    vim.lsp.protocol.make_client_capabilities(),
-    require("cmp_nvim_lsp").default_capabilities()
-  )
-  capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true,
-  }
-  return capabilities
+  return require("blink.cmp").get_lsp_capabilities({
+    textDocument = {
+      foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true,
+      },
+    },
+  }, false)
 end
 
 function M.on_attach(client_name, on_attach)

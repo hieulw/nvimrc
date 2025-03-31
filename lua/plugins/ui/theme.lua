@@ -3,6 +3,13 @@ local M = {}
 local function override_highlights()
   local colors = require("gruvbox").palette
   return {
+    BlinkCmpDocBorder = { link = "GruvboxGray" },
+    BlinkCmpMenu = { link = "Normal" },
+    BlinkCmpMenuBorder = { link = "GruvboxGray" },
+    BlinkCmpLabelDeprecated = { link = "DiagnosticDeprecated" },
+    BlinkCmpMenuSelection = { link = "CursorLine" },
+    BlinkCmpSignatureHelpBorder = { link = "GruvboxGray" },
+    BlinkCmpSignatureHelpActiveParameter = { link = "Visual" },
     DiffAdd = { bg = "#34381b" },
     DiffChange = { bg = "#0e363e" },
     DiffDelete = { bg = "#402120" },
@@ -36,6 +43,7 @@ local function override_highlights()
     NeotestAdapterName = { link = "GruvboxGreen" },
     NeotestExpandMarker = { link = "NeotestIndent" },
     NeotestWinSelect = { link = "GruvboxBlue" },
+    FloatBorder = { link = "GruvboxGray" },
     FzfLuaDirPart = { link = "GruvboxBg2" },
     PmenuSel = { link = "TabLineSel" },
     WinBarNC = { link = "WinBar" },
