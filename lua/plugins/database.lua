@@ -40,13 +40,6 @@ return {
       pattern = { "sql", "mysql", "plsql" },
       callback = function(e)
         require("lspconfig").sqls.launch()
-        require("cmp").setup.buffer({
-          mapping = require("cmp.config").get().mapping,
-          sources = {
-            { name = "nvim_lsp", priority = 1000 },
-            { name = "vsnip", priority = 750 },
-          },
-        })
         map({ "n", "v" }, "gx", "<Plug>(DBUI_ExecuteQuery)")
         map("n", "<leader>W", "<Plug>(DBUI_SaveQuery)")
         map("n", "<leader>E", "<Plug>(DBUI_EditBindParameters)")

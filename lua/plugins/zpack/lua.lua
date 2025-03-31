@@ -13,12 +13,6 @@ return {
     end,
   },
   {
-    "hrsh7th/nvim-cmp",
-    opts = function(_, opts)
-      table.insert(opts.sources, { name = "lazydev", group_index = 0 })
-    end,
-  },
-  {
     "neovim/nvim-lspconfig",
     dependencies = {
       { "bilal2453/luvit-meta", lazy = true },
