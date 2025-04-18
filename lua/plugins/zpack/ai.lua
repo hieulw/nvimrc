@@ -28,5 +28,34 @@ return {
       })
     end,
   },
-  "olimorris/codecompanion.nvim",
+  {
+    "olimorris/codecompanion.nvim",
+    event = "VeryLazy",
+    cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionAction" },
+    keys = {
+      { "<leader>af", "<cmd>CodeCompanionAction<cr>", mode = "n", desc = "CodeCompanionAction" },
+      { "<leader>aa", "<cmd>CodeCompanionChat Toggle<cr>", mode = "n", desc = "CodeCompanionChat" },
+      { "<leader>aa", "<cmd>CodeCompanion<cr>", mode = "x", desc = "CodeCompanion" },
+    },
+    opts = {
+      display = {
+        chat = {
+          window = {
+            opts = { colorcolumn = "0", number = false, relativenumber = false },
+          },
+        },
+        diff = {
+          enabled = true,
+        },
+      },
+      strategies = {
+        chat = {
+          adapter = "gemini",
+        },
+        inline = {
+          adapter = "gemini",
+        },
+      },
+    },
+  },
 }
