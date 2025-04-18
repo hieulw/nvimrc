@@ -26,6 +26,11 @@ return {
     b = { bg = "None", fg = colors.light4 },
     c = { bg = "None", fg = colors.light4 },
   },
+  terminal = {
+    a = { bg = "None", fg = colors.bright_aqua, gui = "bold" },
+    b = { bg = "None", fg = colors.light4 },
+    c = { bg = "None", fg = colors.light4 },
+  },
   inactive = {
     a = { bg = "None", fg = colors.light4, gui = "bold" },
     b = { bg = "None", fg = colors.light4 },

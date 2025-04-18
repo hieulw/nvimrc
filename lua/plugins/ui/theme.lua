@@ -3,6 +3,8 @@ local M = {}
 local function override_highlights()
   local colors = require("gruvbox").palette
   return {
+    AvanteSidebarWinSeparator = { link = "FloatBorder" },
+    AvanteSidebarWinHorizontalSeparator = { link = "FloatBorder" },
     BlinkCmpDocBorder = { link = "GruvboxGray" },
     BlinkCmpMenu = { link = "Normal" },
     BlinkCmpMenuBorder = { link = "GruvboxGray" },
@@ -51,6 +53,7 @@ local function override_highlights()
     Match = { fg = colors.bright_orange },
     Folded = { bg = "None" },
     UfoFoldedBg = { link = "MatchBackground" },
+    StatusLine = { bg = "None" },
     Keyword = { fg = colors.bright_red, italic = true },
     ["@keyword.import"] = { link = "@keyword" },
     ["@namespace"] = { link = "GruvboxAqua" },

@@ -1,3 +1,4 @@
+---@see https://github.com/drybalka/tree-climber.nvim
 local M = {}
 
 M._node_level = 0

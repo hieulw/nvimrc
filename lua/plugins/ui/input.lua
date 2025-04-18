@@ -22,7 +22,6 @@ function M.setup()
       position = { row = 0, col = 0 },
       size = { width = math.max(20, vim.api.nvim_strwidth(default_value)) },
       border = { style = "rounded", text = { top = top_text, top_align = "center" } },
-      win_options = { winhighlight = "NormalFloat:Normal,FloatBorder:Normal" },
     }, {
       default_value = default_value,
       on_close = function()

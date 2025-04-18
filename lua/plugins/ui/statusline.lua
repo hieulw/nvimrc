@@ -60,7 +60,7 @@ function M.setup()
       globalstatus = true,
       section_separators = "",
       component_separators = "",
-      disabled_filetypes = { statusline = { "dashboard", "lazy", "alpha" } },
+      disabled_filetypes = { "mason", "lazy", "NvimTree" },
     },
     sections = {
       lualine_a = { "mode" },
