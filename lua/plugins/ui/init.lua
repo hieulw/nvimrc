@@ -32,6 +32,7 @@ return {
     config = function()
       require("plugins.ui.input").setup()
       require("plugins.ui.quickfix").setup()
+      require("plugins.ui.folding").setup()
     end,
   },
 }
