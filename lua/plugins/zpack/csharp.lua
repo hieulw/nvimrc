@@ -8,37 +8,15 @@ return {
     end,
   },
   {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      -- "jmederosalvarado/roslyn.nvim",
-      "iabdelkareem/csharp.nvim",
-    },
+    ---@see https://github.com/seblyng/roslyn.nvim#-installation
+    "seblyng/roslyn.nvim",
+    ft = "cs",
+    ---@module 'roslyn.config'
+    ---@type RoslynNvimConfig
     opts = {
-      servers = {
-        roslyn = {
-          on_attach = function() end,
-        },
-      },
-      setup = {
-        roslyn = function(_, opts)
-          local ok, roslyn = pcall(require, "roslyn")
-          if ok then
-            roslyn.setup(opts)
-          end
-          return true
-        end,
+      config = {
+        settings = {},
       },
     },
-  },
-  {
-    "iabdelkareem/csharp.nvim",
-    dependencies = {
-      "williamboman/mason.nvim", -- Required, automatically installs omnisharp
-      "mfussenegger/nvim-dap",
-      "Tastyep/structlog.nvim", -- Optional, but highly recommended for debugging
-    },
-    config = function()
-      require("csharp").setup()
-    end,
   },
 }
