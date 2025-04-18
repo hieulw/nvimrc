@@ -143,7 +143,7 @@ return {
   },
   {
     "danymat/neogen",
-    opts = { snippet_engine = "vsnip", languages = {} },
+    opts = { snippet_engine = "nvim", languages = {} },
     cmd = "Neogen",
     keys = {
       { "cd", "<cmd>Neogen<cr>", mode = "n", desc = "Generate Annotation" },

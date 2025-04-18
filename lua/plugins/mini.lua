@@ -58,6 +58,7 @@ return {
       local clue = require("mini.clue")
       local function gen_leaders()
         return {
+          { mode = "n", keys = "<Leader>a", desc = "+AI" },
           { mode = "n", keys = "<Leader>b", desc = "+Buffers" },
           { mode = "n", keys = "<Leader>d", desc = "+Debug" },
           { mode = "n", keys = "<Leader>dh", postkeys = "<Leader>d" },
@@ -181,5 +182,15 @@ return {
       require("mini.surround").setup(opts)
       vim.keymap.set("n", "gss", "gs_", { remap = true })
     end,
+  },
+  {
+    "echasnovski/mini.pairs",
+    opts = {
+      modes = {
+        insert = true,
+        command = true,
+        terminal = false,
+      },
+    },
   },
 }

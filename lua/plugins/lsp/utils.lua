@@ -59,14 +59,7 @@ function M.list_hovers(ft)
 end
 
 function M.capabilities()
-  return require("blink.cmp").get_lsp_capabilities({
-    textDocument = {
-      foldingRange = {
-        dynamicRegistration = false,
-        lineFoldingOnly = true,
-      },
-    },
-  }, false)
+  return require("blink.cmp").get_lsp_capabilities()
 end
 
 function M.on_attach(client_name, on_attach)

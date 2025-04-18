@@ -50,10 +50,15 @@ return {
         per_filetype = {
           lua = { "lazydev", "lsp", "path", "buffer" },
           ["dap-repl"] = { "dap" },
+          gitcommit = { "snippets", "buffer" },
+          AvanteInput = { "avante_commands", "avante_files", "avante_mentions" },
         },
         providers = {
           lazydev = { name = "LazyDev", module = "lazydev.integrations.blink" },
           dap = { name = "dap", module = "blink.compat.source" },
+          avante_commands = { name = "avante_commands", module = "blink.compat.source" },
+          avante_files = { name = "avante_files", module = "blink.compat.source" },
+          avante_mentions = { name = "avante_mentions", module = "blink.compat.source" },
         },
       },
     },
@@ -82,9 +87,6 @@ return {
           openInFile = "<C-o>",
           insertNextPlaceholder = "<C-t>", -- insert & normal mode
         },
-      },
-      telescope = {
-        alsoSearchSnippetBody = false,
       },
       jsonFormatter = "jq", -- "yq"|"jq"|"none"
     },
