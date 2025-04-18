@@ -6,7 +6,6 @@ return {
         "bicep",
         "terraform",
         "helm",
-        "groovy",
       })
     end,
   },
@@ -18,7 +17,6 @@ return {
         "terraform-ls",
         "helm-ls",
         "powershell-editor-services",
-        "npm-groovy-lint",
       })
     end,
   },
