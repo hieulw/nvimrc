@@ -113,6 +113,15 @@ return {
     end,
   },
   {
+    "echasnovski/mini.diff",
+    opts = function()
+      local diff = require("mini.diff")
+      return {
+        source = diff.gen_source.none(),
+      }
+    end,
+  },
+  {
     "echasnovski/mini.files",
     keys = { { "-", "<cmd>=MiniFiles.open()<cr>", mode = "n", desc = "File Explorer" } },
     opts = {
