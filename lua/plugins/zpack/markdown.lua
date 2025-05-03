@@ -37,10 +37,22 @@ return {
       throttle_time = "auto",
     },
     config = function(_, opts)
-      -- install: pacman -S webkit2gtk
+      ---@install pacman -S webkit2gtk
       require("peek").setup(opts)
       vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
       vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
     end,
+  },
+  {
+    -- Make sure to set this up properly if you have lazy=true
+    "meanderingprogrammer/render-markdown.nvim",
+    opts = {
+      file_types = { "markdown", "Avante", "codecompanion" },
+      completions = { blink = { enabled = true } },
+      max_file_size = 1,
+      preset = "obsidian",
+      sign = { enabled = false },
+    },
+    ft = { "markdown", "Avante", "codecompanion" },
   },
 }

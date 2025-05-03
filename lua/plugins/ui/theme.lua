@@ -45,6 +45,7 @@ local function override_highlights()
     NeotestAdapterName = { link = "GruvboxGreen" },
     NeotestExpandMarker = { link = "NeotestIndent" },
     NeotestWinSelect = { link = "GruvboxBlue" },
+    RenderMarkdownCode = { bg = colors.dark0 },
     FloatBorder = { link = "GruvboxGray" },
     FzfLuaDirPart = { link = "GruvboxBg2" },
     PmenuSel = { link = "TabLineSel" },
