@@ -9,7 +9,6 @@ function M.setup(_, opts)
 
   require("lsp-file-operations").setup()
   require("plugins.lsp.diagnostics").setup()
-  require("plugins.lsp.handlers").setup()
 
   local servers = opts.servers
   local capabilities = utils.capabilities()
