@@ -4,6 +4,7 @@ local M = {}
 ---@type table<string,boolean>
 M.pack = {
   ai = true,
+  bash = true,
   cloud = true,
   common = true,
   csharp = true,
