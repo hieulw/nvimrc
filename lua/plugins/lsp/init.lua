@@ -13,6 +13,9 @@ return {
     "williamboman/mason.nvim",
     cmd = "Mason",
     opts = {
+      registries = {
+        "github:mason-org/mason-registry",
+      },
       ensure_installed = {},
       ui = { border = "rounded", width = 0.6, height = 0.7 },
     },
