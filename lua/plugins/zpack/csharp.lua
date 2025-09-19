@@ -17,14 +17,6 @@ return {
     end,
   },
   {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        roslyn = {},
-      },
-    },
-  },
-  {
     ---@see https://github.com/seblyng/roslyn.nvim#-installation
     "seblyng/roslyn.nvim",
     ft = "cs",

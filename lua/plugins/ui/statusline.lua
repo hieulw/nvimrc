@@ -4,19 +4,8 @@ function M.setup()
   local icon = require("hieulw.icons")
   local lualine = require("lualine")
 
+  local mode = "mode"
   local filetype = { "filetype", icon_only = true }
-
-  local lsp_status = {
-    "lsp_status",
-    icon = "", -- f013
-    symbols = {
-      spinner = icon.spinner,
-      done = false,
-      separator = " ",
-    },
-    -- List of LSP names to ignore (e.g., `null-ls`):
-    ignore_lsp = {},
-  }
 
   local diagnostics = {
     "diagnostics",
@@ -63,9 +52,9 @@ function M.setup()
       disabled_filetypes = { "mason", "lazy", "NvimTree" },
     },
     sections = {
-      lualine_a = { "mode" },
+      lualine_a = { mode },
       lualine_b = {},
-      lualine_c = { "filename", lsp_status, "codecompanion", "supermaven" },
+      lualine_c = { "filename", "codecompanion", "supermaven" },
       lualine_x = { diff, diagnostics, filetype },
       lualine_y = {},
       lualine_z = {},
