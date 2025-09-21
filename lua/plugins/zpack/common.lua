@@ -47,21 +47,17 @@ return {
         cssls = {},
         html = {},
       },
-      setup = {
-        yamlls = function(_, opts)
-          local config = require("yaml-companion").setup({
-            builtin_matchers = {
-              kubernetes = { enabled = true },
-              cloud_init = { enabled = true },
-            },
-            lspconfig = opts,
-          })
-          require("lspconfig").yamlls.setup(config)
-          require("fzf-lua").yaml_companion = require("yaml-companion").open_ui_select
-          return true
-        end,
-      },
     },
   },
-  { "hieulw/yaml-companion.nvim", ft = "yaml" },
+  {
+    "manzanit0/k8s-whisper.nvim",
+    config = function()
+      require("k8s-whisper").setup({
+        -- This is a GitHub repository
+        schemas_catalog = "datreeio/CRDs-catalog",
+        -- This is a git ref, branch, tag, sha, etc.
+        schema_catalog_ref = "main",
+      })
+    end,
+  },
 }

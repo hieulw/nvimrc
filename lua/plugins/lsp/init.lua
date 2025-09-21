@@ -64,14 +64,7 @@ return {
           local client_names = {}
 
           for _, client in ipairs(clients) do
-            if client.name == "yamlls" then
-              local schema = require("yaml-companion").get_buf_schema(0)
-              if schema.result[1].name == "none" then
-                table.insert(client_names, client.name)
-              else
-                table.insert(client_names, ("%s(%s)"):format(client.name, schema.result[1].name))
-              end
-            elseif client.name == "null-ls" then
+            if client.name == "null-ls" then
             else
               table.insert(client_names, client.name)
             end
