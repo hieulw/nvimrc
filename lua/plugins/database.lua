@@ -39,7 +39,7 @@ return {
     vim.api.nvim_create_autocmd("FileType", {
       pattern = { "sql", "mysql", "plsql" },
       callback = function(e)
-        require("lspconfig").sqls.launch()
+        vim.lsp.config["sqls"].launch()
         map({ "n", "v" }, "gx", "<Plug>(DBUI_ExecuteQuery)")
         map("n", "<leader>W", "<Plug>(DBUI_SaveQuery)")
         map("n", "<leader>E", "<Plug>(DBUI_EditBindParameters)")

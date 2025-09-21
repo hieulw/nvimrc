@@ -38,7 +38,7 @@ return {
             conn.url = nil
           end
 
-          require("lspconfig").sqls.setup({
+          vim.lsp.config("sqls", {
             autostart = false,
             settings = {
               sqls = {
