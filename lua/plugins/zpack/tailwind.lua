@@ -20,24 +20,9 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        tailwindcss = {
-          root_dir = require("lspconfig.util").root_pattern(
-            "tailwind.config.js",
-            "tailwind.config.cjs",
-            "tailwind.config.mjs",
-            "tailwind.config.ts"
-          ),
-        },
+        tailwindcss = {},
       },
       setup = {},
     },
   },
-  -- {
-  --   "luckasranarison/tailwind-tools.nvim",
-  --   opts = {
-  --     document_color = {
-  --       enabled = false, -- can be toggled by commands
-  --     },
-  --   }, -- your configuration
-  -- },
 }
