@@ -15,7 +15,7 @@ return {
     local icon = require("hieulw.icons")
 
     return {
-      fzf_colors = { ["gutter"] = "-1" },
+      -- fzf_colors = { ["gutter"] = "-1" },
       winopts = {
         width = math.min(vim.o.columns, 80),
         height = math.min(vim.o.lines, 30),
