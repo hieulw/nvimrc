@@ -31,13 +31,6 @@ end, { silent = true, expr = true }) -- expr = true will execute return value of
 map("n", "Y", "y$", { desc = "Copy to end of line" })
 map("x", "g/", "<esc>/\\%V", { silent = false, desc = "Search inside visual selection" })
 
--- quickfix list
-map("n", "]q", "<cmd>cnext<cr>", { desc = "Next Quickfix" })
-map("n", "[q", "<cmd>cprevious<cr>", { desc = "Prev Quickfix" })
--- buffer list
-map("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-
 -- Undo breakpoint
 map("i", ",", ",<c-g>u")
 map("i", ".", ".<c-g>u")

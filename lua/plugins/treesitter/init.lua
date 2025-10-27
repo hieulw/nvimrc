@@ -88,14 +88,4 @@ return {
       prefix = "cr",
     },
   },
-  {
-    "wansmer/treesj",
-    keys = function()
-      local treejs = require("treesj")
-      return {
-        { "gJ", treejs.toggle, mode = "n", desc = "Toggle Split Join" },
-      }
-    end,
-    opts = { use_default_keymaps = false, max_join_length = 1000 },
-  },
 }

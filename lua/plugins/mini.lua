@@ -52,6 +52,25 @@ return {
     opts = {},
   },
   {
+    "echasnovski/mini.bracketed",
+    opts = {
+      buffer = { suffix = "b", options = {} },
+      comment = { suffix = "c", options = {} },
+      conflict = { suffix = "x", options = {} },
+      diagnostic = { suffix = "d", options = {} },
+      file = { suffix = "f", options = {} },
+      indent = { suffix = "i", options = {} },
+      jump = { suffix = "j", options = {} },
+      location = { suffix = "l", options = {} },
+      oldfile = { suffix = "o", options = {} },
+      quickfix = { suffix = "q", options = {} },
+      treesitter = { suffix = "t", options = {} },
+      undo = { suffix = "u", options = {} },
+      window = { suffix = "w", options = {} },
+      yank = { suffix = "y", options = {} },
+    },
+  },
+  {
     "echasnovski/mini.clue",
     event = "LazyFile",
     opts = function()
@@ -117,7 +136,16 @@ return {
     opts = function()
       local diff = require("mini.diff")
       return {
-        source = diff.gen_source.none(),
+        source = diff.gen_source.git(),
+        mappings = {
+          apply = "gh",
+          reset = "gH",
+          textobject = "gh",
+          goto_first = "",
+          goto_last = "",
+          goto_prev = "[c",
+          goto_next = "]c",
+        },
       }
     end,
   },
@@ -142,6 +170,9 @@ return {
     },
   },
   {
+    "echasnovski/mini-git",
+  },
+  {
     "echasnovski/mini.move",
     keys = {
       { "H", mode = "v" },
@@ -159,6 +190,21 @@ return {
         line_right = "",
         line_down = "",
         line_up = "",
+      },
+    },
+  },
+  {
+    "echasnovski/mini.sessions",
+    event = "LazyFile",
+  },
+  {
+    "echasnovski/mini.splitjoin",
+    keys = { "gJ" },
+    opts = {
+      mappings = {
+        toggle = "gJ",
+        split = "",
+        join = "",
       },
     },
   },
