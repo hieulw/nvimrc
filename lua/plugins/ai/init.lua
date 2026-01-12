@@ -17,46 +17,81 @@ return {
     },
   },
   {
-    "olimorris/codecompanion.nvim",
-    event = "VeryLazy",
-    cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionAction" },
-    keys = {
-      { "<leader>fa", "<cmd>CodeCompanionAction<cr>", mode = "n", desc = "CodeCompanionAction" },
-      { "<leader>aa", "<cmd>CodeCompanionChat Toggle<cr>", mode = "n", desc = "CodeCompanionChat" },
-      { "<leader>aa", ":CodeCompanion<cr>", mode = "x", desc = "CodeCompanion" },
-    },
+    "folke/sidekick.nvim",
     opts = {
-      display = {
-        chat = {
-          window = {
-            opts = { colorcolumn = "0", number = false, relativenumber = false },
-          },
-        },
-        diff = {
-          provider = "mini_diff",
+      -- add any options here
+      cli = {
+        mux = {
+          backend = "tmux",
+          enabled = true,
         },
       },
-      strategies = {
-        chat = {
-          adapter = "gemini",
-          roles = {
-            llm = function(adapter)
-              return ("%s (%s)"):format(adapter.formatted_name, adapter.parameters.model)
-            end,
-            user = "hieulw",
-          },
-          keymaps = {
-            send = {
-              modes = { n = "<C-s>", i = "<C-s>" },
-            },
-            close = {
-              modes = { n = "<Nop>", i = "<C-q>" },
-            },
-          },
-        },
-        inline = {
-          adapter = "gemini",
-        },
+    },
+    keys = {
+      {
+        "<tab>",
+        function()
+          -- if there is a next edit, jump to it, otherwise apply it if any
+          if not require("sidekick").nes_jump_or_apply() then
+            return "<Tab>" -- fallback to normal tab
+          end
+        end,
+        expr = true,
+        desc = "Goto/Apply Next Edit Suggestion",
+      },
+      {
+        "<leader>aa",
+        function()
+          require("sidekick.cli").toggle()
+        end,
+        desc = "Sidekick Toggle CLI",
+      },
+      {
+        "<leader>as",
+        function()
+          require("sidekick.cli").select()
+        end,
+        -- Or to select only installed tools:
+        -- require("sidekick.cli").select({ filter = { installed = true } })
+        desc = "Select CLI",
+      },
+      {
+        "<leader>ad",
+        function()
+          require("sidekick.cli").close()
+        end,
+        desc = "Detach a CLI Session",
+      },
+      {
+        "<leader>at",
+        function()
+          require("sidekick.cli").send({ msg = "{this}" })
+        end,
+        mode = { "x", "n" },
+        desc = "Send This",
+      },
+      {
+        "<leader>af",
+        function()
+          require("sidekick.cli").send({ msg = "{file}" })
+        end,
+        desc = "Send File",
+      },
+      {
+        "<leader>av",
+        function()
+          require("sidekick.cli").send({ msg = "{selection}" })
+        end,
+        mode = { "x" },
+        desc = "Send Visual Selection",
+      },
+      {
+        "<leader>ap",
+        function()
+          require("sidekick.cli").prompt()
+        end,
+        mode = { "n", "x" },
+        desc = "Sidekick Select Prompt",
       },
     },
   },

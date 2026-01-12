@@ -10,7 +10,9 @@ return {
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         "pint",
-        "phpactor",
+        "phpstan",
+        "intelephense",
+        "laravel-ls",
       })
     end,
   },
@@ -20,6 +22,7 @@ return {
       local nls = require("null-ls")
       vim.list_extend(opts.sources, {
         nls.builtins.formatting.pint,
+        nls.builtins.diagnostics.phpstan,
       })
     end,
   },
@@ -27,13 +30,9 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        phpactor = {},
+        intelephense = {},
+        laravel_ls = {},
       },
     },
-  },
-  {
-    "ricardoramirezr/blade-nav.nvim",
-    dependencies = { "hrsh7th/nvim-cmp" },
-    ft = { "blade", "php" },
   },
 }

@@ -47,12 +47,12 @@ return {
     -- Make sure to set this up properly if you have lazy=true
     "meanderingprogrammer/render-markdown.nvim",
     opts = {
-      file_types = { "markdown", "Avante", "codecompanion" },
+      file_types = { "markdown", "codecompanion" },
       completions = { blink = { enabled = true } },
       max_file_size = 1,
       preset = "obsidian",
       sign = { enabled = false },
     },
-    ft = { "markdown", "Avante", "codecompanion" },
+    ft = { "markdown", "codecompanion" },
   },
 }

@@ -3,8 +3,6 @@ local M = {}
 local function override_highlights()
   local colors = require("gruvbox").palette
   return {
-    AvanteSidebarWinSeparator = { link = "FloatBorder" },
-    AvanteSidebarWinHorizontalSeparator = { link = "FloatBorder" },
     BlinkCmpDocBorder = { link = "GruvboxGray" },
     BlinkCmpMenu = { link = "Normal" },
     BlinkCmpMenuBorder = { link = "GruvboxGray" },
