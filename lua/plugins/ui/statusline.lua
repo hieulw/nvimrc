@@ -25,12 +25,12 @@ function M.setup()
   local diff = {
     "diff",
     source = function()
-      local gitsigns = vim.b[vim.api.nvim_get_current_buf()].minidiff_summary
+      local gitsigns = vim.b.gitsigns_status_dict
       if gitsigns then
         return {
-          added = gitsigns.add,
-          modified = gitsigns.change,
-          removed = gitsigns.delete,
+          added = gitsigns.added,
+          modified = gitsigns.changed,
+          removed = gitsigns.removed,
         }
       end
     end,

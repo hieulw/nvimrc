@@ -170,9 +170,6 @@ return {
     },
   },
   {
-    "echasnovski/mini-git",
-  },
-  {
     "echasnovski/mini.move",
     keys = {
       { "H", mode = "v" },
