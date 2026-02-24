@@ -60,32 +60,4 @@ return {
       },
     },
   },
-  {
-    "chrisgrieser/nvim-scissors",
-    keys = function()
-      local scissors = require("scissors")
-      return {
-        { "<leader>se", scissors.editSnippet, mode = "n", desc = "Edit Snippet" },
-        { "<leader>sa", scissors.addNewSnippet, mode = { "n", "x" }, desc = "Add Snippet" },
-      }
-    end,
-    opts = {
-      snippetDir = vim.fn.stdpath("config") .. "/snippets",
-      editSnippetPopup = {
-        height = 0.4, -- relative to the window, number between 0 and 1
-        width = 0.6,
-        border = "rounded",
-        keymaps = {
-          cancel = "q",
-          saveChanges = "<CR>", -- alternatively, can also use `:w`
-          goBackToSearch = "<BS>",
-          deleteSnippet = "<C-x>",
-          duplicateSnippet = "<C-d>",
-          openInFile = "<C-o>",
-          insertNextPlaceholder = "<C-t>", -- insert & normal mode
-        },
-      },
-      jsonFormatter = "jq", -- "yq"|"jq"|"none"
-    },
-  },
 }
