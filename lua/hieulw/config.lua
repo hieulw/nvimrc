@@ -13,6 +13,7 @@ M.pack = {
   lua = true,
   markdown = true,
   php = true,
+  proto = true,
   python = true,
   sql = true,
   tailwind = true,
