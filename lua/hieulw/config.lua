@@ -3,7 +3,6 @@ local M = {}
 --- Bundle every configs|plugins we need for specific language
 ---@type table<string,boolean>
 M.pack = {
-  ai = true,
   bash = true,
   cloud = true,
   common = true,
