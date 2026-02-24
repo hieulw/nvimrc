@@ -17,81 +17,96 @@ return {
     },
   },
   {
-    "folke/sidekick.nvim",
+    "olimorris/codecompanion.nvim",
+    version = "^18.0.0",
+    dependencies = {
+      "ravitemer/mcphub.nvim",
+    },
+    event = "VeryLazy",
+    cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionAction" },
+    keys = {
+      { "<leader>ac", "<cmd>CodeCompanionAction<cr>", mode = { "n", "v" }, desc = "CodeCompanionAction" },
+      { "<leader>aa", "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v" }, desc = "CodeCompanionChat" },
+      { "<leader>av", "<cmd>CodeCompanion Add<cr>", mode = "v", desc = "CodeCompanion" },
+    },
     opts = {
-      -- add any options here
-      cli = {
-        mux = {
-          backend = "tmux",
-          enabled = true,
+      display = {
+        action_palette = {
+          prompt = "Prompt ",
+          provider = "fzf_lua",
+          opts = {
+            show_preset_actions = true,
+            show_preset_prompts = true,
+            title = "Prompt actions> ",
+          },
+        },
+        chat = {
+          window = {
+            opts = { colorcolumn = "0", number = false, relativenumber = false },
+          },
+        },
+        diff = {
+          provider = "mini_diff",
+        },
+      },
+      strategies = {
+        chat = {
+          adapter = {
+            name = "opencode",
+          },
+          roles = {
+            llm = function(adapter)
+              return ("%s (%s)"):format(adapter.formatted_name, adapter.parameters.model)
+            end,
+            user = "hieulw",
+          },
+          keymaps = {
+            send = {
+              modes = { n = "<C-s>", i = "<C-s>" },
+            },
+            close = {
+              modes = { n = "<Nop>", i = "<C-q>" },
+            },
+          },
+        },
+      },
+      extensions = {
+        mcphub = {
+          callback = "mcphub.extensions.codecompanion",
+          opts = {
+            make_vars = true,
+            make_slash_commands = true,
+            show_result_in_chat = true,
+          },
         },
       },
     },
-    keys = {
-      {
-        "<tab>",
-        function()
-          -- if there is a next edit, jump to it, otherwise apply it if any
-          if not require("sidekick").nes_jump_or_apply() then
-            return "<Tab>" -- fallback to normal tab
-          end
-        end,
-        expr = true,
-        desc = "Goto/Apply Next Edit Suggestion",
+  },
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    enabled = false,
+    event = "InsertEnter",
+    dependencies = {
+      -- "copilotlsp-nvim/copilot-lsp",
+      -- "andrem222/copilot-lualine",
+    },
+    opts = {
+      suggestion = {
+        enabled = false,
+        auto_trigger = false,
+        trigger_on_accept = true,
+        keymap = {
+          accept = "<C-j>",
+          accept_word = "<C-y>",
+          next = "<M-n>",
+          prev = "<M-p>",
+          dismiss = "<C-e>",
+          toggle_auto_trigger = false,
+        },
       },
-      {
-        "<leader>aa",
-        function()
-          require("sidekick.cli").toggle()
-        end,
-        desc = "Sidekick Toggle CLI",
-      },
-      {
-        "<leader>as",
-        function()
-          require("sidekick.cli").select()
-        end,
-        -- Or to select only installed tools:
-        -- require("sidekick.cli").select({ filter = { installed = true } })
-        desc = "Select CLI",
-      },
-      {
-        "<leader>ad",
-        function()
-          require("sidekick.cli").close()
-        end,
-        desc = "Detach a CLI Session",
-      },
-      {
-        "<leader>at",
-        function()
-          require("sidekick.cli").send({ msg = "{this}" })
-        end,
-        mode = { "x", "n" },
-        desc = "Send This",
-      },
-      {
-        "<leader>af",
-        function()
-          require("sidekick.cli").send({ msg = "{file}" })
-        end,
-        desc = "Send File",
-      },
-      {
-        "<leader>av",
-        function()
-          require("sidekick.cli").send({ msg = "{selection}" })
-        end,
-        mode = { "x" },
-        desc = "Send Visual Selection",
-      },
-      {
-        "<leader>ap",
-        function()
-          require("sidekick.cli").prompt()
-        end,
-        mode = { "n", "x" },
-        desc = "Sidekick Select Prompt",
+      filetypes = {
+        yaml = true,
       },
     },
   },

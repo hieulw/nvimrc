@@ -42,20 +42,20 @@ return {
       -- Navigation
       map("n", "]c", function()
         if vim.wo.diff then
-          return "]c"
+          vim.cmd.normal({ "]c", bang = true })
         end
         vim.schedule(function()
-          gs.next_hunk()
+          gs.nav_hunk("next")
         end)
         return "<Ignore>"
       end, { expr = true, desc = "Next Hunk" })
 
       map("n", "[c", function()
         if vim.wo.diff then
-          return "[c"
+          vim.cmd.normal({ "[c", bang = true })
         end
         vim.schedule(function()
-          gs.prev_hunk()
+          gs.nav_hunk("prev")
         end)
         return "<Ignore>"
       end, { expr = true, desc = "Prev Hunk" })
@@ -70,9 +70,9 @@ return {
         gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
       end, { desc = "Reset Hunk" })
       map("n", "<leader>hS", gs.stage_buffer, { desc = "Stage Buffer" })
-      map("n", "<leader>hu", gs.undo_stage_hunk, { desc = "Undo Stage Hunk" })
       map("n", "<leader>hR", gs.reset_buffer, { desc = "Reset Buffer" })
       map("n", "<leader>hp", gs.preview_hunk, { desc = "Preview Hunk" })
+      map("n", "<leader>hi", gs.preview_hunk_inline, { desc = "Preview Hunk Inline" })
       map("n", "<leader>hb", function()
         gs.blame_line({ full = true })
       end, { desc = "Blame Line" })
@@ -80,15 +80,19 @@ return {
       map("n", "<leader>hD", function()
         gs.diffthis("~")
       end, { desc = "Diff This ~" })
+
+      map("n", "<leader>hQ", function()
+        gs.setqflist("all")
+      end, { desc = "Set Git Quickfix All" })
+      map("n", "<leader>hq", gs.setqflist, { desc = "Set Git Quickfix" })
       map("n", "<leader>hts", gs.toggle_signs, { desc = "Toggle Git Signs" })
       map("n", "<leader>htn", gs.toggle_numhl, { desc = "Toggle Number Highlight" })
       map("n", "<leader>htl", gs.toggle_linehl, { desc = "Toggle Line Highlight" })
       map("n", "<leader>htw", gs.toggle_word_diff, { desc = "Toggle Word Diff" })
-      map("n", "<leader>htd", gs.toggle_deleted, { desc = "Toggle Hunk Deleted" })
       map("n", "<leader>htb", gs.toggle_current_line_blame, { desc = "Toggle Git Blame" })
 
       -- Text object
-      map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select Hunk" })
+      map({ "o", "x" }, "ih", gs.select_hunk, { desc = "Select Hunk" })
     end,
   },
 }

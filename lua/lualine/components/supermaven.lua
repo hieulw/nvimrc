@@ -7,7 +7,11 @@ end
 
 -- Function that runs every time statusline is updated
 function M:update_status()
-  return require("supermaven-nvim.api").is_running() and "󱜙 " or "󱚧 "
+  local ok, supermaven = pcall(require, "supermaven-nvim.api")
+  if not ok then
+    return ""
+  end
+  return supermaven.is_running() and "󱜙 " or "󱚧 "
 end
 
 return M

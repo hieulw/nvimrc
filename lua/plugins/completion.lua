@@ -38,7 +38,7 @@ return {
             components = {
               label = {
                 text = function(ctx)
-                  return ctx.label:match("[^(]+") .. ctx.label_detail
+                  return (ctx.label:match("[^(]+") or "") .. (ctx.label_detail or "")
                 end,
               },
             },
@@ -51,6 +51,7 @@ return {
           lua = { "lazydev", "lsp", "path", "buffer" },
           ["dap-repl"] = { "dap" },
           gitcommit = { "snippets", "buffer" },
+          codecompanion = { "codecompanion" },
         },
         providers = {
           lazydev = { name = "LazyDev", module = "lazydev.integrations.blink" },

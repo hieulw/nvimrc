@@ -19,7 +19,7 @@ function M.setup(_, opts)
   end
 
   -- integrate with overseer
-  require("overseer").patch_dap(true)
+  require("overseer").enable_dap()
   require("dap.ext.vscode").json_decode = require("overseer.json").decode
 
   -- setup UI
