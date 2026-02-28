@@ -2,7 +2,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "go", "gomod", "gosum", "gowork" })
+      vim.list_extend(opts.ensure_installed, { "go", "gomod", "gosum", "gowork", "gotmpl" })
     end,
   },
   {
@@ -10,7 +10,6 @@ return {
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         "gopls",
-        "gofumpt",
         "goimports",
         "golines",
         "gomodifytags",
@@ -26,7 +25,6 @@ return {
       vim.list_extend(opts.sources, {
         nls.builtins.formatting.goimports,
         nls.builtins.formatting.golines,
-        nls.builtins.formatting.gofumpt,
         nls.builtins.code_actions.gomodifytags,
         nls.builtins.code_actions.impl,
       })
