@@ -32,30 +32,10 @@ return {
     opts = {
       servers = {
         ruff = {},
-        -- basedpyright = {
-        --   ---@see https://docs.basedpyright.com/latest/configuration/language-server-settings/
-        --   settings = {
-        --     basedpyright = {
-        --       disableLanguageServices = false,
-        --       disableOrganizeImports = false,
-        --       disableTaggedHints = false,
-        --       analysis = {
-        --         autoImportCompletions = true,
-        --         autoSearchPaths = true,
-        --         diagnosticMode = "openFilesOnly",
-        --         typeCheckingMode = "standard",
-        --         stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs/stubs",
-        --       },
-        --     },
-        --     python = {
-        --       pythonPath = vim.fn.expand("${workspaceFolder}/.venv/bin/python"),
-        --     },
-        --   },
-        -- },
-        pyright = {
-          ---@see https://github.com/microsoft/pyright/blob/main/docs/settings.md
+        basedpyright = {
+          ---@see https://docs.basedpyright.com/latest/configuration/language-server-settings/
           settings = {
-            pyright = {
+            basedpyright = {
               disableLanguageServices = false,
               disableOrganizeImports = true,
               disableTaggedHints = false,
@@ -74,11 +54,33 @@ return {
             },
           },
         },
+        -- pyright = {
+        --   ---@see https://github.com/microsoft/pyright/blob/main/docs/settings.md
+        --   settings = {
+        --     pyright = {
+        --       disableLanguageServices = false,
+        --       disableOrganizeImports = true,
+        --       disableTaggedHints = false,
+        --     },
+        --     python = {
+        --       analysis = {
+        --         autoImportCompletions = true,
+        --         autoSearchPaths = true,
+        --         diagnosticMode = "openFilesOnly",
+        --         typeCheckingMode = "standard",
+        --         useLibraryCodeForTypes = true,
+        --         stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs/stubs",
+        --         extraPaths = {},
+        --       },
+        --       pythonPath = vim.fn.expand("${workspaceFolder}/.venv/bin/python"),
+        --     },
+        --   },
+        -- },
       },
       setup = {
         ruff = function()
           require("plugins.lsp.utils").on_attach("ruff", function(client, _)
-            -- Disable hover in favor of Pyright
+            -- Disable hover in favor of basedpyright/pyright
             client.server_capabilities.hoverProvider = false
             -- Auto organize imports on save
             vim.api.nvim_create_autocmd("BufWritePre", {
@@ -105,7 +107,7 @@ return {
             vim.keymap.set(
               "n",
               "<leader>lo",
-              "<cmd>PyrightOrganizeImports<cr>",
+              "<cmd>LspPyrightOrganizeImports<cr>",
               { desc = "Organize Imports", buffer = bufnr }
             )
           end)
@@ -115,7 +117,7 @@ return {
             vim.keymap.set(
               "n",
               "<leader>lo",
-              "<cmd>PyrightOrganizeImports<cr>",
+              "<cmd>LspPyrightOrganizeImports<cr>",
               { desc = "Organize Imports", buffer = bufnr }
             )
           end)

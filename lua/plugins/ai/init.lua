@@ -12,13 +12,17 @@ return {
       },
       condition = function()
         local path = vim.fn.expand("%:p")
-        return path:match(".*/gopass.*$") ~= nil or path:match(".*/.ssh/.*$") ~= nil
+        return path:match(".*/gopass.*$") ~= nil
+          or path:match(".*/.ssh/.*$") ~= nil
+          or path:match(".*secret.*") ~= nil
+          or path:match(".*env.*") ~= nil
       end,
     },
   },
   {
     "olimorris/codecompanion.nvim",
     version = "^18.0.0",
+    enabled = false,
     dependencies = {
       "ravitemer/mcphub.nvim",
     },
