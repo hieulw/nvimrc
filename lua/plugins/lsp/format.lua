@@ -11,6 +11,12 @@ end
 function M.format()
   local buf = vim.api.nvim_get_current_buf()
 
+  local has_conform, conform = pcall(require, "conform")
+  if has_conform then
+    conform.format({ bufnr = buf, lsp_format = "fallback", timeout_ms = 3000 })
+    return
+  end
+
   local formatters = M.get_formatters(buf)
   local client_ids = vim.tbl_map(function(client)
     return client.id
@@ -36,19 +42,7 @@ function M.notify(formatters)
   local lines = { "# Active:" }
 
   for _, client in ipairs(formatters.active) do
-    local line = "- **" .. client.name .. "**"
-    if client.name == "null-ls" then
-      line = line
-        .. " ("
-        .. table.concat(
-          vim.tbl_map(function(f)
-            return "`" .. f.name .. "`"
-          end, formatters.null_ls),
-          ", "
-        )
-        .. ")"
-    end
-    table.insert(lines, line)
+    table.insert(lines, "- **" .. client.name .. "**")
   end
 
   if #formatters.available > 0 then
@@ -82,24 +76,15 @@ function M.supports_format(client)
 end
 
 function M.get_formatters(bufnr)
-  local ft = vim.bo[bufnr].filetype
-  -- check if we have any null-ls formatters for the current filetype
-  local null_ls = package.loaded["null-ls"] and require("null-ls.sources").get_available(ft, "NULL_LS_FORMATTING") or {}
-
   local ret = {
     active = {},
     available = {},
-    null_ls = null_ls,
   }
 
   local clients = vim.lsp.get_clients({ bufnr = bufnr })
   for _, client in ipairs(clients) do
     if M.supports_format(client) then
-      if (#null_ls > 0 and client.name == "null-ls") or #null_ls == 0 then
-        table.insert(ret.active, client)
-      else
-        table.insert(ret.available, client)
-      end
+      table.insert(ret.active, client)
     end
   end
 

@@ -1,61 +1,45 @@
 local M = {}
 
-local loaded = false
-local FORMATTING = nil
-local DIAGNOSTICS = nil
-local COMPLETION = nil
-local CODE_ACTION = nil
-local HOVER = nil
-
-local function init()
-  local nls_methods = require("null-ls").methods
-  FORMATTING = nls_methods.FORMATTING
-  DIAGNOSTICS = nls_methods.DIAGNOSTICS
-  COMPLETION = nls_methods.COMPLETION
-  CODE_ACTION = nls_methods.CODE_ACTION
-  HOVER = nls_methods.HOVER
-  loaded = true
-end
-
-local function list_registered_providers_names(ft)
-  if not loaded then
-    init()
-  end
-  local s = require("null-ls.sources")
-  local available_sources = s.get_available(ft)
-  local registered = {}
-  for _, source in ipairs(available_sources) do
-    for method in pairs(source.methods) do
-      registered[method] = registered[method] or {}
-      table.insert(registered[method], source.name)
+function M.list_formatters(ft)
+  local opts = M.opts("conform.nvim")
+  local by_ft = opts.formatters_by_ft or {}
+  local ret = {}
+  for _, key in ipairs({ "_", ft, "*" }) do
+    local formatters = by_ft[key] or {}
+    for _, formatter in ipairs(formatters) do
+      if type(formatter) == "string" and not vim.tbl_contains(ret, formatter) then
+        table.insert(ret, formatter)
+      end
     end
   end
-  return registered
-end
-
-function M.list_formatters(ft)
-  local providers = list_registered_providers_names(ft)
-  return providers[FORMATTING] or {}
+  return ret
 end
 
 function M.list_linters(ft)
-  local providers = list_registered_providers_names(ft)
-  return providers[DIAGNOSTICS] or {}
+  local opts = M.opts("nvim-lint")
+  local by_ft = opts.linters_by_ft or {}
+  local ret = {}
+  for _, key in ipairs({ "_", ft, "*" }) do
+    local linters = by_ft[key] or {}
+    for _, linter in ipairs(linters) do
+      if type(linter) == "string" and not vim.tbl_contains(ret, linter) then
+        table.insert(ret, linter)
+      end
+    end
+  end
+  return ret
 end
 
 function M.list_completions(ft)
-  local providers = list_registered_providers_names(ft)
-  return providers[COMPLETION] or {}
+  return {}
 end
 
 function M.list_code_actions(ft)
-  local providers = list_registered_providers_names(ft)
-  return providers[CODE_ACTION] or {}
+  return {}
 end
 
 function M.list_hovers(ft)
-  local providers = list_registered_providers_names(ft)
-  return providers[HOVER] or {}
+  return {}
 end
 
 function M.capabilities()

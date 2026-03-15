@@ -38,9 +38,34 @@ return {
     end,
   },
   {
-    "nvimtools/none-ls.nvim",
+    "stevearc/conform.nvim",
     event = "LazyFile",
-    opts = { sources = {} },
+    opts = {
+      formatters_by_ft = {},
+      formatters = {},
+    },
+    config = function(_, opts)
+      require("conform").setup(opts)
+    end,
+  },
+  {
+    "mfussenegger/nvim-lint",
+    event = { "BufReadPost", "BufNewFile", "BufWritePost", "InsertLeave" },
+    opts = {
+      linters_by_ft = {},
+    },
+    config = function(_, opts)
+      local lint = require("lint")
+      lint.linters_by_ft = opts.linters_by_ft or {}
+
+      local group = vim.api.nvim_create_augroup("nvim-lint", { clear = true })
+      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+        group = group,
+        callback = function()
+          lint.try_lint()
+        end,
+      })
+    end,
   },
   {
     "linrongbin16/lsp-progress.nvim",
@@ -64,8 +89,7 @@ return {
           local client_names = {}
 
           for _, client in ipairs(clients) do
-            if client.name == "null-ls" then
-            else
+            if client.name ~= "conform" then
               table.insert(client_names, client.name)
             end
           end

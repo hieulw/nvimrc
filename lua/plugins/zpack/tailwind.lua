@@ -6,15 +6,13 @@ return {
     end,
   },
   {
-    "nvimtools/none-ls.nvim",
-    opts = function(_, opts)
-      local nls = require("null-ls")
-      vim.list_extend(opts.sources, {
-        nls.builtins.formatting.rustywind.with({
-          extra_filetypes = { "blade" },
-        }),
-      })
-    end,
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        blade = { "rustywind" },
+        html = { "rustywind" },
+      },
+    },
   },
   {
     "neovim/nvim-lspconfig",

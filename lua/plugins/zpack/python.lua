@@ -17,14 +17,20 @@ return {
     end,
   },
   {
-    "nvimtools/none-ls.nvim",
-    opts = function(_, opts)
-      local nls = require("null-ls")
-      vim.list_extend(opts.sources, {
-        nls.builtins.formatting.djlint,
-        nls.builtins.diagnostics.djlint,
-      })
-    end,
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        htmldjango = { "djlint" },
+      },
+    },
+  },
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters_by_ft = {
+        htmldjango = { "djlint" },
+      },
+    },
   },
   {
     "neovim/nvim-lspconfig",

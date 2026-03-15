@@ -12,23 +12,17 @@ return {
         "gopls",
         "goimports",
         "golines",
-        "gomodifytags",
-        "impl",
         "delve",
       })
     end,
   },
   {
-    "nvimtools/none-ls.nvim",
-    opts = function(_, opts)
-      local nls = require("null-ls")
-      vim.list_extend(opts.sources, {
-        nls.builtins.formatting.goimports,
-        nls.builtins.formatting.golines,
-        nls.builtins.code_actions.gomodifytags,
-        nls.builtins.code_actions.impl,
-      })
-    end,
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        go = { "goimports", "golines" },
+      },
+    },
   },
   {
     "neovim/nvim-lspconfig",

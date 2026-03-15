@@ -27,16 +27,16 @@ return {
     end,
   },
   {
-    "nvimtools/none-ls.nvim",
-    opts = function(_, opts)
-      local nls = require("null-ls")
-      vim.list_extend(opts.sources, {
-        nls.builtins.formatting.prettierd.with({
-          extra_filetypes = { "blade" },
-          disabled_filetypes = { "yaml" },
-        }),
-      })
-    end,
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        json = { "prettierd" },
+        jsonc = { "prettierd" },
+        html = { "prettierd" },
+        css = { "prettierd" },
+        blade = { "prettierd" },
+      },
+    },
   },
   {
     "neovim/nvim-lspconfig",
