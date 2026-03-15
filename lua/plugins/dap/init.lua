@@ -4,7 +4,7 @@ return {
   {
     "mfussenegger/nvim-dap",
     dependencies = {
-      "rcarriga/nvim-dap-ui",
+      "igorlfs/nvim-dap-view",
       "thehamsta/nvim-dap-virtual-text",
       "liadoz/nvim-dap-repl-highlights",
     },

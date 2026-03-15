@@ -3,7 +3,7 @@ local M = {}
 function M.setup(_, opts)
   local icons = require("hieulw.icons")
   local dap = require("dap")
-  local dapui = require("dapui")
+  local dapview = require("dap-view")
   local dapvt = require("nvim-dap-virtual-text")
   local daprh = require("nvim-dap-repl-highlights")
   local lualine = require("lualine")
@@ -25,19 +25,11 @@ function M.setup(_, opts)
   -- setup UI
   daprh.setup()
   dapvt.setup({ virt_text_pos = "inline" })
-  dapui.setup({
-    controls = { element = "breakpoints" },
-    expand_lines = false,
-    layouts = {
-      {
-        elements = {
-          { id = "stacks", size = 0.20 },
-          { id = "scopes", size = 0.48 },
-          { id = "watches", size = 0.32 },
-        },
-        position = "right",
-        size = 40,
-      },
+  dapview.setup({
+    auto_toggle = true,
+    windows = {
+      position = "right",
+      size = 0.25,
     },
   })
   lualine.setup({
@@ -52,17 +44,6 @@ function M.setup(_, opts)
       }),
     },
   })
-
-  -- setup hooks
-  dap.listeners.after.event_initialized["dapui_config"] = function()
-    dapui.open()
-  end
-  dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close()
-  end
-  dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close()
-  end
 
   -- setup adapters
   for _config, _opts in pairs(opts.configurations) do

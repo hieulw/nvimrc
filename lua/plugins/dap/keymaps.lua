@@ -80,9 +80,9 @@ M.dap = {
   {
     "<leader>du",
     function()
-      require("dapui").toggle({ reset = true })
+      require("dap-view").toggle()
     end,
-    desc = "Toggle Dap UI",
+    desc = "Toggle DAP View",
   },
   {
     "<leader>dw",
@@ -95,9 +95,9 @@ M.dap = {
   {
     "<leader>de",
     function()
-      require("dapui").eval()
+      require("dap-view").add_expr()
     end,
-    desc = "Eval",
+    desc = "Watch Expression",
     mode = { "n", "v" },
   },
 }
