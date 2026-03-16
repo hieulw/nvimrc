@@ -51,12 +51,4 @@ return {
       },
     },
   },
-  -- {
-  --   "nanotee/sqls.nvim",
-  --   config = function()
-  --     require("plugins.lsp.utils").on_attach("sqls", function(client, buffer)
-  --       require("sqls").on_attach(client, buffer)
-  --     end)
-  --   end,
-  -- },
 }

@@ -14,7 +14,7 @@ M.pack = {
   php = true,
   proto = true,
   python = true,
-  sql = true,
+  sql = false,
   tailwind = true,
   typescript = true,
 }

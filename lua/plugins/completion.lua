@@ -56,6 +56,7 @@ return {
         providers = {
           lazydev = { name = "LazyDev", module = "lazydev.integrations.blink" },
           dap = { name = "dap", module = "blink.compat.source" },
+          dadbod_grip = { name = "dadbod_grip", module = "dadbod-grip.completion.blink" },
         },
       },
     },
