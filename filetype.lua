@@ -1,4 +1,5 @@
 vim.treesitter.language.register("bash", { "tmux", "zsh", "sh" })
+vim.treesitter.language.register("markdown", "mdx")
 vim.filetype.add({
   extension = {
     html = function(_, bufnr)
@@ -10,6 +11,7 @@ vim.filetype.add({
       return "html"
     end,
     tfstate = "json",
+    mdx = "mdx",
   },
   pattern = {
     [".*/hypr/.*%.conf"] = "hyprlang",
