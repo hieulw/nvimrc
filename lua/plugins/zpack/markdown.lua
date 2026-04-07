@@ -47,12 +47,16 @@ return {
     -- Make sure to set this up properly if you have lazy=true
     "meanderingprogrammer/render-markdown.nvim",
     opts = {
-      file_types = { "markdown", "codecompanion" },
+      file_types = { "markdown", "mdx", "codecompanion" },
       completions = { blink = { enabled = true } },
       max_file_size = 1,
       preset = "obsidian",
       sign = { enabled = false },
     },
-    ft = { "markdown", "codecompanion" },
+    ft = { "markdown", "mdx", "codecompanion" },
+  },
+  {
+    "davidmh/mdx.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
   },
 }

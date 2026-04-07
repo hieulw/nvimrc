@@ -18,6 +18,53 @@ return {
           or path:match(".*env.*") ~= nil
       end,
     },
+    config = function(_, opts)
+      require("supermaven-nvim").setup(opts)
+
+      local api = require("supermaven-nvim.api")
+      local preview = require("supermaven-nvim.completion_preview")
+      local group = vim.api.nvim_create_augroup("supermaven_mode_control", { clear = true })
+
+      local function stop_if_running()
+        preview:dispose_inlay()
+        if api.is_running() then
+          api.stop()
+        end
+      end
+
+      local function start_if_allowed()
+        if opts.condition() then
+          stop_if_running()
+          return
+        end
+        if not api.is_running() then
+          api.start()
+        end
+      end
+
+      vim.api.nvim_create_autocmd("InsertEnter", {
+        group = group,
+        callback = start_if_allowed,
+      })
+
+      vim.api.nvim_create_autocmd("InsertLeave", {
+        group = group,
+        callback = stop_if_running,
+      })
+
+      vim.api.nvim_create_autocmd("BufEnter", {
+        group = group,
+        callback = function()
+          if vim.api.nvim_get_mode().mode:sub(1, 1) == "i" then
+            start_if_allowed()
+          else
+            stop_if_running()
+          end
+        end,
+      })
+
+      stop_if_running()
+    end,
   },
   {
     "olimorris/codecompanion.nvim",

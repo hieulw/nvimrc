@@ -11,7 +11,7 @@ return {
       vim.list_extend(opts.ensure_installed, {
         "gopls",
         "goimports",
-        "golines",
+        -- "golines",
         "delve",
       })
     end,
@@ -20,7 +20,10 @@ return {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
-        go = { "goimports", "golines" },
+        go = {
+          "goimports",
+          -- "golines",
+        },
       },
     },
   },

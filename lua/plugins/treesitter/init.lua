@@ -45,6 +45,15 @@ return {
     config = require("plugins.treesitter.config").setup,
   },
   {
+    "nvim-treesitter/nvim-treesitter-context",
+    event = "LazyFile",
+    opts = {
+      max_lines = 3,
+      trim_scope = "outer",
+      mode = "cursor",
+    },
+  },
+  {
     "windwp/nvim-ts-autotag",
     event = "LazyFile",
     opts = {
