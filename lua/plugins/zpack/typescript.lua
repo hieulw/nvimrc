@@ -65,7 +65,7 @@ return {
             })
           end)
         end,
-        tsserver = function()
+        ts_ls = function()
           -- skip mason-lspconfig auto setup
           return true
         end,
