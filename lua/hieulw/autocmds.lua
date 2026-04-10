@@ -61,7 +61,7 @@ autocmd("FileType", {
   },
   callback = function(e)
     vim.bo[e.buf].buflisted = false
-    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = e.buf, silent = true, desc = "Close buffer" })
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buf = e.buf, silent = true, desc = "Close buffer" })
   end,
 })
 
@@ -96,7 +96,7 @@ autocmd("BufWritePre", {
     if e.match:match("^%w%w+://") then
       return
     end
-    local file = vim.loop.fs_realpath(e.match) or e.match
+    local file = vim.uv.fs_realpath(e.match) or e.match
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
 })

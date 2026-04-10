@@ -24,7 +24,7 @@ end
 
 function M:has(method)
   method = method:find("/") and method or "textDocument/" .. method
-  return self.client.supports_method(method)
+  return self.client:supports_method(method)
 end
 
 function M:map(lhs, rhs, opts)
@@ -36,7 +36,7 @@ function M:map(lhs, rhs, opts)
     opts.mode or "n",
     lhs,
     type(rhs) == "string" and ("<cmd>%s<cr>"):format(rhs) or rhs,
-    { silent = true, buffer = self.buffer, expr = opts.expr, desc = opts.desc }
+    { silent = true, buf = self.buffer, expr = opts.expr, desc = opts.desc }
   )
 end
 

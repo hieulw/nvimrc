@@ -90,7 +90,7 @@ return {
             ---@see https://github.com/nvim-neotest/neotest-go/issues/12
             vim.keymap.set("n", "<leader>td", function()
               require("dap-go").debug_test()
-            end, { buffer = buffer, desc = "Debug Nearest (Go)" })
+            end, { buf = buffer, desc = "Debug Nearest (Go)" })
           end)
         end,
       },

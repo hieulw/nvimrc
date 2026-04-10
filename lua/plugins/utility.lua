@@ -73,7 +73,7 @@ return {
         for _, mapping in ipairs(mappings) do
           vim.keymap.set("n", mapping[1], mapping[2], {
             desc = mapping[3],
-            buffer = bufnr,
+            buf = bufnr,
             noremap = true,
             silent = true,
             nowait = true,

@@ -95,7 +95,7 @@ return {
                   return
                 end
                 ---@class lsp.Client
-                client.request_sync("workspace/executeCommand", {
+                client:request_sync("workspace/executeCommand", {
                   command = "ruff.applyOrganizeImports",
                   arguments = {
                     {
@@ -114,7 +114,7 @@ return {
               "n",
               "<leader>lo",
               "<cmd>LspPyrightOrganizeImports<cr>",
-              { desc = "Organize Imports", buffer = bufnr }
+              { desc = "Organize Imports", buf = bufnr }
             )
           end)
         end,
@@ -124,7 +124,7 @@ return {
               "n",
               "<leader>lo",
               "<cmd>LspPyrightOrganizeImports<cr>",
-              { desc = "Organize Imports", buffer = bufnr }
+              { desc = "Organize Imports", buf = bufnr }
             )
           end)
         end,
