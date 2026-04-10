@@ -1,6 +1,7 @@
 return {
   "joryeugene/dadbod-grip.nvim",
   version = "*",
+  pkg = false,
   dependencies = {
     "tpope/vim-dadbod",
   },

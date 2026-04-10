@@ -36,6 +36,11 @@ vim.opt.pumblend = 0 -- Make builtin completion menus no transparent
 vim.opt.pumheight = 10 -- Makes popup menu smaller
 vim.opt.cmdheight = 1
 
+local ok, ui2 = pcall(require, "vim._core.ui2")
+if ok then
+  ui2.enable({ enable = true })
+end
+
 vim.opt.list = true -- Show some helper symbols
 vim.opt.listchars = { tab = "→ ", trail = "·", nbsp = "·", extends = "❯", precedes = "❮" }
 

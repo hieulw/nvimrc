@@ -52,6 +52,13 @@ return {
       max_file_size = 1,
       preset = "obsidian",
       sign = { enabled = false },
+      overrides = {
+        buftype = {
+          nofile = {
+            enabled = false,
+          },
+        },
+      },
     },
     ft = { "markdown", "mdx", "codecompanion" },
   },
