@@ -5,7 +5,8 @@ function M.setup(_, opts)
   -- commenting out the comment queries in injections.scm seem to fix performance issues
   require("plugins.treesitter.keymaps").setup()
   require("plugins.treesitter.parser").setup()
-  require("nvim-treesitter.configs").setup(opts)
+  require("plugins.treesitter.compat").setup()
+  require("nvim-treesitter").setup(opts)
   require("ts-comments").setup()
 end
 

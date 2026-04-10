@@ -76,7 +76,6 @@ end
 
 function M.setup()
   local lsp_utils = require("plugins.lsp.utils")
-  local treesitter = require("nvim-treesitter")
 
   vim.opt.foldenable = true
   vim.opt.foldlevel = 99
@@ -93,22 +92,20 @@ function M.setup()
   })
 
   -- Using Treesitter folding if available
-  ---@see https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/ui.lua#L10-L25
-  treesitter.define_modules({
-    fold = {
-      enable = true,
-      attach = function(bufnr, ft)
-        if vim.b[bufnr].ts_folds == nil then
-          vim.b[bufnr].ts_folds = pcall(vim.treesitter.get_parser, bufnr)
+  local folding_group = vim.api.nvim_create_augroup("hieulw_ts_folding", { clear = true })
+  vim.api.nvim_create_autocmd("FileType", {
+    group = folding_group,
+    callback = function(args)
+      if vim.b[args.buf].ts_folds == nil then
+        vim.b[args.buf].ts_folds = pcall(vim.treesitter.get_parser, args.buf)
+      end
+      if vim.b[args.buf].ts_folds then
+        local winid = vim.fn.bufwinid(args.buf)
+        if winid ~= -1 then
+          vim.api.nvim_set_option_value("foldexpr", "v:lua.vim.treesitter.foldexpr()", { win = winid })
         end
-        if vim.b[bufnr].ts_folds then
-          vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-        end
-      end,
-      detach = function(bufnr)
-        vim.opt_local.foldexpr = vim.go.foldexpr
-      end,
-    },
+      end
+    end,
   })
 
   -- Using LSP folding if available
@@ -116,7 +113,7 @@ function M.setup()
     if vim.b[bufnr].ts_folds then
       return
     end
-    if client.supports_method("textDocument/foldingRange") then
+    if client:supports_method("textDocument/foldingRange") then
       local win = vim.api.nvim_get_current_win()
       vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
     end

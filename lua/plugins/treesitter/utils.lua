@@ -2,7 +2,51 @@
 local M = {}
 
 M._node_level = 0
-local ts_utils = require("nvim-treesitter.ts_utils")
+
+local function highlight_node_range(node, bufnr, ns, higroup)
+  local start_row, start_col, end_row, end_col = node:range()
+  vim.api.nvim_buf_set_extmark(bufnr, ns, start_row, start_col, {
+    end_row = end_row,
+    end_col = end_col,
+    hl_group = higroup,
+  })
+end
+
+local function is_before(a, b)
+  if a.start_row ~= b.start_row then
+    return a.start_row < b.start_row
+  end
+  return a.start_col < b.start_col
+end
+
+local function swap_nodes(node_a, node_b, bufnr)
+  local a_start_row, a_start_col, a_end_row, a_end_col = node_a:range()
+  local b_start_row, b_start_col, b_end_row, b_end_col = node_b:range()
+
+  local a = {
+    start_row = a_start_row,
+    start_col = a_start_col,
+    end_row = a_end_row,
+    end_col = a_end_col,
+    text = vim.api.nvim_buf_get_text(bufnr, a_start_row, a_start_col, a_end_row, a_end_col, {}),
+  }
+
+  local b = {
+    start_row = b_start_row,
+    start_col = b_start_col,
+    end_row = b_end_row,
+    end_col = b_end_col,
+    text = vim.api.nvim_buf_get_text(bufnr, b_start_row, b_start_col, b_end_row, b_end_col, {}),
+  }
+
+  if is_before(a, b) then
+    vim.api.nvim_buf_set_text(bufnr, b.start_row, b.start_col, b.end_row, b.end_col, a.text)
+    vim.api.nvim_buf_set_text(bufnr, a.start_row, a.start_col, a.end_row, a.end_col, b.text)
+  else
+    vim.api.nvim_buf_set_text(bufnr, a.start_row, a.start_col, a.end_row, a.end_col, b.text)
+    vim.api.nvim_buf_set_text(bufnr, b.start_row, b.start_col, b.end_row, b.end_col, a.text)
+  end
+end
 
 local function highlight_node(node)
   vim.validate({ node = { node, "userdata", true } })
@@ -26,7 +70,7 @@ local function highlight_node(node)
     node_timer:close()
   end
 
-  ts_utils.highlight_node(node, bufnr, node_ns, higroup)
+  highlight_node_range(node, bufnr, node_ns, higroup)
   node_timer = vim.defer_fn(function()
     node_timer = nil
     if vim.api.nvim_buf_is_valid(bufnr) then
@@ -270,7 +314,7 @@ local function swap_with(new_path_getter)
   local new_node = new_path[#new_path]
 
   set_node_level(new_path)
-  ts_utils.swap_nodes(node, new_node, buffer, true)
+  swap_nodes(node, new_node, buffer)
 end
 
 function M.goto_prev()

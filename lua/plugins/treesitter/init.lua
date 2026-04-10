@@ -6,13 +6,8 @@ return {
       "nvim-treesitter/nvim-treesitter-textobjects",
       "folke/ts-comments.nvim",
     },
-    init = function(plugin)
-      ---@see https://github.com/LazyVim/LazyVim/commit/1e1b68d633d4bd4faa912ba5f49ab6b8601dc0c9
-      require("lazy.core.loader").add_to_rtp(plugin)
-      require("nvim-treesitter.query_predicates")
-    end,
     build = function()
-      pcall(require("nvim-treesitter.install").update({ with_sync = false }))
+      require("nvim-treesitter").update({ summary = true })
     end,
     opts = {
       ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
@@ -25,7 +20,7 @@ return {
             return true
           end
           local max_filesize = 100 * 1024 -- 100 KB
-          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+          local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
           if ok and stats and stats.size > max_filesize then
             return true
           end

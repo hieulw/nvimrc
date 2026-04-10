@@ -12,9 +12,15 @@ local parsers = {
 }
 
 function M.setup()
-  local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+  local parser_config = require("nvim-treesitter.parsers")
+  if type(parser_config.get_parser_configs) == "function" then
+    parser_config = parser_config.get_parser_configs()
+  end
+
   for parser, config in pairs(parsers) do
-    parser_config[parser] = config
+    if parser_config[parser] == nil then
+      parser_config[parser] = config
+    end
   end
 end
 
