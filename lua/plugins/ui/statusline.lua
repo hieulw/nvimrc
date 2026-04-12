@@ -43,6 +43,18 @@ function M.setup()
     always_visible = false,
   }
 
+  local lsp_status = {
+    "lsp_status",
+    icon = icon.ui.LSP,
+    symbols = {
+      spinner = icon.spinner,
+      done = "",
+      separator = " ",
+    },
+    ignore_lsp = {},
+    show_name = true,
+  }
+
   lualine.setup({
     options = {
       theme = "auto",
@@ -54,7 +66,7 @@ function M.setup()
     sections = {
       lualine_a = { mode },
       lualine_b = {},
-      lualine_c = { "filename", "codecompanion", "supermaven" },
+      lualine_c = { "filename", lsp_status, "codecompanion", "supermaven" },
       lualine_x = { diff, diagnostics, filetype },
       lualine_y = {},
       lualine_z = {},
