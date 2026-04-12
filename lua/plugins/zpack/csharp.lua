@@ -2,7 +2,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, {
+      vim.list_extend(opts.parsers, {
         "c_sharp",
       })
     end,

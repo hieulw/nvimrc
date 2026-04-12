@@ -2,7 +2,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "php", "php_only", "blade" })
+      vim.list_extend(opts.parsers, { "php", "php_only", "blade" })
     end,
   },
   {

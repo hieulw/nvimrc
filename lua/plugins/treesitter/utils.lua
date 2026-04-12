@@ -219,10 +219,12 @@ end
 
 local function get_current_node_path()
   local cursor = get_cursor()
-  local main_parser = require("nvim-treesitter.parsers").get_parser()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local main_parser = vim.treesitter.get_parser(bufnr)
   if not main_parser then
     return
   end
+  main_parser:parse()
 
   local root = get_root(main_parser, cursor)
   if not root then

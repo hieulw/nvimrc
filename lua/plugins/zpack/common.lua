@@ -2,12 +2,11 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, {
+      vim.list_extend(opts.parsers, {
         "hyprlang",
         "hurl",
         "just",
         "json",
-        "jsonc",
         "yaml",
         "html",
         "css",
