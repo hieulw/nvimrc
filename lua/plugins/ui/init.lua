@@ -33,6 +33,7 @@ return {
       require("plugins.ui.input").setup()
       require("plugins.ui.quickfix").setup()
       require("plugins.ui.folding").setup()
+      require("vim._core.ui2").enable()
     end,
   },
   {
