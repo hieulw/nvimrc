@@ -314,9 +314,12 @@ local function swap_with(new_path_getter)
     return
   end
   local new_node = new_path[#new_path]
+  local target_row, target_col = new_node:start()
 
   set_node_level(new_path)
   swap_nodes(node, new_node, buffer)
+  vim.api.nvim_win_set_cursor(0, { target_row + 1, target_col })
+  highlight_node(new_node)
 end
 
 function M.goto_prev()
