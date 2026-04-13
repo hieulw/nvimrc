@@ -7,6 +7,7 @@ return {
         "hurl",
         "just",
         "json",
+        "jsonc",
         "yaml",
         "html",
         "css",
