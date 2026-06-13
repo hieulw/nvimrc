@@ -58,7 +58,7 @@ return {
           bundle_path = vim.fn.stdpath("data") .. "/mason/packages/powershell-editor-services",
         },
         terraformls = {
-          filetypes = { "tf", "terraform", "terraform-vars" },
+          filetypes = { "tf", "terraform", "terraform-vars", "hcl" },
         },
       },
     },

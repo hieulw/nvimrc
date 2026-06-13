@@ -46,6 +46,7 @@ return {
     },
     config = function(_, opts)
       require("conform").setup(opts)
+      require("plugins.lsp.format").setup()
     end,
   },
   {

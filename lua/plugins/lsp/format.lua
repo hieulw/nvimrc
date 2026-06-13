@@ -2,14 +2,15 @@ local M = {}
 
 M.autoformat = true
 M.format_notify = false
+M._is_initialized = false
 
 function M.toggle()
   M.autoformat = not M.autoformat
   vim.notify(M.autoformat and "Enabled format on save" or "Disabled format on save")
 end
 
-function M.format()
-  local buf = vim.api.nvim_get_current_buf()
+function M.format(buf)
+  buf = buf or vim.api.nvim_get_current_buf()
 
   local has_conform, conform = pcall(require, "conform")
   if has_conform then
@@ -34,6 +35,27 @@ function M.format()
     bufnr = buf,
     filter = function(client)
       return vim.tbl_contains(client_ids, client.id)
+    end,
+  })
+end
+
+function M.setup()
+  if M._is_initialized then
+    return
+  end
+
+  M._is_initialized = true
+  local group = vim.api.nvim_create_augroup("LspFormat", { clear = true })
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    group = group,
+    callback = function(args)
+      if not M.autoformat then
+        return
+      end
+      if vim.bo[args.buf].buftype ~= "" then
+        return
+      end
+      M.format(args.buf)
     end,
   })
 end
@@ -89,18 +111,6 @@ function M.get_formatters(bufnr)
   end
 
   return ret
-end
-
-function M.on_attach(_, bufnr)
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    group = vim.api.nvim_create_augroup("LspFormat." .. bufnr, {}),
-    buffer = bufnr,
-    callback = function()
-      if M.autoformat then
-        M.format()
-      end
-    end,
-  })
 end
 
 return M

@@ -3,7 +3,6 @@ local utils = require("plugins.lsp.utils")
 
 function M.setup(_, opts)
   utils.on_attach(nil, function(client, bufnr)
-    require("plugins.lsp.format").on_attach(client, bufnr)
     require("plugins.lsp.keymaps").on_attach(client, bufnr)
   end)
 

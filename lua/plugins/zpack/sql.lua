@@ -8,14 +8,44 @@ return {
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "sqls" })
+      vim.list_extend(opts.ensure_installed, { "sqls", "sqlfluff" })
     end,
+  },
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        sql = { "sqlfluff" },
+      },
+      formatters = {
+        sqlfluff = {
+          command = vim.fn.stdpath("data") .. "/mason/bin/sqlfluff",
+          args = { "fix", "--dialect", "tsql", "-" },
+          exit_codes = { 0, 1 },
+          require_cwd = false,
+        },
+      },
+    },
+  },
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters_by_ft = {
+        sql = { "sqlfluff" },
+      },
+      linters = {
+        sqlfluff = {
+          cmd = vim.fn.stdpath("data") .. "/mason/bin/sqlfluff",
+          args = { "lint", "--dialect", "tsql", "--format=json", "-" },
+        },
+      },
+    },
   },
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        sqls = {},
+        -- sqls = {},
       },
       setup = {
         sqls = function()
