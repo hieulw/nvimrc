@@ -4,7 +4,7 @@ return {
     branch = "main",
     event = "LazyFile",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
+      { "nvim-treesitter/nvim-treesitter-textobjects", branch = "main" },
       "folke/ts-comments.nvim",
     },
     build = function()

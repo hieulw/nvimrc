@@ -11,3 +11,5 @@
 ```
 git clone https://github.com/hieulw/nvimrc ~/.config/nvim
 ```
+
+Tree-sitter parser installation requires Neovim 0.12+, `tree-sitter-cli` 0.26.1+, `curl`, `tar`, and a C compiler. On macOS with Homebrew, install the CLI with `brew install tree-sitter-cli`; the `tree-sitter` formula installs only the library.
