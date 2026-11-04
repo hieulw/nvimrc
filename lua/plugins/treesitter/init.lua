@@ -1,6 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     event = "LazyFile",
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",

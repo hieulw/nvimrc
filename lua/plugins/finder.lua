@@ -68,7 +68,15 @@ return {
         formatter = { "path.filename_first", 2 },
         winopts = { height = math.min(vim.o.lines, 15) },
       },
-      grep = {},
+      -- Search previews update rapidly while the live query changes.
+      -- Keep Treesitter off there; it can fail while parsing preview buffers.
+      grep = {
+        previewers = {
+          builtin = {
+            treesitter = { enabled = false },
+          },
+        },
+      },
     }
   end,
   config = function(_, opts)

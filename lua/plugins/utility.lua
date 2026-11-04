@@ -87,7 +87,6 @@ return {
     opts = {
       ignored_filetypes = { "NvimTree" },
       ignored_buftypes = { "nofile", "quickfix", "prompt" },
-      resize_mode = { silent = true },
     },
     keys = function()
       local split = require("smart-splits")
